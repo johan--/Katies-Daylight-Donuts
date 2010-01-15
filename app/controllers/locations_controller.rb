@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   
   def search
     flash[:notice] = "Feature has been disabled."
-    redirect_to locations_path
+    redirect_to :action => "index"
     # if !params[:zipcode].blank? and !params[:miles].to_s.blank?
     #   @locations = Location.find_within(params[:miles].to_s, :origin => params[:zipcode])
     #   render :action => "index"
