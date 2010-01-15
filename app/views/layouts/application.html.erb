@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title><%= h(yield(:title) || "Untitled") %></title>
+    <%= stylesheet_link_tag 'application' %>
+    <%= javascript_include_tag :defaults %>
+    <%= yield(:head) %>
+  </head>
+  <body>
+    <div class="container">
+      <%= link_to(image_tag("logo.png", :id => "logo"), "/") %>
+      <ul id="links" class="span-24">
+        <% if current_user %>
+        <li class="<%= current "employees" %>"><%= link_to "Employees",  employees_path %></li>
+        <li class="<%= current "customers" %>"><%= link_to "Customers",  customers_path %></li>
+        <li class="<%= current "deliveries" %>"><%= link_to "Deliveries", deliveries_path %></li>
+        <li class="<%= current "users" %>"><%= link_to "My Account", edit_user_path(current_user.record) %></li>
+        <li class="<%= current "locations" %>">
+          <%= link_to "Locations", locations_url %>
+        </li>
+        <li class="<%= current "settings" %>">
+          <%= link_to "Settings", settings_url %>
+        </li>
+        <li class="<%= current "user_sessions" %>">
+          <%= link_to "Logout", logout_url %>
+        </li>
+        <% else %>
+        <li class="<%= current "locations" %>">
+          <%= link_to "Locations", locations_url %>
+        </li>
+        <li class="<%= current "user_sessions" %>">
+          <%= link_to "Login", login_url %>
+        </li>
+        <% end %>
+      </ul>
+      <div class="span-24 backdrop">
+        <div class="span-24 header">
+          <div class="span-16">
+          <%- if show_title? -%>
+            <h1><%=h yield(:title) %></h1>
+          <%- end -%>
+          </div>
+          &nbsp;
+          <% if @content_for_toolbar %>
+          <div class="span-6 toolbar">
+            <%= yield :toolbar %>
+          </div>
+          <% end %>
+        </div>
+        <div class="span-24">
+        <%- flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, :id => "flash_#{name}" %>
+        <%- end -%>
+        </div>
+        <div id="inner" class="span-16">
+        <%= yield %>
+        </div>
+        <% if @content_for_sidebar %>
+        <div id="sidebar" class="span-6">
+        <%= render :partial => 'shared/sidebar' if @content_for_sidebar %>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </body>
+</html>

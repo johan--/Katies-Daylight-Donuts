@@ -1,0 +1,38 @@
+<div id="edit_location_<%= f.object.id %>">
+<p>
+  <%= f.label :manager %><br />
+  <%= f.text_field :manager %>
+</p>
+<p>
+  <%= f.label :address %><br />
+  <%= f.text_field :address %>
+</p>
+<p>
+  <%= f.label :city %><br />
+  <%= f.text_field :city %>
+</p>
+<p>
+  <%= f.label :state %><br />
+  <%= f.select :state, State.list, {:selected => "NE" } %>
+</p>
+<p>
+  <%= f.label :country %><br />
+  <%= f.select :country, Country.list, {:selected => "United States"} %>
+</p>
+<p>
+  <%= f.label :zipcode %><br />
+  <%= f.text_field :zipcode %>
+</p>
+<p>
+  <%= f.label :phone %><br />
+  <%= f.text_field :phone %>
+</p>
+<p>
+  <%= f.label :fax %><br />
+  <%= f.text_field :fax %>
+</p>
+<p>
+  <%= f.label :email %><br />
+  <%= f.text_field :email %>
+</p>
+</div>

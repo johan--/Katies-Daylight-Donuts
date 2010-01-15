@@ -1,0 +1,29 @@
+<% form_for @employee do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :firstname %><br />
+    <%= f.text_field :firstname %>
+  </p>
+  <p>
+    <%= f.label :lastname %><br />
+    <%= f.text_field :lastname %>
+  </p>
+  <p>
+    <%= f.label :born_on %><br />
+    <%= f.date_select :born_on, :start_year => 80.years.ago.year, :end_year => 15.years.ago.year  %>
+  </p>
+  <p>
+    <strong>Positions</strong>
+    <br />
+    <% Position.all.each do |position| %>
+      <%= check_box_tag "employee[position_ids][]", position.id, @employee.has_position?(position) %>
+      <label><%= position.name %></label><br />
+    <% end %>
+    <%= link_to "Add Position", new_position_path %><br /.>
+  </p>
+  <p>
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </p>
+  <p><%= f.submit "Submit" %></p>
+<% end %>

@@ -1,0 +1,46 @@
+<% if !@locations.empty? and @locations[0].locatable %>
+  <% title "#{@locations[0].locatable.name}'s Locations" %>
+<% else %>
+  <% title "Locations" %>
+<% end %>
+
+<ul class="addresses">
+  <% @locations.each do |location| %>
+  <li>
+    <%= location.full_address %>
+    <br />
+    <% if !location.phone.blank? %>
+      <%= h location.phone %>
+    <br />
+    <% end %>
+    <% if !location.fax.blank? %>
+      <%= h location.fax %>
+      <br />
+    <% end %>
+    <%= mail_to location.email, location.email %>
+  <br />
+    <%= link_to "Google Map", "http://maps.google.com/?q=#{location.to_google}" %>
+    <%= link_to "Show", location_path(location) %> | 
+    <%= link_to "Edit", edit_location_path(location) %> | 
+    <%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %>
+  </li>
+  <% end %>
+</ul>
+
+<p><%= link_to "New Location", new_location_path %></p>
+
+
+<% content_for :sidebar do %>
+  <% if @current_user %>
+  <%= link_to image_tag("buttons/mocha-blues/add-location.png", :alt => "Add Location"), new_customer_location_path(@customer)%>
+  <% else %>
+    <strong>Locations</strong>
+    <p>You can find Katies Daylight Donuts at any of our distributors stores.</p>
+    <br />
+    <p>Enter your zipcode to find locations near you.</p>
+    <% form_tag search_locations_path do %>
+      <%= select :miles, {},(5..100).to_a %> miles from <%= text_field_tag :zipcode, {},{:size => 8, :value => 68826} %><br />
+      <%= submit_tag :search %>
+    <% end %>
+  <% end %>
+<% end %>

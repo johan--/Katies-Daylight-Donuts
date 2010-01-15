@@ -1,0 +1,32 @@
+<% title "Employees" %>
+
+<table>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Dob</th>
+    <th>Positions</th>
+    <th>Phone</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% for employee in @employees %>
+    <tr>
+      <td><%=h employee.firstname %></td>
+      <td><%=h employee.lastname %></td>
+      <td><%=h employee.dob %></td>
+      <td><%=h employee.positions.map(&:name).join(", ") %></td>
+      <td><%=h employee.phone %></td>
+      <td><%= link_to "Show", employee %></td>
+      <td><%= link_to "Edit", edit_employee_path(employee) %></td>
+      <td><%= link_to "Destroy", employee, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Employee", new_employee_path %></p>
+
+<% content_for :sidebar do %>
+  <%= link_to image_tag("buttons/mocha-blues/add-employee.png", :alt => "Add Employee"), new_employee_path %>
+<% end %>

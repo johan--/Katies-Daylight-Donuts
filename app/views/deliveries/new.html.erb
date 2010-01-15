@@ -1,0 +1,9 @@
+<% title "New Delivery" %>
+<%= render :partial => 'form' %>
+
+<p><%= link_to "Back to List", deliveries_path %></p>
+
+<% content_for :sidebar do %>
+  <h2>New Delivery</h1>
+  <%= Customer.count %> Customers, <%= link_to "Add a Customer", new_customer_path %> ?
+<% end %>

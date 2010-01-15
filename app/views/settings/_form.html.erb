@@ -1,0 +1,16 @@
+<% form_for @setting do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :time_zone %><br />
+    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
+  </p>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p><%= f.submit "Save" %></p>
+<% end %>

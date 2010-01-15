@@ -1,0 +1,39 @@
+<% title "Delivery" %>
+
+<p>
+  <strong>Customer:</strong>
+  <%=h @delivery.location.locatable.name %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%=h @delivery.state.titleize %>
+</p>
+
+<p>
+  <strong>Driver:</strong>
+  <%=h @delivery.employee.fullname %>
+</p>
+
+<h2>Items</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Price</th>
+  </tr>
+<% for item in @delivery.items %>
+  <tr>
+    <td><%= item.name %></td>
+    <td><%= number_to_currency item.price %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= delivery_action_link(@delivery) %>
+
+
+<p>
+  <%= link_to "Edit", edit_delivery_path(@delivery) %> |
+  <%= link_to "Destroy", @delivery, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", deliveries_path %>
+</p>

@@ -1,0 +1,35 @@
+<% form_for @delivery do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :location_id %><br />
+    <% if Customer.count > 0 %>
+      <%= f.collection_select :location_id, Location.all(:include => :locatable), :id, :address_option %>
+    <% end %>
+  </p>
+  <% if Employee.drivers.size > 0 %>
+  <p>
+    <%= f.label :employee_id %><br />
+    <%= f.collection_select :employee_id, Employee.drivers, :id, :fullname %>
+  </p>
+  <% end %>
+  
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+    </tr>
+  <% for item in @delivery.items %>
+    <tr>
+      <td><%= item.name %></td>
+      <td><%= number_to_currency item.price %></td>
+    </tr>
+  <% end %>
+  </table>
+  
+  <% for item in Item.available %>
+  
+  <%= delivery_action_link(@delivery) %>
+  
+  <%= f.submit :save %>
+  
+<% end %>

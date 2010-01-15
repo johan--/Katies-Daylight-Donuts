@@ -1,0 +1,48 @@
+<% title "Location" %>
+
+<p>
+  <strong>Address:</strong>
+  <%=h @location.address %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%=h @location.city %>
+</p>
+<p>
+  <strong>State:</strong>
+  <%=h @location.state %>
+</p>
+<p>
+  <strong>Zipcode:</strong>
+  <%=h @location.zipcode %>
+</p>
+<p>
+  <strong>Country:</strong>
+  <%=h @location.country %>
+</p>
+<p>
+  <strong>Phone:</strong>
+  <%=h @location.phone %>
+</p>
+<p>
+  <strong>Fax:</strong>
+  <%=h @location.fax %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%=h @location.email %>
+</p>
+<p>
+  <strong>Manager:</strong>
+  <%=h @location.manager %>
+</p>
+<p>
+  <strong>Customer:</strong>
+  <%=h @location.customer_id %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_customer_location_path(@customer,@location) %> |
+  <%= link_to "Destroy", @location, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", locations_path %>
+</p>

@@ -1,0 +1,30 @@
+<% title @customer.name %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @customer.name %>
+</p>
+<p>
+  <strong>Website:</strong>
+  <%=h @customer.website %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_customer_path(@customer) %> |
+  <%= link_to "Destroy", @customer, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", customers_path %>
+</p>
+
+<% content_for :sidebar do %>
+  <h2>Customer Locations</h2>
+  <small><em>You can view any location on Google maps.</em></small>
+  <br />
+  <% @customer.locations.each do |location| %>
+    <strong><%= @customer.name %></strong>
+    <%= location.full_address %>
+    <br />
+    <%= location.phone %>
+    <br />
+    <%= link_to("View map", "http://maps.google.com?q=#{location.address_option} #{location.geocode}", :target => "_blank") if location.geocode %>
+  <% end %>
+<% end %>

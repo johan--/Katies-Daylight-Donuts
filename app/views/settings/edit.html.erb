@@ -1,0 +1,7 @@
+<% title "Edit Setting" %>
+
+<%= render :partial => 'form' %>
+
+<% content_for :sidebar do %>
+  <%= link_to(image_tag("buttons/mocha-blues/add-location.png", :alt => "Add Location"), new_setting_location_path(@setting)) %>
+<% end %>
