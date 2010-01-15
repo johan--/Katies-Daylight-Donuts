@@ -3,13 +3,15 @@ class LocationsController < ApplicationController
   before_filter :find_locatable, :except => [:index]
   
   def search
-    if !params[:zipcode].blank? and !params[:miles].to_s.blank?
-      @locations = Location.find_within(params[:miles].to_s, :origin => params[:zipcode])
-      render :action => "index"
-    else
-      flash[:error] = "Could not find any locations near zipcode."
-      redirect_to locations_path
-    end
+    flash[:notice] = "Feature has been disabled."
+    redirect_to locations_path
+    # if !params[:zipcode].blank? and !params[:miles].to_s.blank?
+    #   @locations = Location.find_within(params[:miles].to_s, :origin => params[:zipcode])
+    #   render :action => "index"
+    # else
+    #   flash[:error] = "Could not find any locations near zipcode."
+    #   redirect_to locations_path
+    # end
   end
   
   def index
