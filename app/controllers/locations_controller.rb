@@ -27,7 +27,7 @@ class LocationsController < ApplicationController
     if @locatable = find_locatable
       @location = @locatable.locations.build
     else
-      render :action => "select"
+      render :action => "index"
     end
   end
   
