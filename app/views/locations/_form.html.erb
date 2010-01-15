@@ -4,8 +4,8 @@
     <%- if @locatable.is_a?(Setting) -%>
       Store Locations
     <%- else -%>
-      <%= f.label :locatable_id, "#{@locatable.class.to_s}" %><br />
-      <%= f.collection_select :locatable_id, @locatable.class.all, :id, :name %>
+      <%= f.label :locatable_id, "Customer" %><br />
+      <%= f.collection_select :locatable_id, Customer.all, :id, :name %>
     <%- end -%>
   </p>
   <p>
