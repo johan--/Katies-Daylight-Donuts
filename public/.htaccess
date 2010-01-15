@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} !^www.katiesdaylightdonuts.com$ [NC]
+RewriteRule ^(.*)$ http://www.katiesdaylightdonuts.com/$1 [L,R=301]
