@@ -1,17 +1,18 @@
 class LocationsController < ApplicationController
-  before_filter :login_required, :except => [:index, :search]
+  before_filter :login_required, :except => [:index]
   before_filter :find_locatable, :except => [:index]
+  before_filter :current_user_session
   
   def search
     flash[:notice] = "Feature has been disabled."
     redirect_to :action => "index"
-    # if !params[:zipcode].blank? and !params[:miles].to_s.blank?
-    #   @locations = Location.find_within(params[:miles].to_s, :origin => params[:zipcode])
-    #   render :action => "index"
-    # else
-    #   flash[:error] = "Could not find any locations near zipcode."
-    #   redirect_to locations_path
-    # end
+    if !params[:zipcode].blank? and !params[:miles].to_s.blank?
+      @locations = Location.find_within(params[:miles].to_s, :origin => params[:zipcode])
+      render :action => "index"
+    else
+      flash[:error] = "Could not find any locations near zipcode."
+      redirect_to locations_path
+    end
   end
   
   def index
@@ -19,8 +20,7 @@ class LocationsController < ApplicationController
   end
   
   def show
-    @locatable = find_locatable
-    @location = @locatable.locations.find(params[:id])
+    @location = Location.find(params[:id])
   end
   
   def new
@@ -32,11 +32,11 @@ class LocationsController < ApplicationController
   end
   
   def create
-    @locatable = find_locatable
-    @location = @locatable.locations.new(params[:location])
+    @customer = Customer.find(params[:location][:customer_id])
+    @location = @customer.locations.new(params[:location])
     if @location.save
       flash[:notice] = "Successfully created location."
-      redirect_to_locatable @location
+      redirect_to customer_path(@customer)
     else
       render :action => 'new'
     end
@@ -81,6 +81,7 @@ class LocationsController < ApplicationController
   def find_locatable
     params.each do |name, value|
       if name =~ /^(.+)_id$/
+        puts "Found #{$1}"
         return $1.classify.constantize.find(value, :include => [:locations])
       end
     end

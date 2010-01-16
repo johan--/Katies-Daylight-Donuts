@@ -22,7 +22,7 @@ class Delivery < ActiveRecord::Base
   
   validates_presence_of :location, :employee
   
-  named_scope :recent, find(:all, :limit => 10, :conditions => {:state => "delivered"})
+  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at"
   named_scope :pending, :conditions => {:state => "pending"}
   named_scope :delivered, :conditions => {:state => "delivered"}
   

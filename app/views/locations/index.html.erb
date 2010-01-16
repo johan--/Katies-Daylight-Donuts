@@ -21,7 +21,7 @@
   <br />
     <%= link_to "Google Map", "http://maps.google.com/?q=#{location.to_google}" %>
     <%= link_to "Show", location_path(location) %> | 
-    <%= link_to "Edit", edit_location_path(location) %> | 
+    <%= link_to "Edit", edit_customer_location_path(location.locatable,location) %> | 
     <%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %>
   </li>
   <% end %>

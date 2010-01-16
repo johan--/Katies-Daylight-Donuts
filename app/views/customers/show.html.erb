@@ -24,7 +24,5 @@
     <%= location.full_address %>
     <br />
     <%= location.phone %>
-    <br />
-    <%= link_to("View map", "http://maps.google.com?q=#{location.address_option} #{location.geocode}", :target => "_blank") if location.geocode %>
   <% end %>
 <% end %>
