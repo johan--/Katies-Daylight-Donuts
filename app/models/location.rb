@@ -1,6 +1,6 @@
 class Location < ActiveRecord::Base
   belongs_to :customer
-  has_many :deliveries
+  has_many :deliveries, :dependent => :destroy
     
   # Geocode the locations for mapping
   after_update  :get_geocode
