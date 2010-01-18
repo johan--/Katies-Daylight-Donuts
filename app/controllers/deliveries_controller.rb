@@ -9,6 +9,10 @@ class DeliveriesController < ApplicationController
     else
       @deliveries = Delivery.all
     end
+    respond_to do |format|
+      format.html
+      format.xml{ render :xml => @deliveries.to_xml }
+    end
   end
   
   def show
