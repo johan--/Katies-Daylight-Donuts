@@ -9,7 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100113081839) do
+ActiveRecord::Schema.define(:version => 20100117110743) do
+
+  create_table "buy_backs", :force => true do |t|
+    t.integer  "delivery_id"
+    t.string   "state"
+    t.integer  "tax",                :limit => 10, :precision => 10, :scale => 0
+    t.integer  "price",              :limit => 10, :precision => 10, :scale => 0
+    t.integer  "raised_donut_count"
+    t.integer  "cake_donut_count"
+    t.integer  "roll_count"
+    t.integer  "donuthole_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -33,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20100113081839) do
     t.integer  "location_id"
     t.integer  "employee_id"
     t.string   "state"
+    t.datetime "delivered_at"
   end
 
   create_table "deliveries_items", :id => false, :force => true do |t|
@@ -81,8 +95,6 @@ ActiveRecord::Schema.define(:version => 20100113081839) do
     t.datetime "updated_at"
     t.string   "lat"
     t.string   "lng"
-    t.integer  "locatable_id"
-    t.string   "locatable_type"
   end
 
   create_table "positions", :force => true do |t|
@@ -108,6 +120,8 @@ ActiveRecord::Schema.define(:version => 20100113081839) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",         :default => "Central Time (US & Canada)"
+    t.string   "api_key"
+    t.boolean  "api_enabled",       :default => false
   end
 
 end

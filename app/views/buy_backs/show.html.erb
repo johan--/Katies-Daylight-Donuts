@@ -1,0 +1,40 @@
+<% title "Buy Back" %>
+
+<p>
+  <strong>Delivery:</strong>
+  <%=h @buy_back.delivery_id %>
+</p>
+<p>
+  <strong>State:</strong>
+  <%=h @buy_back.state %>
+</p>
+<p>
+  <strong>Tax:</strong>
+  <%=h @buy_back.tax %>
+</p>
+<p>
+  <strong>Price:</strong>
+  <%=h @buy_back.price %>
+</p>
+<p>
+  <strong>Raised Donut Count:</strong>
+  <%=h @buy_back.raised_donut_count %>
+</p>
+<p>
+  <strong>Cake Donut Count:</strong>
+  <%=h @buy_back.cake_donut_count %>
+</p>
+<p>
+  <strong>Roll Count:</strong>
+  <%=h @buy_back.roll_count %>
+</p>
+<p>
+  <strong>Donuthole Count:</strong>
+  <%=h @buy_back.donuthole_count %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_buy_back_path(@buy_back) %> |
+  <%= link_to "Destroy", @buy_back, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", buy_backs_path %>
+</p>

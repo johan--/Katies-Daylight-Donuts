@@ -1,4 +1,9 @@
 class Employee < ActiveRecord::Base
+    
+  validates_uniqueness_of :phone
+  validates_presence_of :firstname, :lastname, :born_on, :phone
+  validates_presence_of :positions, :if => Proc.new{ |employee| employee.positions.empty? }
+  
   has_and_belongs_to_many :positions
   
   def self.drivers

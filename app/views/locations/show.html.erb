@@ -1,5 +1,7 @@
 <% title "Location" %>
 
+<h1><%= @location.customer.name %></h1>
+
 <p>
   <strong>Address:</strong>
   <%=h @location.address %>
@@ -36,13 +38,9 @@
   <strong>Manager:</strong>
   <%=h @location.manager %>
 </p>
-<p>
-  <strong>Customer:</strong>
-  <%=h @location.customer_id %>
-</p>
 
 <p>
-  <%= link_to "Edit", edit_location_path(@customer,@location) %> |
+  <%= link_to "Edit", edit_location_path(@location) %> |
   <%= link_to "Destroy", @location, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", locations_path %>
 </p>

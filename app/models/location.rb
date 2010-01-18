@@ -1,11 +1,11 @@
 class Location < ActiveRecord::Base
-  belongs_to :locatable, :polymorphic => true
+  belongs_to :customer
   has_many :deliveries
     
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
-  
+    
   validates_presence_of :address, :city, :state, :country, :zipcode
   validates_numericality_of :zipcode
   validates_length_of :state, :is => 2
@@ -21,8 +21,8 @@ class Location < ActiveRecord::Base
   end
   
   def address_option
-    return to_google unless self.locatable
-    "#{self.locatable.name} - " + to_google
+    return to_google unless self.customer
+    "#{self.customer.name} - " + to_google
   end
   
   def to_google

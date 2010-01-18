@@ -2,7 +2,7 @@
 
 <p>
   <strong>Customer:</strong>
-  <%=h @delivery.location.locatable.name %>
+  <%=h @delivery.location.customer.name %>
 </p>
 <p>
   <strong>Status:</strong>
@@ -37,3 +37,9 @@
   <%= link_to "Destroy", @delivery, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", deliveries_path %>
 </p>
+
+<% content_for :sidebar do %>
+  <%= button "Add Buy Back", new_delivery_buy_back_path(@delivery) %>
+  <p>You can manually enter a buy back for this  delivery.
+    Generally BuyBacks are created via the API from the iPhone application.</p>
+<% end %>

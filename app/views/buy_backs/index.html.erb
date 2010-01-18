@@ -1,0 +1,31 @@
+<% title "Buy Backs" %>
+
+<table>
+  <tr>
+    <th>Delivery</th>
+    <th>State</th>
+    <th>Tax</th>
+    <th>Price</th>
+    <th>Raised Donut Count</th>
+    <th>Cake Donut Count</th>
+    <th>Roll Count</th>
+    <th>Donuthole Count</th>
+  </tr>
+  <% for buy_back in @buy_backs %>
+    <tr>
+      <td><%=h buy_back.delivery_id %></td>
+      <td><%=h buy_back.state %></td>
+      <td><%=h buy_back.tax %></td>
+      <td><%=h buy_back.price %></td>
+      <td><%=h buy_back.raised_donut_count %></td>
+      <td><%=h buy_back.cake_donut_count %></td>
+      <td><%=h buy_back.roll_count %></td>
+      <td><%=h buy_back.donuthole_count %></td>
+      <td><%= link_to "Show", buy_back %></td>
+      <td><%= link_to "Edit", edit_buy_back_path(buy_back) %></td>
+      <td><%= link_to "Destroy", buy_back, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Buy Back", new_buy_back_path %></p>

@@ -16,7 +16,7 @@ class EmployeesController < ApplicationController
   def create
 
     @employee = Employee.new(params[:employee])
-    
+    @employee.positions << build_positions!
     if @employee.save
       flash[:notice] = "Successfully created employee."
       redirect_to @employee
@@ -45,5 +45,17 @@ class EmployeesController < ApplicationController
     @employee.destroy
     flash[:notice] = "Successfully destroyed employee."
     redirect_to employees_url
+  end
+  
+  private
+  
+  def build_positions!
+    return unless params[:position_names]
+    positions = []
+    params[:position_names].each do |name|
+      p = Position.find_by_name(name) || Position.create(:name => name)
+      positions.push(p) if p and p.valid?
+    end
+    return positions
   end
 end

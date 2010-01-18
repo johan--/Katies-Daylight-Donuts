@@ -3,7 +3,7 @@
   <p>
     <%= f.label :location_id %><br />
     <% if Customer.count > 0 %>
-      <%= f.collection_select :location_id, Location.all(:include => :locatable), :id, :address_option %>
+      <%= f.collection_select :location_id, Location.all(:include => :customer), :id, :address_option %>
     <% end %>
   </p>
   <% if Employee.drivers.size > 0 %>

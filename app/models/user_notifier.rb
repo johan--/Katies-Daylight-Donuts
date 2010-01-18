@@ -6,4 +6,12 @@ class UserNotifier < ActionMailer::Base
     subject      "New Delivery" 
     content_type "text/html"
   end
+  
+  def delivered_notification(recipients, delivery)
+    recipients   recipients
+    from         "noreply@katiesdonuts.com"
+    body         :delivery => delivery
+    subject      "Delivery delivered" 
+    content_type "text/html"
+  end
 end

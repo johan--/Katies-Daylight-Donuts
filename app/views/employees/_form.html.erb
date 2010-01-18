@@ -19,7 +19,12 @@
       <%= check_box_tag "employee[position_ids][]", position.id, @employee.has_position?(position) %>
       <label><%= position.name %></label><br />
     <% end %>
-    <%= link_to "Add Position", new_position_path %><br /.>
+    <%= link_to_function "Add Position" do |page|
+          page.insert_html(:bottom, :position_fields, :partial => "positions/fields")
+          page.show("position_fields")
+        end
+     %><br />
+    <ul id="position_fields" style="display: none;"></ul>
   </p>
   <p>
     <%= f.label :phone %><br />

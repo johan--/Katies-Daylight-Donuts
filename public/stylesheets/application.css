@@ -27,7 +27,7 @@ a img {
 }
 
 a {
-  color: #0000FF;
+  color: #19232E;
 }
 
 .clear {
@@ -206,4 +206,23 @@ table{ width: 100%; }
 table tr th{ font-weight: bold; padding: 0.1em 0.5em; background: #e4e1dd; border-bottom: 1px solid #7B7B7B; }
 table tr td{
   padding: 0.1em 0.5em;
+}
+
+p.grey-box{
+  padding: 0.5em;
+  font-style: italic;
+  color: #818181;
+  background: #DBDBDB;
+}
+
+/* Button */
+
+p.button{
+  background: url("../images/buttons/default/button-bg.png") no-repeat;
+  padding: 5px 0 6px 30px;
+}
+
+a.button{
+  text-decoration: none;
+  font-weight: bold;
 }

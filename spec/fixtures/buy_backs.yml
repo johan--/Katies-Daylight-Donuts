@@ -1,0 +1,19 @@
+one:
+  delivery_id: 1
+  state: MyString
+  tax: 9.99
+  price: 9.99
+  raised_donut_count: 1
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+
+two:
+  delivery_id: 1
+  state: MyString
+  tax: 9.99
+  price: 9.99
+  raised_donut_count: 1
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1

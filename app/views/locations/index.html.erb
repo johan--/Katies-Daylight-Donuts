@@ -1,36 +1,48 @@
-<% if !@locations.empty? and @locations[0].locatable %>
-  <% title "#{@locations[0].locatable.name}'s Locations" %>
-<% else %>
-  <% title "Locations" %>
-<% end %>
+<% title "Katies Daylight Donuts Locations" %>
 
 <ul class="addresses">
-  <% @locations.each do |location| %>
+  <% @customers.each do |customer| %>
   <li>
-    <%= location.full_address %>
+    <p style="background: #DBDBDB; padding: 1em;">
+      <%= customer.name %>
+    </p>
     <br />
-    <% if !location.phone.blank? %>
-      <%= h location.phone %>
-    <br />
-    <% end %>
-    <% if !location.fax.blank? %>
-      <%= h location.fax %>
+    <p style="padding:0.5em;">
+    <% customer.locations.each do |location| %>
+      <%= location.full_address %>
       <br />
+      <% if !location.phone.blank? %>
+        <%= h location.phone %>
+      <br />
+      <% end %>
+      <% if !location.fax.blank? %>
+        <%= h location.fax %>
+        <br />
+      <% end %>
+      Coords: Lat: <%= location.lat %>, Long: <%= location.lng %>
+      <%= mail_to location.email, location.email %>
+    <br />
+      <%= link_to "Google Map", "http://maps.google.com/?q=#{location.to_google}" %>
+      <% if current_user %>
+      <%= link_to "Show", location_path(location) %> | 
+      <%= link_to "Edit", edit_customer_location_path(location.customer,location) %> | 
+      <%= link_to "Destroy", customer_location_path(customer,location), :confirm => 'Are you sure?', :method => :delete %>
+      <p>&nbsp;</p>
+      <hr />
+      </p>
+      <% end %>
     <% end %>
-    <%= mail_to location.email, location.email %>
-  <br />
-    <%= link_to "Google Map", "http://maps.google.com/?q=#{location.to_google}" %>
-    <%= link_to "Show", location_path(location) %> | 
-    <%= link_to "Edit", edit_customer_location_path(location.locatable,location) %> | 
-    <%= link_to "Destroy", location, :confirm => 'Are you sure?', :method => :delete %>
   </li>
   <% end %>
 </ul>
 
-<p><%= link_to "New Location", new_location_path %></p>
+<% if current_user %>
+  <p><%= link_to "New Location", new_location_path %></p>
+<% end %>
 
 
 <% content_for :sidebar do %>
+  <%= button "Add Location", new_location_path %>
   <% if @current_user %>
   <%= link_to image_tag("buttons/mocha-blues/add-location.png", :alt => "Add Location"), new_customer_location_path(@customer)%>
   <% else %>

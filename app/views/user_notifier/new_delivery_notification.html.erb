@@ -9,6 +9,7 @@
     <li>Created: <%= @delivery.created_at %></li>
     <li>Location: <%= @delivery.location.address_option %></li>
     <li>Status: <%= @delivery.state %></li>
+    <li>Assigned To: <%= @delivery.employee.fullname %></li>
     <li><%= link_to "View", delivery_url(@delivery, :host => "www.katiesdaylightdonuts.com") %></li>
   </ul>
 </div>

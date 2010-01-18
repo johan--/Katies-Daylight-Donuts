@@ -3,5 +3,14 @@
 <%= render :partial => 'form' %>
 
 <% content_for :sidebar do %>
-  <%= link_to(image_tag("buttons/mocha-blues/add-location.png", :alt => "Add Location"), new_setting_location_path(@setting)) %>
+  <h2>Application Settings</h2>
+  <p>The settings you select here will be used for the application.</p>
+  
+  <br />
+  <h2>Time Zone Settings</h2>
+  <p>Time Zone will be used to calculate dates of deliveries and buy backs.</p>
+  
+  <br />
+  <h2>Notifications</h2>
+  <p>The email you enter will be sent email updates and alerts when changes take place with deliveries and customers.</p>
 <% end %>

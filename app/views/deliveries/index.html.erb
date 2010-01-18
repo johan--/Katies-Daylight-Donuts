@@ -1,39 +1,29 @@
 <% title(@controller.action_name =~ /index/ ? "Deliveries" : "Deliveries / #{@controller.action_name.titleize}") %>
 
-<table>
-  <tr>
-    <th>Customer</th>
-    <th>Status</th>
-    <th>Delivery Date</th>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
-    <th>&nbsp;</th>
-  </tr>
-  <% for delivery in @deliveries %>
-    <tr>
-      <td><%= link_to(h(delivery.location.locatable.name), delivery.location.locatable)  %></td>
-      <td style="text-align: center;">
-        <%= delivery_action_link(delivery) %>
-      </td>
-      <td><%= delivery.delivery_time %></td>
-      <td><%= link_to "Show", delivery %></td>
-      <td><%= link_to "Edit", edit_delivery_path(delivery) %></td>
-      <td><%= link_to "Destroy", delivery, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+<ul>
+  <% @deliveries.each do |delivery| %>
+    <li style="padding: 0.2em; background: #eee; margin-top: 0.6em;">
+    <h2><%= delivery.customer_name %></h2>
+    <%= link_to delivery.customer_name, delivery_path(delivery) %> | <%= delivery.delivery_time %><br />
+      <%= link_to "Show", delivery %>
+      | <%= link_to "Edit", edit_delivery_path(delivery) %> 
+      | <%= link_to "Destroy", delivery, :confirm => 'Are you sure?', :method => :delete %>  
+    </li>
   <% end %>
-</table>
+</ul>
+
 
 <% content_for :toolbar do %>
   <%= link_to "Pending", pending_deliveries_path, :class => "toolbutton" %> <%= link_to "Delivered", delivered_deliveries_path, :class => "toolbutton" %>
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= link_to image_tag("buttons/mocha-blues/add-delivery.png", :alt => "Add Delivery"), new_delivery_path %>
+  <%= button "Add Delivery", new_delivery_path %>
   <h2>Recent Deliveries</h2>
   <ol>
-    <% Delivery.recent.group_by{|d| d.location.locatable }.each do |locatable, deliveries| %>
+    <% Delivery.recent.group_by{|d| d.location.customer }.each do |customer, deliveries| %>
       <li>
-      <strong><%= locatable.name %></strong><br />
+      <strong><%= customer.name %></strong><br />
       <% deliveries.each do |delivery| %>
         <%= delivery.location.full_address %>, <%= delivery.delivery_time %><br /><br />
       <% end %>
