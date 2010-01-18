@@ -11,7 +11,7 @@ class DeliveriesController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.xml{ render :xml => @deliveries.to_xml }
+      format.xml{ render :xml => @deliveries.to_xml(:include => [:customer, :location]) }
     end
   end
   
