@@ -1,5 +1,5 @@
 class DeliveriesController < ApplicationController
-  before_filter :login_required
+  before_filter :login_required, :except => [:index]
   
   def index
     if params[:status] == "pending"
