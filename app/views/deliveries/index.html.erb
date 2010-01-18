@@ -21,7 +21,7 @@
   <%= button "Add Delivery", new_delivery_path %>
   <h2>Recent Deliveries</h2>
   <ol>
-    <% Delivery.recent.group_by{|d| d.location.customer }.each do |customer, deliveries| %>
+    <% Delivery.recent.group_by{|d| d.customer }.each do |customer, deliveries| %>
       <li>
       <strong><%= customer.name %></strong><br />
       <% deliveries.each do |delivery| %>

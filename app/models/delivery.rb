@@ -19,6 +19,7 @@ class Delivery < ActiveRecord::Base
   has_and_belongs_to_many :items
   has_many :buy_backs
   belongs_to :location
+  has_one :customer, :through => :location
   belongs_to :employee
   
   validates_presence_of :location, :message => "Must be assigned a delivery location."
