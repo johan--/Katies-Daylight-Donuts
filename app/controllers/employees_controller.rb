@@ -55,7 +55,8 @@ class EmployeesController < ApplicationController
   
   def build_positions!
     return unless params[:position_names]
-    positions = Position.find(params[:position_ids])
+    positions = []
+    positions = Position.find(params[:position_ids]) if params.has_key?(:position_ids)
     params[:position_names].each do |name|
       p = Position.find_or_create_by_name(name)
       positions.push(p) if p and p.valid?
