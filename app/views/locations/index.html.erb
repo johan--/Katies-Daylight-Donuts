@@ -1,5 +1,6 @@
 <% title "Katies Daylight Donuts Locations" %>
 
+<% if @customers %>
 <ul class="addresses">
   <% @customers.each do |customer| %>
   <li>
@@ -56,3 +57,6 @@
     <% end %>
   <% end %>
 <% end %>
+<% else #if @customers %>
+  <p>No locations found.</p>
+<% end #if @customers%>
