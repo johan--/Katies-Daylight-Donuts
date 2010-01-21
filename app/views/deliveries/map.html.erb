@@ -6,7 +6,7 @@
 <% end %>
 
 <% content_for :head do %>
-  <%= GMap.header %>
+  <%= GMap.header(:with_vml => false, :host => request.host) %>
   <%= @map.to_html %>
 <% end %>
 
