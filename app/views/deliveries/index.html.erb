@@ -1,19 +1,29 @@
 <% title(@controller.action_name =~ /index/ ? "Deliveries" : "Deliveries / #{@controller.action_name.titleize}") %>
 
-<ul>
-  <% @deliveries.each do |delivery| %>
-    <li style="padding: 0.2em; background: #eee; margin-top: 0.6em;">
-    <h2><%= delivery.customer_name %></h2>
-    <%= link_to delivery.customer_name, delivery_path(delivery) %> | <%= delivery.delivery_time %><br />
-      <%= link_to "Show", delivery %>
-      | <%= link_to "Edit", edit_delivery_path(delivery) %> 
-      | <%= link_to "Destroy", delivery, :confirm => 'Are you sure?', :method => :delete %>  
-    </li>
+
+<% @deliveries.group_by{|d| d.created_at.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
+  <h2 class="date"><%= created %></h2>
+  <% deliveries.group_by{|d| d.customer }.each do |customer, deliveries| %>
+  <h2><%= customer.name %></h2>
+  <ul>
+    <% deliveries.each do |delivery| %>
+      <li style="padding: 0.2em; background: #eee; margin-top: 0.6em;">
+      <p><%= delivery.location.full_address %></p>
+      <%= delivery.delivery_time %><br />
+        <%= link_to "Show", delivery %>
+        | <%= link_to "Edit", edit_delivery_path(delivery) %> 
+        | <%= link_to "Destroy", delivery, :confirm => 'Are you sure?', :method => :delete %>  
+      </li>
+    <% end %>
+  </ul>
   <% end %>
-</ul>
+<% end %>
 
 
 <% content_for :toolbar do %>
+  <% if Delivery.pending.size > 0 %>
+    <%= link_to "Show Route", map_deliveries_path, :class => "toolbutton" %>
+  <% end %>
   <%= link_to "Pending", pending_deliveries_path, :class => "toolbutton" %> <%= link_to "Delivered", delivered_deliveries_path, :class => "toolbutton" %>
 <% end %>
 

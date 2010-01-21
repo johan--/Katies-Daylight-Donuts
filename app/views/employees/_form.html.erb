@@ -10,7 +10,7 @@
   </p>
   <p>
     <%= f.label :born_on %><br />
-    <%= f.date_select :born_on, :start_year => 80.years.ago.year, :end_year => 15.years.ago.year  %>
+    <%= f.calendar_date_select :born_on, :year_range => (90.years.ago..16.years.ago), :onclick => %(enableCalendar())  %>
   </p>
   <p>
     <strong>Positions</strong>

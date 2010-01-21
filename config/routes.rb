@@ -1,4 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :items, :collection => {
+    :auto_complete_for_item_name => :get,
+    :auto_complete_for_item_item_type => :get
+  }
+
   map.resources :buy_backs
 
   map.resources :settings, :has_many => :locations
@@ -20,9 +25,10 @@ ActionController::Routing::Routes.draw do |map|
       :deliver => :any,
       :undeliver => :any
      }, :collection => {
+    :map => :get,
     :delivered => :get,
     :pending => :get
-  }, :has_many => :buy_backs
+  }, :has_many => [:buy_backs, :items]
 
   map.resources :user_sessions
   map.resources :users

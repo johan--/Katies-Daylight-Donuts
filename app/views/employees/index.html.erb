@@ -1,6 +1,7 @@
 <% title "Employees" %>
 
 <table>
+  <thead>
   <tr>
     <th>Firstname</th>
     <th>Lastname</th>
@@ -11,20 +12,19 @@
     <th>&nbsp;</th>
     <th>&nbsp;</th>
   </tr>
-  <% for employee in @employees %>
-    <tr>
-      <td><%=h employee.firstname %></td>
-      <td><%=h employee.lastname %></td>
-      <td><%=h employee.dob %></td>
-      <td><%=h employee.driver? ? "Yes" : "No" %></td>
-      <td><%=h employee.phone %></td>
-      <td><%= link_to "Show", employee %></td>
-      <td><%= link_to "Edit", edit_employee_path(employee) %></td>
-      <td><%= link_to "Destroy", employee, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
-  <% end %>
+  </thead>
+  <tbody id="employees">
+    <%= render "employee_list" %>
+  </tbody>
 </table>
+
+<%= more_paginate @employees %>
 
 <% content_for :sidebar do %>
   <%= button "Add Employee", new_employee_path %>
 <% end %>
+
+
+<script type="text/javascript" charset="utf-8">
+  paginate("#employees");
+</script>

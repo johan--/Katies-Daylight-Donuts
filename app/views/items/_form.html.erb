@@ -1,0 +1,19 @@
+<% form_for @item do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= text_field_with_auto_complete :item, :name, {}, {:method => :get} %>
+  </p>
+  <p>
+    <%= f.label :item_type %><br />
+    <%= f.select, :item_type, Item.types %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.check_box :available %> <%= f.label :available %>
+  </p>
+  <p><%= f.submit "Save" %></p>
+<% end %>

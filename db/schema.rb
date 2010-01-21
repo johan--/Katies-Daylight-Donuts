@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100117110743) do
+ActiveRecord::Schema.define(:version => 20100121040454) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20100117110743) do
     t.integer  "employee_id"
     t.string   "state"
     t.datetime "delivered_at"
+    t.datetime "delivery_date"
   end
 
   create_table "deliveries_items", :id => false, :force => true do |t|
@@ -74,10 +75,10 @@ ActiveRecord::Schema.define(:version => 20100117110743) do
   create_table "items", :force => true do |t|
     t.string   "name"
     t.string   "item_type"
-    t.integer  "price",      :limit => 10, :precision => 10, :scale => 0
-    t.boolean  "available"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "price",      :precision => 8, :scale => 2, :default => 0.0
+    t.boolean  "available",                                :default => true
   end
 
   create_table "locations", :force => true do |t|

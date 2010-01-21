@@ -1,9 +1,10 @@
 class UserSessionsController < ApplicationController
+  
   def new
     @user_session = UserSession.new
   end
   
-  def create
+  def create 
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Successfully logged in."
@@ -18,5 +19,11 @@ class UserSessionsController < ApplicationController
     @user_session.destroy
     flash[:notice] = "Successfully logged out."
     redirect_to login_path
+  end
+  
+  def forgot_password
+    if @user = User.find_by_username_or_email(params[:id])
+      @user.reset_password!
+    end
   end
 end

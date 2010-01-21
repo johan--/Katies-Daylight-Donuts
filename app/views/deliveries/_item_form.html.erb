@@ -1,0 +1,15 @@
+<% fields_for item_record do |item| %>
+  <%= item.error_messages %>
+    <tr style="background: #D7D7D7; padding: 1em;">
+      <td><%= item.check_box :available %></td>
+      <td>
+        <%= item.text_field :name %>
+      </td>
+      <td>
+        <%= item.select :item_type, Item.types %>
+      </td>
+      <td>
+        <%= item.text_field :price %>
+      </td>
+    </tr>
+<% end %>

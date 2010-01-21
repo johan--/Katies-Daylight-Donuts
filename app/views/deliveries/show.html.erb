@@ -16,6 +16,7 @@
 
 <h2>Items</h2>
 
+<% unless @delivery.items.empty? %>
 <table>
   <tr>
     <th>Name</th>
@@ -28,9 +29,7 @@
   </tr>
 <% end %>
 </table>
-
-<%= delivery_action_link(@delivery) %>
-
+<% end %>
 
 <p>
   <%= link_to "Edit", edit_delivery_path(@delivery) %> |
@@ -39,6 +38,7 @@
 </p>
 
 <% content_for :sidebar do %>
+  <%= delivery_action_link(@delivery, true) %>
   <%= button "Add Buy Back", new_delivery_buy_back_path(@delivery) %>
   <p>You can manually enter a buy back for this  delivery.
     Generally BuyBacks are created via the API from the iPhone application.</p>

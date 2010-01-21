@@ -1,6 +1,10 @@
 <% form_for @delivery do |f| %>
   <%= f.error_messages %>
   <p>
+    <%= f.label :delivery_date %><br />
+    <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now) %>
+  </p>
+  <p>
     <%= f.label :location_id %><br />
     <% if Customer.count > 0 %>
       <%= f.collection_select :location_id, Location.all(:include => :customer), :id, :address_option %>
@@ -12,22 +16,35 @@
     <%= f.collection_select :employee_id, Employee.drivers, :id, :fullname %>
   </p>
   <% end %>
-  
-  <table>
+  <br />
+  <table id="items_table" style="display: <%= @delivery.items.empty? ? 'none' : '' %>">
+    <thead>
     <tr>
+      <th>Available</th>
       <th>Name</th>
+      <th>Type</th>
       <th>Price</th>
     </tr>
-  <% for item in @delivery.items %>
-    <tr>
-      <td><%= item.name %></td>
-      <td><%= number_to_currency item.price %></td>
-    </tr>
-  <% end %>
+    </thead>
+    <tbody id="items">
+      <% for item in @delivery.items %>
+        <tr>
+          <td><%= item.name %></td>
+          <td><%= number_to_currency item.price %></td>
+        </tr>
+      <% end %>
+    </tbody>
   </table>
-  
-  <%= delivery_action_link(@delivery) %>
-  
   <%= f.submit :save %>
   
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= delivery_action_link(@delivery, true) %>
+  <br />
+  <%= link_to_function("Add Item",nil,:id => "add_item", :class => "toolbar") do |page|
+        page.insert_html(:top, :items, :partial => "item_form", :locals => {:item_record => @delivery.items.build})
+        page.visual_effect(:highlight, :items)
+        page.show(:items_table)
+  end %>
 <% end %>

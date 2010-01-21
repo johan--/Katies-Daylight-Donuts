@@ -1,0 +1,13 @@
+<% title "Map four Delivery Route" %>
+
+<% content_for :toolbar do %>
+  <%= link_to "All", deliveries_path, :class => "toolbutton" %>
+  <%= link_to "Pending", pending_deliveries_path, :class => "toolbutton" %>     <%= link_to "Delivered", delivered_deliveries_path, :class => "toolbutton" %>
+<% end %>
+
+<% content_for :head do %>
+  <%= GMap.header %>
+  <%= @map.to_html %>
+<% end %>
+
+<%= @map.div(:width => 900, :height => 500) %>

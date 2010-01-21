@@ -9,6 +9,7 @@ class Location < ActiveRecord::Base
   validates_presence_of :address, :city, :state, :country, :zipcode
   validates_numericality_of :zipcode
   validates_length_of :state, :is => 2
+  validates_uniqueness_of :lng, :lat
   
   acts_as_mappable
   
@@ -30,10 +31,13 @@ class Location < ActiveRecord::Base
   end
   
   def geocode
-    "#{lat},#{lng}"
+    geocode_array.join(",")
   end
-  
-  
+
+  def geocode_array
+    [lat,lng]
+  end
+
   private
   
   def get_geocode

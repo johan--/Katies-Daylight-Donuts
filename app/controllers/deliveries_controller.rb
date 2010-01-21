@@ -1,5 +1,9 @@
-class DeliveriesController < ApplicationController
+class DeliveriesController < ApplicationController  
   before_filter :login_required, :except => [:index]
+  before_filter :current_user_session
+
+  auto_complete_for :item, :name
+  auto_complete_for :item, :item_type
   
   def index
     if params[:status] == "pending"
@@ -77,6 +81,35 @@ class DeliveriesController < ApplicationController
   def pending
     @deliveries = Delivery.pending
     render :action => "index"
+  end
+  
+  def map
+    @deliveries = Delivery.pending(
+      :origin => "68826", 
+      :within => 500, 
+      :order => "distance asc",
+      :include => [:location]
+    )
+    @locations = @deliveries.map(&:location)
+       @map = GMap.new("map")
+       @map.control_init(:large_map => true,:map_type => true)
+       @map.center_zoom_init(@locations.first.geocode_array, 11)
+       @locations.each do |location|
+         
+         @map.icon_global_init(GIcon.new(:image => "/images/daylight_donuts_gmarker.png",
+             :shadow => "/images/daylight_donuts_gmarker.png",
+             :shadow_size => GSize.new(50,28),
+             :icon_anchor => GPoint.new(7,7),
+             :info_window_anchor => GPoint.new(9,2)), "daylight_donuts_icon")
+          icon = Variable.new("daylight_donuts_icon")
+         
+         location_marker = GMarker.new(location.geocode_array,
+          :title => "#{location.customer.name}",
+          :info_window => "#{location.full_address} <br />#{location.phone}",
+          :icon => icon)
+         #@map.overlay_init GPolyline.new(@locations.map(&:geocode_array))
+         @map.overlay_init location_marker
+       end
   end
   
   def destroy

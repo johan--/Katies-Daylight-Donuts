@@ -2,7 +2,12 @@ class EmployeesController < ApplicationController
   before_filter :login_required
   
   def index
-    @employees = Employee.all
+    @employees = Employee.paginate_by_creation params.dup
+    
+    respond_to do |format|
+      format.html
+      format.js{ render :partial => "employee_list" }
+    end
   end
   
   def show
@@ -14,7 +19,6 @@ class EmployeesController < ApplicationController
   end
   
   def create
-
     @employee = Employee.new(params[:employee])
     @employee.positions << build_positions!
     if @employee.save
@@ -51,11 +55,11 @@ class EmployeesController < ApplicationController
   
   def build_positions!
     return unless params[:position_names]
-    positions = []
+    positions = Position.find(params[:position_ids])
     params[:position_names].each do |name|
-      p = Position.find_by_name(name) || Position.create(:name => name)
+      p = Position.find_or_create_by_name(name)
       positions.push(p) if p and p.valid?
     end
-    return positions
+    return positions.uniq
   end
 end

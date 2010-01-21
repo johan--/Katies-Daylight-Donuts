@@ -1,11 +1,19 @@
 module DeliveriesHelper
-  def delivery_action_link(delivery)
+  def delivery_action_link(delivery, button = false)
     return if delivery.new_record?
     case delivery.state
     when /^pending$/i
-      link_to "Deliver", deliver_delivery_path(delivery)
+      unless button
+        link_to "Deliver", deliver_delivery_path(delivery)
+      else
+        button "Deliver", deliver_delivery_path(delivery)
+      end
     when /^delivered$/i
-      link_to "Undeliver", undeliver_delivery_path(delivery)
+      unless button
+        link_to "Undeliver", undeliver_delivery_path(delivery)
+      else
+        button "Undeliver", undeliver_delivery_path(delivery)
+      end
     else
       delivery.state
     end

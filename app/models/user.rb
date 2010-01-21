@@ -9,10 +9,19 @@ class User < ActiveRecord::Base
   
   before_validation :generate_api_key
   
+  def reset_password!
+    self.password = self.password_confirmation = digest(self.email + Time.now.to_s)
+    save
+  end
+  
   private
   
+  def digest(value)
+    Digest::MD5.hexdigest(value)
+  end
+    
   def generate_api_key
     return unless self.api_enabled?
-    self.api_key = Digest::MD5.hexdigest(Time.now.to_i.to_s + self.email + rand(999).to_s )
+    self.api_key = digest(Time.now.to_i.to_s + self.email + rand(999).to_s )
   end
 end

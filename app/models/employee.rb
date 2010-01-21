@@ -6,6 +6,16 @@ class Employee < ActiveRecord::Base
   
   has_and_belongs_to_many :positions
   
+  def self.paginate_by_creation(params = {})
+    paginate :all,
+      :sort_key => params[:sort_key] || 'created_at',
+      :sort_value => params[:sort_value],
+      :sort_id => params[:sort_id],
+      :sort_order => 'desc',
+      :include => :positions,
+      :limit => 2
+  end
+  
   def self.drivers
     all.collect{ |e| e if e.driver? }.compact
   end

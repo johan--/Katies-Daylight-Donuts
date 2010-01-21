@@ -8,14 +8,17 @@
     <%= f.label :website %><br />
     <%= f.text_field :website %>
   </p>
-  <% @customer.locations.each_with_index do |location_record, index| %>
-    <fieldset>
-    <legend><strong>Location <%= index+1 %></strong></legend>
-    <% fields_for location_record do |location| %>
-      <%= location.error_messages %>
-      <%= render :partial => "location", :locals => {:f => location} %>
+  <ul id="locations">
+    <% @customer.locations.each do |location_record| %>
+      <%= render :partial => "location_form", :locals => {:location_record => location_record} %>
     <% end %>
-    </fieldset>
-  <% end %>
+  </ul>
   <p><%= f.submit "Submit" %></p>
+<% end %>
+
+<% content_for :sidebar do %>
+  <%= link_to_function("Add Location",nil,:id => "add_location", :class => "toobar") do |page|
+        page.insert_html(:top, :locations, :partial => "location_form",    :locals => {:location_record => @customer.locations.build})
+        page.visual_effect(:highlight, :locations)
+  end %>
 <% end %>

@@ -27,7 +27,8 @@ a img {
 }
 
 a {
-  color: #19232E;
+  /*color: #19232E;*/
+  color: #164DB5;
 }
 
 .clear {
@@ -225,4 +226,10 @@ p.button{
 a.button{
   text-decoration: none;
   font-weight: bold;
+}
+
+h2.date{
+  padding: 0.5em;
+  border: 1px solid #B0B0B0;
+  background: #F2D5C9;
 }
