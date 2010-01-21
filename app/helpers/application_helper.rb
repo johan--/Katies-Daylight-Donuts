@@ -17,4 +17,12 @@ module ApplicationHelper
       end
     end
   end
+  
+  def list(collection, selector, &block)
+    content_tag(:ul, :id => selector) do
+      collection.each do |object|
+        yield block
+      end
+    end
+  end
 end

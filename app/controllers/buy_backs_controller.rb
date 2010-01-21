@@ -49,6 +49,6 @@ class BuyBacksController < ApplicationController
   protected
   
   def find_delivery
-    @delivery = Delivery.find(params[:delivery_id])
+    @delivery = Delivery.delivered.find(params[:delivery_id])
   end
 end
