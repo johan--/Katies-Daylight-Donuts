@@ -1,0 +1,14 @@
+<tr style="background: #D7D7D7; padding: 1em;" id="<%= delivery_line_item.id %>">
+  <td>
+    <%= delivery_line_item.item.name %>
+  </td>
+  <td>
+    <%= delivery_line_item.item.item_type %>
+  </td>
+  <td>
+    <%= delivery_line_item.quantity %>
+  </td>
+  <td>
+    <%= number_to_currency(delivery_line_item.price) %>
+  </td>
+</tr>

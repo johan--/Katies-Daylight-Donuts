@@ -42,12 +42,19 @@ class Delivery < ActiveRecord::Base
     @customer_name ||= location.customer.name rescue ""
   end
   
-  def add_item(item)
+  def add_item(item, quantity)
+    raise Exception, "Quantity required!" unless quantity.to_i > 0
+    options = {
+      :quantity => quantity.to_i,
+      :item => item,
+      :price => (quantity.to_i * item.price.to_f)
+    }
     if self.new_record?
-      line_items.build(:item => item)
+      line_item = line_items.build(options)
     else
-      line_items.create(:item => item)
+      line_item = line_items.create(options)
     end
+    line_item
   end
   
   def remove_item(item)

@@ -22,9 +22,9 @@ class DeliveriesController < ApplicationController
   
   # TODO: remove these actions
   def add_item
-    @delivery.add_item(@item) if @delivery && @item
+    @line_item = @delivery.add_item(@item, params[:quantity]) if @delivery && @item
     render :update do |page|
-      page.insert_html(:top, :items, :partial => "item_form", :locals => {:item_record => @item})
+      page.insert_html(:top, :items, :partial => "line_item_form", :locals => {:delivery_line_item => @line_item})
       page.visual_effect(:highlight, :items)
       page.show(:items_table)
     end

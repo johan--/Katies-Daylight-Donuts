@@ -20,19 +20,18 @@
   <table id="items_table" style="display: <%= @delivery.items.empty? ? 'none' : '' %>">
     <thead>
     <tr>
-      <th>Available</th>
       <th>Name</th>
       <th>Type</th>
+      <th>Quantity</th>
       <th>Price</th>
     </tr>
     </thead>
     <tbody id="items">
-      <% for item in @delivery.items %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= number_to_currency item.price %></td>
-        </tr>
+      <% for line_item in @delivery.line_items %>
+        <%= render :partial => "line_item_form", :locals => {:delivery_line_item => line_item} %>
       <% end %>
+      <tr>
+      </tr>
     </tbody>
   </table>
   <%= f.submit :save %>
@@ -42,12 +41,10 @@
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) %>
   <br />
-  <%= collection_select :item, :id, Item.available, :id, :name %>
-  <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value" %>
+  <p>Select an item from the list and click "add item" ti add an existing item. You can also click "New item" to add a new item.</p>
   
-  <%= button_to_function("New Item",nil,:id => "add_item", :class => "toolbar") do |page|
-        page.insert_html(:top, :items, :partial => "item_form", :locals => {:item_record => @delivery.items.build})
-        page.visual_effect(:highlight, :items)
-        page.show(:items_table)
-  end %>
+  <%= collection_select :item, :id, Item.available, :id, :name %>
+  <label>QTY:</label> <%= text_field_tag :item_quantity, nil, :value => 12, :size => 3 %><br />
+  <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value + '&quantity='+$('item_quantity').value" %>
+  
 <% end %>
