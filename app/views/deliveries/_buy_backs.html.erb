@@ -1,0 +1,5 @@
+<% list @delivery.buy_backs, :buy_backs do |buy_back| %>
+  <% content_tag :li do %>
+    <%= buy_back.id %>
+  <% end %>
+<% end %>

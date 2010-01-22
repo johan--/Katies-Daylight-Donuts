@@ -1,8 +1,6 @@
 class Setting < ActiveRecord::Base
-  has_many :locations, :dependent => :destroy
-  
   def self.for_application
-    first
+    @setting ||= (first || create(:time_zone => APP_TIME_ZONE, :email => APP_EMAIL))
   end
   
   def self.email
