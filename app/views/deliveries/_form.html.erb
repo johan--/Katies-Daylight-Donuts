@@ -17,6 +17,12 @@
   </p>
   <% end %>
   <br />
+    <%= collection_select_tag :item, :id, Item.available, :id, :name %>
+    <%= button_to_function "Add Item", do |page|
+      page.alert("Item Added")
+    end
+    %>
+  <br />
   <table id="items_table" style="display: <%= @delivery.items.empty? ? 'none' : '' %>">
     <thead>
     <tr>

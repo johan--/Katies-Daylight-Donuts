@@ -1,5 +1,7 @@
 class Delivery < ActiveRecord::Base
-  has_and_belongs_to_many :items
+  has_many :line_items, :dependent => :destroy
+  has_many :items, :through => :line_items
+  
   has_many :buy_backs
   belongs_to :location, :include => [:customer]
   belongs_to :employee
