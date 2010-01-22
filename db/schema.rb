@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(:version => 20100122201911) do
     t.boolean  "available",                                :default => true
   end
 
-  create_table "line_items", :id => false, :force => true do |t|
+  create_table "line_items", :force => true do |t|
     t.integer "delivery_id"
     t.integer "item_id"
     t.integer "quantity"
