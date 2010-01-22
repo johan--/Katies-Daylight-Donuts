@@ -23,7 +23,9 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :deliveries, :member => { 
       :deliver => :any,
-      :undeliver => :any
+      :undeliver => :any,
+      :add_item => :any,
+      :remove_item => :any
      }, :collection => {
     :map => :get,
     :delivered => :get,

@@ -41,4 +41,18 @@ class Delivery < ActiveRecord::Base
   def customer_name
     @customer_name ||= location.customer.name rescue ""
   end
+  
+  def add_item(item)
+    if self.new_record?
+      line_items.build(:item => item)
+    else
+      line_items.create(:item => item)
+    end
+  end
+  
+  def remove_item(item)
+    if line_item = link_items.detect{ |li| li.item_id == item.id }
+      line_items -= line_item
+    end
+  end
 end

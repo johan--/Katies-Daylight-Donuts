@@ -17,12 +17,6 @@
   </p>
   <% end %>
   <br />
-    <%= collection_select_tag :item, :id, Item.available, :id, :name %>
-    <%= button_to_function "Add Item", do |page|
-      page.alert("Item Added")
-    end
-    %>
-  <br />
   <table id="items_table" style="display: <%= @delivery.items.empty? ? 'none' : '' %>">
     <thead>
     <tr>
@@ -48,7 +42,10 @@
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) %>
   <br />
-  <%= link_to_function("Add Item",nil,:id => "add_item", :class => "toolbar") do |page|
+  <%= collection_select :item, :id, Item.available, :id, :name %>
+  <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value" %>
+  
+  <%= button_to_function("New Item",nil,:id => "add_item", :class => "toolbar") do |page|
         page.insert_html(:top, :items, :partial => "item_form", :locals => {:item_record => @delivery.items.build})
         page.visual_effect(:highlight, :items)
         page.show(:items_table)

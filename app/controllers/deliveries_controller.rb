@@ -1,6 +1,7 @@
 class DeliveriesController < ApplicationController  
   before_filter :login_required, :except => [:index]
   before_filter :current_user_session
+  before_filter :find_delivery_with_item, :only => [:add_item, :remove_item]
 
   auto_complete_for :item, :name
   auto_complete_for :item, :item_type
@@ -16,6 +17,25 @@ class DeliveriesController < ApplicationController
     respond_to do |format|
       format.html
       format.xml{ render :xml => @deliveries.to_xml(:include => [:customer, :location]) }
+    end
+  end
+  
+  # TODO: remove these actions
+  def add_item
+    @delivery.add_item(@item) if @delivery && @item
+    render :update do |page|
+      page.insert_html(:top, :items, :partial => "item_form", :locals => {:item_record => @item})
+      page.visual_effect(:highlight, :items)
+      page.show(:items_table)
+    end
+  end
+  
+  def remove_item
+    @delivery.remove_item(@item) if @delivery && @item
+    render :update do |page|
+      page.remove("item_#{@item.id}")
+      page.visual_effect(:highlight, :items)
+      page.show(:items_table)
     end
   end
   
@@ -117,5 +137,12 @@ class DeliveriesController < ApplicationController
     @delivery.destroy
     flash[:notice] = "Successfully destroyed delivery."
     redirect_to deliveries_url
+  end
+  
+  protected
+  
+  def find_delivery_with_item
+    @delivery = Delivery.find(params[:id])
+    @item = Item.available.find(params[:item_id])
   end
 end

@@ -1,6 +1,6 @@
 <% fields_for item_record do |item| %>
   <%= item.error_messages %>
-    <tr style="background: #D7D7D7; padding: 1em;">
+    <tr style="background: #D7D7D7; padding: 1em;" id="<%= item.id %>">
       <td><%= item.check_box :available %></td>
       <td>
         <%= item.text_field :name %>
