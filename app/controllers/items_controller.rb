@@ -45,4 +45,12 @@ class ItemsController < ApplicationController
     flash[:notice] = "Successfully destroyed item."
     redirect_to items_url
   end
+  
+  def screen_calculation
+    @screen_calculation = ScreenCalculation.new(params)
+    render :update do |page|
+      page.replace_html(:screen_calculation, @screen_calculation.to_html)
+      page.show(:screen_calculation)
+    end
+  end
 end

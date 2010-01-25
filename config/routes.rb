@@ -46,7 +46,7 @@ ActionController::Routing::Routes.draw do |map|
   map.forgot_password "forgot_password", :controller => "user_sessions", :action => "forgot_password"
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
-
+  map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
   
   map.root :locations
   map.connect ':controller/:action/:id'

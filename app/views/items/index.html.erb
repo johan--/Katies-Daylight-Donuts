@@ -6,6 +6,8 @@
     <th>Name</th>
     <th>Item Type</th>
     <th>Price</th>
+    <th>Weight</th>
+    <th>No. per screen</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
@@ -16,6 +18,8 @@
       <td><%=h item.name %></td>
       <td><%=h item.item_type %></td>
       <td><%=h item.price %></td>
+      <td><%= item.weight %> lbs.</td>
+      <td style="text-align: right;"><%= item.number_per_screen %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), item %></td>
       <td><%= link_to "Edit", edit_item_path(item) %></td>
       <td><%= link_to icon("cross-circle-frame"), item, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -26,4 +30,6 @@
 
 <% content_for :sidebar do %>
   <%= button "Add Item", new_item_path %>
+  <br />
+  <%= render :partial => "screen_calculator_form" %>
 <% end %>

@@ -10,7 +10,7 @@
 </p>
 
 <p>
-  <%= link_to "Edit", edit_customer_path(@customer) %> |
+  <%= link_to icon("layer-pencil"), edit_customer_path(@customer) %> |
   <%= link_to icon("cross-circle-frame"), @customer, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", customers_path %>
 </p>
@@ -18,11 +18,17 @@
 <% content_for :sidebar do %>
   <h2>Customer Locations</h2>
   <small><em>You can view any location on Google maps.</em></small>
-  <br />
+  <ul>
   <% @customer.locations.each do |location| %>
-    <strong><%= @customer.name %></strong>
-    <%= location.full_address %>
-    <br />
-    <%= location.phone %>
+    <li>
+      <strong><%= @customer.name %></strong>
+      <%= location.full_address %>
+      <br />
+      <%= location.phone %> 
+      <%= link_to "Edit", edit_location_path(location) %>
+      <%= link_to "Destroy", location_path(location), :method => :delete, :confirm => "Are you sure?" %>
+      <br />
+    </li>
   <% end %>
+  </ul>
 <% end %>
