@@ -12,7 +12,7 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 body {
-  background-color: #523f26;
+  background-color: #192456;
   font-family: "Lucida Grande";
   font-size: 14px;
 }
@@ -121,7 +121,7 @@ ul#links{
 }
 
 ul#links li{
-  background: #523f26;
+  background: #192456;
   padding: 0.2em 0.5em;
 }
 
@@ -255,4 +255,10 @@ h2.date{
 img.icon{
   padding: 2px;
   vertical-align: bottom;
+}
+
+li.sidebar{
+  border: 1px solid #aaa; 
+  padding: 0.5em; 
+  margin: 0.8em 0;
 }

@@ -2,3 +2,17 @@
 
 <%= render :partial => 'form' %>
 
+<% if !@user.api_key.blank? %>
+  <% content_for :sidebar do %>
+    <ul>
+      <li class="sidebar">
+        <p>
+          <strong>Your API Key: </strong>
+          <small>
+            <%= icon "key" %> <%= @user.api_key %>
+          </small>
+        </p>
+      </li>
+    </ul>
+  <% end %>
+<% end %>

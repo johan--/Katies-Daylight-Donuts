@@ -21,7 +21,7 @@
       <td><%= item.weight %> lbs.</td>
       <td style="text-align: right;"><%= item.number_per_screen %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), item %></td>
-      <td><%= link_to "Edit", edit_item_path(item) %></td>
+      <td><%= link_to icon("pencil-small"), edit_item_path(item) %></td>
       <td><%= link_to icon("cross-circle-frame"), item, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>

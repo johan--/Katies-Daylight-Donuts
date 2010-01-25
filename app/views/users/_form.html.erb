@@ -13,11 +13,7 @@
     <%= icon "clock-frame" %>  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
   </p>
   <p>
-    <%= f.check_box :api_enabled, :onchange => %(if(!this.checked){ new Effect.BlindUp('api_key') }else{ Effect.Shake('api_key') }) %> <%= f.label :api_enabled %>
-  </p>
-  <p>
-    <%= api_key @user %>
-    &nbsp;
+    <%= f.check_box :api_enabled %> <%= f.label :api_enabled %>
   </p>
   <p>
     <%= f.label :password %><br />

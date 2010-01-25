@@ -5,7 +5,7 @@
     <td><%=h employee.phone %></td>
     <td><%= icon "clock-select" %><%= link_to "Timesheet", timesheet_employee_path(employee) %></td>
     <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), employee %></td>
-    <td><%= link_to "Edit", edit_employee_path(employee) %></td>
+    <td><%= link_to icon("pencil-small"), edit_employee_path(employee) %></td>
     <td><%= link_to icon("cross-circle-frame"), employee, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

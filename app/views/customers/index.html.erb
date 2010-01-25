@@ -15,7 +15,7 @@
       <td><%= link_to(h(customer.website),customer.website, :target => "_blank") %></td>
       <td><%= link_to "Locations", customer_locations_path(customer) %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), customer %></td>
-      <td><%= link_to "Edit", edit_customer_path(customer) %></td>
+      <td><%= link_to icon("pencil-small"), edit_customer_path(customer) %></td>
       <td><%= link_to icon("cross-circle-frame"), customer, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
