@@ -1,0 +1,9 @@
+<h2>Screen Calculator</h2>
+<div id="screen_calculation" class="message" style="display: none;"></div>
+<% form_remote_tag :url => screen_calculation_path do %>
+  <% Item.available.each do |item| %>
+    <%= hidden_field_tag :"item[ids][]", {}, {:value => item.id} %>
+    <%= item.name %> Count:<%= text_field_tag :"item[counts][]" %><br />
+  <% end %>
+  <%= submit_tag "Calculate" %>
+<% end %>
