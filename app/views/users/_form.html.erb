@@ -6,7 +6,11 @@
   </p>
   <p>
     <%= f.label :email %><br />
-    <%= f.text_field :email %>
+   <%= icon "mail" %> <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :time_zone %><br />
+    <%= icon "clock-frame" %>  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
   </p>
   <p>
     <%= f.check_box :api_enabled, :onchange => %(if(!this.checked){ new Effect.BlindUp('api_key') }else{ Effect.Shake('api_key') }) %> <%= f.label :api_enabled %>
@@ -16,16 +20,12 @@
     &nbsp;
   </p>
   <p>
-    <%= f.label :time_zone %><br />
-    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
-  </p>
-  <p>
     <%= f.label :password %><br />
-    <%= f.password_field :password %>
+    <%= icon "lock" %> <%= f.password_field :password %>
   </p>
   <p>
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation %>
+    <%= icon "lock" %> <%= f.password_field :password_confirmation %>
   </p>
   <p><%= f.submit "Submit" %></p>
 <% end %>

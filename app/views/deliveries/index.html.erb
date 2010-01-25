@@ -2,17 +2,17 @@
 
 
 <% @deliveries.group_by{|d| d.created_at.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
-  <h2 class="date"><%= created %></h2>
+  <strong><%= icon "calendar-day" %> <%= created %></strong>
   <% deliveries.group_by{|d| d.customer }.each do |customer, deliveries| %>
-  <h2><%= customer.name %></h2>
+  <h3><%= customer.name %></h3>
   <ul>
     <% deliveries.each do |delivery| %>
       <li style="padding: 0.2em; background: #eee; margin-top: 0.6em;">
       <p><%= delivery.location.full_address %></p>
       <%= delivery.delivery_time %><br />
-        <%= link_to "Show", delivery %>
+        <%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %>
         | <%= link_to "Edit", edit_delivery_path(delivery) %> 
-        | <%= link_to "Destroy", delivery, :confirm => 'Are you sure?', :method => :delete %>  
+        | <%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %>  
       </li>
     <% end %>
   </ul>

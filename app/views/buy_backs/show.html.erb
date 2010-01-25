@@ -35,6 +35,6 @@
 
 <p>
   <%= link_to "Edit", edit_buy_back_path(@buy_back) %> |
-  <%= link_to "Destroy", @buy_back, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to icon("cross-circle-frame"), @buy_back, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", buy_backs_path %>
 </p>

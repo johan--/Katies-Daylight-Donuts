@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :clockin_times
+
   map.resources :items, :collection => {
     :auto_complete_for_item_name => :get,
     :auto_complete_for_item_item_type => :get
@@ -19,7 +21,13 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :customers, :has_many => [:locations, :deliveries]
 
-  map.resources :employees
+  map.resources :employees, 
+    :member => {
+      :timesheet => :get
+    },
+    :collection => {
+      :validate_clockin_id_available => :any
+    }, :has_many => :clockin_times
 
   map.resources :deliveries, :member => { 
       :deliver => :any,

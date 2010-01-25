@@ -21,9 +21,9 @@
       <td><%=h buy_back.cake_donut_count %></td>
       <td><%=h buy_back.roll_count %></td>
       <td><%=h buy_back.donuthole_count %></td>
-      <td><%= link_to "Show", buy_back %></td>
+      <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), buy_back %></td>
       <td><%= link_to "Edit", edit_buy_back_path(buy_back) %></td>
-      <td><%= link_to "Destroy", buy_back, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to icon("cross-circle-frame"), buy_back, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>

@@ -25,9 +25,9 @@
     <br />
       <%= link_to "Google Map", "http://maps.google.com/?q=#{location.to_google}" %>
       <% if current_user %>
-      <%= link_to "Show", location_path(location) %> | 
+      <%= link_to icon("eye",:alt => "Show", :title => "Show"), location_path(location) %> | 
       <%= link_to "Edit", edit_customer_location_path(location.customer,location) %> | 
-      <%= link_to "Destroy", customer_location_path(customer,location), :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to icon("cross-circle-frame"), customer_location_path(customer,location), :confirm => 'Are you sure?', :method => :delete %>
       <p>&nbsp;</p>
       <hr />
       </p>

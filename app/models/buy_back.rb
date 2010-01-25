@@ -1,16 +1,21 @@
-class BuyBack < ActiveRecord::Base
+class BuyBack < ActiveRecord::Base  
+  include AASM
+  
   belongs_to :delivery
   
-  acts_as_state_machine :initial => :pending
-  state :pending
-  state :paid
-  state :voided
+  aasm_initial_state :pending
   
-  event :pay do
+  aasm_column :state
+  
+  aasm_state :pending
+  aasm_state :paid
+  aasm_state :voided
+  
+  aasm_event :pay do
     transitions :from => :pending, :to => :paid
   end
   
-  event :void do
+  aasm_event :void do
     transitions :from => :paid, :to => :pending
   end
 end

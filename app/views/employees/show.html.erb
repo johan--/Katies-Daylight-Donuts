@@ -23,6 +23,6 @@
 
 <p>
   <%= link_to "Edit", edit_employee_path(@employee) %> |
-  <%= link_to "Destroy", @employee, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to icon("cross-circle-frame"), @employee, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", employees_path %>
 </p>

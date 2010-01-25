@@ -5,9 +5,8 @@
   <tr>
     <th>Firstname</th>
     <th>Lastname</th>
-    <th>Dob</th>
-    <th>Driver</th>
     <th>Phone</th>
+    <th>Timesheet</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
@@ -22,6 +21,7 @@
 
 <% content_for :sidebar do %>
   <%= button "Add Employee", new_employee_path %>
+  <%= render :partial => "clockin_form" %>
 <% end %>
 
 

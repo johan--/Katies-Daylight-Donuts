@@ -7,6 +7,6 @@
 
 <p>
   <%= link_to "Edit", edit_position_path(@position) %> |
-  <%= link_to "Destroy", @position, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to icon("cross-circle-frame"), @position, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", positions_path %>
 </p>

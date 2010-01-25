@@ -25,4 +25,15 @@ module ApplicationHelper
       end
     end
   end
+  
+  def icon(name, options = {})
+    if File.exists?(RAILS_ROOT + "/public/images/icons/default/#{name}.png")
+      if options.has_key?(:class)
+        options[:class] << " icon" 
+      else
+        options[:class] = "icon"
+      end
+      image_tag("icons/default/#{name}.png", options)
+    end
+  end
 end

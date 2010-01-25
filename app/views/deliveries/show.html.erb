@@ -33,7 +33,7 @@
 
 <p>
   <%= link_to "Edit", edit_delivery_path(@delivery) %> |
-  <%= link_to "Destroy", @delivery, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to icon("cross-circle-frame"), @delivery, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", deliveries_path %>
 </p>
 

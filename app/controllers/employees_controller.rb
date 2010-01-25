@@ -51,6 +51,17 @@ class EmployeesController < ApplicationController
     redirect_to employees_url
   end
   
+  def validate_clockin_id_available
+    render :text => Employee.clockin_id_available?(params[:employee_clockin_id]) ? "Available" : "Unavailable"
+  end
+  
+  def timesheet
+    @employee = Employee.find(params[:id])
+    @date = Time.parse("#{params[:start_date]} || Time.zone.now")
+    @start_date = Date.new(@date.year, @date.month, @date.day)
+    @events = @employee.hours.clocked_out.find(:all, :conditions => ['starts_at between ? and ?', @start_date, @start_date + 7])
+  end
+  
   private
   
   def build_positions!

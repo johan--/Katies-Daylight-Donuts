@@ -1,4 +1,6 @@
 class Delivery < ActiveRecord::Base
+  include AASM
+  
   has_many :line_items, :dependent => :destroy
   has_many :items, :through => :line_items
   
@@ -9,20 +11,21 @@ class Delivery < ActiveRecord::Base
   
   acts_as_mappable :through => :location
   
-  acts_as_state_machine :initial => :pending
-  state :pending
-  state :delivered
-  state :canceled
+  aasm_column :state
+  aasm_initial_state :pending
+  aasm_state :pending
+  aasm_state :delivered
+  aasm_state :canceled
   
-  event :deliver do
+  aasm_event :deliver do
     transitions :from => :pending, :to => :delivered
   end
   
-  event :undeliver do
+  aasm_event :undeliver do
     transitions :from => :delivered, :to => :pending
   end
   
-  event :cancel do
+  aasm_event :cancel do
     transitions :from => [:pending, :delivered], :to => :canceled
   end
   

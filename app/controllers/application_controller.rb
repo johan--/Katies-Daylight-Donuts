@@ -5,10 +5,15 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
+  before_filter :set_timezone
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
   
   private
+  
+  def set_timezone
+    Time.zone = @current_user.time_zone if @current_user
+  end
   
   def current_user_session
     return @current_user if defined?(@current_user_sessiom)

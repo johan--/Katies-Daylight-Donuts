@@ -2,25 +2,28 @@
 
 <table>
   <tr>
+    <th>Available</th>
     <th>Name</th>
     <th>Item Type</th>
     <th>Price</th>
-    <th>Available</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
   </tr>
   <% for item in @items %>
     <tr>
+      <td><%= item.available? ? icon("tick-circle-frame") : icon("slash") %></td>
       <td><%=h item.name %></td>
       <td><%=h item.item_type %></td>
       <td><%=h item.price %></td>
-      <td><%=h item.available %></td>
-      <td><%= link_to "Show", item %></td>
+      <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), item %></td>
       <td><%= link_to "Edit", edit_item_path(item) %></td>
-      <td><%= link_to "Destroy", item, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to icon("cross-circle-frame"), item, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
 
-<p><%= link_to "New Item", new_item_path %></p>
+
+<% content_for :sidebar do %>
+  <%= button "Add Item", new_item_path %>
+<% end %>
