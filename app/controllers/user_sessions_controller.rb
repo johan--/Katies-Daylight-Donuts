@@ -1,5 +1,4 @@
-class UserSessionsController < ApplicationController
-  
+class UserSessionsController < ApplicationController  
   def new
     @user_session = UserSession.new
   end
@@ -20,10 +19,19 @@ class UserSessionsController < ApplicationController
     flash[:notice] = "Successfully logged out."
     redirect_to login_path
   end
-  
+    
   def forgot_password
-    if @user = User.find_by_username_or_email(params[:id])
+    value = params[:user_session][:username]
+    if @user = User.find(:first, :conditions => ["username = ? or email = ?", value, value])
       @user.reset_password!
+      render :update do |page|
+        page.hide("forgot_password_form")
+        page.show("login_form")
+      end
+    else
+      render :update do |page|
+        page.replace_html("forgot_password_form_error", "Could not find any user with that login or email.")
+      end
     end
   end
 end

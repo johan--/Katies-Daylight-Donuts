@@ -45,6 +45,15 @@
   
   <%= collection_select :item, :id, Item.available, :id, :name %>
   <label>QTY:</label> <%= text_field_tag :item_quantity, nil, :value => 12, :size => 3 %><br />
-  <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value + '&quantity='+$('item_quantity').value" %>
+  <% if @delivery.new_record? %>
+    <%= button_to_function("Add Item") do |page|
+      page.insert_html(:top, :items, :partial => "line_item_form", :locals => {:delivery_line_item =>    @delivery.items.build})
+      page.visual_effect(:highlight, :items)
+      page.show(:items_table)
+    end
+  %>
+  <% else %>
+    <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value + '&quantity='+$('item_quantity').value" %>
+  <% end %>
   
 <% end %>

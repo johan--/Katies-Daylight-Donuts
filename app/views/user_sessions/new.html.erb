@@ -1,6 +1,6 @@
 <% title "New User Session" %>
 
-<% form_for @user_session do |f| %>
+<% form_for @user_session, :html => {:id => "login_form"} do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :username %><br />
@@ -10,7 +10,17 @@
     <%= f.label :password %><br />
     <%= f.password_field :password %>
   </p>
-  <p><%= f.submit "Submit" %> <%= link_to "Register", new_user_path %></p>
+  <p>
+    <%= f.submit "Submit" %> 
+    <%= link_to_function("Forgot password?") do |page|
+      page.show("forgot_password_form")
+      page.hide("login_form")
+    end %>
+  </p>
 <% end %>
 
-
+<% form_remote_for(@user_session, :url => forgot_password_url, :html => {:id => "forgot_password_form", :style => "display: none;"}) do |f| %>
+  <p id="forgot_password_form_error"></p>
+  <%= f.label :username, "Login or Email" %> <%= f.text_field :username %>
+  <%= f.submit :submit %>
+<% end %>

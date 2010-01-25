@@ -30,6 +30,7 @@ class DeliveriesController < ApplicationController
     end
   end
   
+  # TODO: remove these actions
   def remove_item
     @delivery.remove_item(@item) if @delivery && @item
     render :update do |page|

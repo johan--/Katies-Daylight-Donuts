@@ -8,9 +8,15 @@ class User < ActiveRecord::Base
   validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
   
   before_validation :generate_api_key
+
+  def self.with_username_of_email(value)
+    find(:first, :conditions => ["username = ? or email = ?", value, value])
+  end
   
   def reset_password!
-    self.password = self.password_confirmation = digest(self.email + Time.now.to_s)
+    new_password = digest(self.email + Time.now.to_s)
+    self.password = self.password_confirmation = new_password
+    UserNotifier.deliver_password(self,new_password)
     save
   end
   
