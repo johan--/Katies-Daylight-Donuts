@@ -15,3 +15,7 @@ function paginate(target){
   });
   
 }
+
+function setText(selector, text){
+  $(selector).innerHTML = text;
+}

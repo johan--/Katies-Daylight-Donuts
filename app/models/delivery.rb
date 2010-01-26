@@ -45,6 +45,10 @@ class Delivery < ActiveRecord::Base
     @customer_name ||= location.customer.name rescue ""
   end
   
+  def total
+    items.map(&:price).to_a.sum
+  end
+  
   def add_item(item, quantity)
     raise Exception, "Quantity required!" unless quantity.to_i > 0
     options = {

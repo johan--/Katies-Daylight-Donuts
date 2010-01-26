@@ -2,8 +2,9 @@
 
 <div class="span-22">
 <% weekly_calendar(@events, :date => @date, :include_24_hours => true) do |w| %>
-  <% w.week(:business_hours => params[:business_hours]) do |event,truncate| %>
-    <%= event.starts_at.strftime('%I:%M%p') %>
+  <% w.week(:business_hours => 0..24) do |event,truncate| %>
+    <%= event.starts_at.strftime('%I:%M%p') %><br />
+    <%= link_to event.employee.fullname, employee_path(event.employee) %>
   <% end -%>
 <% end -%>
 </div>

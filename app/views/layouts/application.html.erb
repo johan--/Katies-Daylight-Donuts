@@ -6,8 +6,16 @@
     <%= stylesheet_link_tag 'application' %>
     <%= stylesheet_link_tag 'weekly' %>
     <%= yield(:head) %>
+    <%= javascript_include_tag "jquery", "more_paginate", "application", :cache => true %>
+    <%= javascript_include_tag :defaults %>
+    <%= calendar_date_select_includes "red" %>
   </head>
   <body>
+    <!-- 
+      User: <%= current_user.user.username %>
+      TimeZone: <%= current_user.user.time_zone %>
+      Current TimeZone: <%= Time.zone %>
+    -->
     <div class="container">
       <%= link_to(image_tag("logo.png", :id => "logo"), "/") %>
       <ul id="links" class="span-24">
@@ -64,8 +72,5 @@
         <% end %>
       </div>
     </div>
-    <%= javascript_include_tag "jquery", "more_paginate", "application", :cache => true %>
-    <%= javascript_include_tag :defaults %>
-    <%= calendar_date_select_includes "red" %>
   </body>
 </html>

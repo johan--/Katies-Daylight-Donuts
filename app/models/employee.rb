@@ -14,10 +14,6 @@ class Employee < ActiveRecord::Base
   aasm_event :clockout do
     transitions :from => :clocked_in, :to => :clocked_out, :on_transition => :record_clockout!
   end
-  
-  def test
-    raise Exception, "Transition with triggers"
-  end
     
   validates_uniqueness_of :phone
   validates_presence_of :firstname, :lastname, :born_on, :phone
@@ -70,7 +66,7 @@ class Employee < ActiveRecord::Base
     if clocked_in?
       return false
     else
-      return clockin_times.create(:starts_at => Time.now)
+      return clockin_times.create(:starts_at => Time.zone.now)
     end
   end
   
@@ -78,7 +74,7 @@ class Employee < ActiveRecord::Base
     if clocked_out?
       return false
     else
-      return clockin_times.clocked_in[0].update_attribute(:ends_at,Time.now)
+      return clockin_times.clocked_in[0].update_attribute(:ends_at,Time.zone.now)
     end
   end
 end

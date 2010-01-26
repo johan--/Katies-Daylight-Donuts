@@ -31,6 +31,10 @@ a {
   color: #164DB5;
 }
 
+p{
+  margin: 0.2em 0;
+}
+
 .clear {
   clear: both;
   height: 0;
@@ -47,12 +51,15 @@ a {
 }
 
 #flash_notice {
-  background-color: #CFC;
+  background: url("../images/icons/default/plus-shield.png") no-repeat #CFC;
+  background-position: auto left;
+  padding: 0.5em 0 0 2em;
 }
 
 #flash_error {
-  background-color: #FCC;
   border: solid 1px #C66;
+  background: url("../images/icons/default/minus-shield.png") no-repeat center left #FCC;
+  padding: 0.5em 0 0 2em;
 }
 
 .fieldWithErrors {

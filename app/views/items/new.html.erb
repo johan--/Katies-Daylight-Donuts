@@ -2,4 +2,7 @@
 
 <%= render :partial => 'form' %>
 
-<p><%= link_to "Back to List", items_path %></p>
+<% content_for :sidebar do %>
+  <h1 id="item_title_label">Untitled</h1>
+  <p>Price: <span id="item_price_label"><%= number_to_currency @item.price %></span></p>
+<% end %>
