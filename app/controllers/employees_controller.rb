@@ -2,8 +2,8 @@ class EmployeesController < ApplicationController
   before_filter :login_required
   
   def index
-    @employees = Employee.paginate_by_creation params.dup
-    
+    # @employees = Employee.paginate_by_creation params.dup
+    @employees = Employee.all
     respond_to do |format|
       format.html
       format.js{ render :partial => "employee_list" }
