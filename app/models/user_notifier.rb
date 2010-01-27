@@ -18,7 +18,7 @@ class UserNotifier < ActionMailer::Base
   def password(user, password)
     recipients   user.email
     from         "noreply@katiesdonuts.com"
-    body         "Your password: #{password}"
+    body         :user => user, :password => password
     subject      "Katies Daylight Donuts Forgot Password." 
     content_type "text/html"
   end
