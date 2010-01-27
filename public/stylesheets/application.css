@@ -13,8 +13,8 @@ a img {border:none;}
 
 body {
   background-color: #192456;
-  font-family: "Lucida Grande";
-  font-size: 14px;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 80%;
 }
 
 h1,h2{
@@ -123,13 +123,8 @@ ul#nav{
   float: right;
 }
 
-ul#links{
-  margin: 0 0 0.1em 1.5em;
-}
-
 ul#links li{
-  background: #192456;
-  padding: 0.2em 0.5em;
+  padding: 0.4em 0.5em;
 }
 
 ul#links li.current{
