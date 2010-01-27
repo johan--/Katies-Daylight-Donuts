@@ -14,9 +14,8 @@ class User < ActiveRecord::Base
   end
   
   def reset_password!
-    new_password = digest(self.email + Time.now.to_s)
+    new_password = digest(self.email + Time.now.to_s).slice(0,10)
     self.password = self.password_confirmation = new_password
-    UserNotifier.deliver_password(self,new_password)
     save
   end
   
