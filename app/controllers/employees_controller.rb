@@ -20,7 +20,7 @@ class EmployeesController < ApplicationController
   
   def create
     @employee = Employee.new(params[:employee])
-    @employee.positions << build_positions!
+    @employee.positions << build_positions! if params[:position_names]
     if @employee.save
       flash[:notice] = "Successfully created employee."
       redirect_to @employee
@@ -65,7 +65,6 @@ class EmployeesController < ApplicationController
   private
   
   def build_positions!
-    return unless params[:position_names]
     positions = []
     positions = Position.find(params[:position_ids]) if params.has_key?(:position_ids)
     params[:position_names].each do |name|

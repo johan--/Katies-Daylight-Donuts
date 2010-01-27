@@ -33,6 +33,7 @@ class Employee < ActiveRecord::Base
   end
   
   def average_hours
+    return 0 if lifetime_hours == 0
     (lifetime_hours / hours.clocked_out.size)
   end
   
