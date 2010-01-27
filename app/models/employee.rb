@@ -26,6 +26,16 @@ class Employee < ActiveRecord::Base
     clockin_times
   end
   
+  def lifetime_hours
+    hours.clocked_out.inject([]) do |collection, record|
+      collection << calculate_hours(record.starts_at,record.ends_at)
+    end.sum
+  end
+  
+  def average_hours
+    (lifetime_hours / hours.clocked_out.size)
+  end
+  
   def self.paginate_by_creation(params = {})
     paginate :all,
       :sort_key => params[:sort_key] || 'created_at',
@@ -76,5 +86,9 @@ class Employee < ActiveRecord::Base
     else
       return clockin_times.clocked_in[0].update_attribute(:ends_at,Time.zone.now)
     end
+  end
+  
+  def calculate_hours(start, ends)
+    ( (ends - start) / 3600 ).round(1)
   end
 end

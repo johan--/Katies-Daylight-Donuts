@@ -36,7 +36,7 @@ class ScreenCalculation
       if count < 25
         count = 25
       end
-      @results << [item.name, (count.to_f / item.number_per_screen.to_f)]
+      @results << [item.name, (count / item.number_per_screen).ceil]
     end
     @results
   end

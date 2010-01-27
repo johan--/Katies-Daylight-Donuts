@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   auto_complete_for :item, :name
   
   def index
-    @items = Item.all
+    @items = Item.all(:order => "available desc")
   end
   
   def show

@@ -17,8 +17,8 @@
       <td><%= item.available? ? icon("tick-circle-frame") : icon("slash") %></td>
       <td><%=h item.name %></td>
       <td><%=h item.item_type %></td>
-      <td><%=h item.price %></td>
-      <td><%= item.weight %> lbs.</td>
+      <td><%= number_to_currency item.price %></td>
+      <td><%= item.weight %> ozs.</td>
       <td style="text-align: right;"><%= item.number_per_screen %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), item %></td>
       <td><%= link_to icon("pencil-small"), edit_item_path(item) %></td>

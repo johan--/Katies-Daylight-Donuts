@@ -2,20 +2,30 @@
 
 
 <% @deliveries.group_by{|d| d.created_at.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
-  <strong><%= icon "calendar-day" %> <%= created %></strong>
   <% deliveries.group_by{|d| d.customer }.each do |customer, deliveries| %>
-  <h3><%= customer.name %></h3>
-  <ul>
+    <div class="span-16" style="margin: 1em 0;padding: 1em 0.6em; background: #eee; border: 1px solid #aaa">
+      <strong>
+        <%= customer.name %>
+        <%= icon "calendar-day" %> <%= created %>
+      </strong>
+    </div>
     <% deliveries.each do |delivery| %>
-      <li style="padding: 0.2em; background: #eee; margin-top: 0.6em;">
-      <p><%= delivery.location.full_address %></p>
-      <%= delivery.delivery_time %><br />
-        <%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %>
-        | <%= link_to icon("pencil-small"), edit_delivery_path(delivery) %> 
-        | <%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %>  
-      </li>
+      <table>
+        <tr>
+          <th>Address</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td><%= delivery.location.to_google %></td>
+          <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>
+          <td><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
+          <td><%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %></td>
+        </tr>
+      </table>
     <% end %>
-  </ul>
+
   <% end %>
 <% end %>
 
@@ -29,15 +39,7 @@
 
 <% content_for :sidebar do %>
   <%= button "Add Delivery", new_delivery_path %>
-  <h2>Recent Deliveries</h2>
-  <ol>
-    <% Delivery.recent.group_by{|d| d.customer }.each do |customer, deliveries| %>
-      <li class="sidebar">
-      <strong><%= icon("box-label") %> <%= customer.name %></strong><br />
-      <% deliveries.each do |delivery| %>
-        <%= delivery.location.full_address %>, <%= delivery.delivery_time %><br /><br />
-      <% end %>
-      </li>
-    <% end %>
-  </ol>
+  <h2>Deliveries</h2>
+  (<%= Delivery.pending.count %>) <%= link_to "Pending Deliveries", pending_deliveries_path %><br />
+  (<%= Delivery.delivered.count %>) <%= link_to "Delivered Deliveries", delivered_deliveries_path %>
 <% end %>
