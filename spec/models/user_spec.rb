@@ -22,7 +22,33 @@ describe User do
   
   it "should require username" do
     user = User.create(@attributes.except(:username))
-    user.errors.on(:username).should == ["is too short (minimum is 3 characters)", "should use only letters, numbers, spaces, and .-_@ please.", "can't be blank"]
+    user.errors.on(:username).should == ["is too short (minimum is 3 characters)", "should use only letters, numbers, spaces, and .-_@ please.", "can't be blank","Username can only be letters and/or numbers"]
+  end
+  
+  it "should be invalid with an invalid username" do
+    attributes = @attributes.dup
+    attributes[:username] = "-4Abcde4321"  
+    User.new(attributes).valid?.should == false
+  end
+  
+  it "should be valid with a valid username" do
+    attributes = @attributes.dup
+    attributes[:username] = "userme420"  
+    User.new(attributes).valid?.should == true
+  end
+  
+  it "should find a user by email" do
+    user = User.create(@attributes)
+    User.with_username_or_email(@attributes[:email]).should == user
+  end
+  
+  it "should find a user by username" do
+    user = User.create(@attributes)
+    User.with_username_or_email(@attributes[:username]).should == user
+  end
+  
+  it "should return username for to_param" do
+    User.new(:username => "foo").to_param.should == "foo"
   end
   
 end
