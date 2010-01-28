@@ -2,10 +2,7 @@
   <% fields_for line_item do |builder| %>
   <tr style="background: #D7D7D7; padding: 1em;" id="<%= line_item.id %>">
     <td>  
-      <%= builder.collection_select :item_id, Item.all, :name, :id %>
-    </td>
-    <td>
-      <%= builder.text_field :item_type %>
+      <%= builder.collection_select :item_id, Item.available, :name, :id %>
     </td>
     <td>
       <%= builder.text_field :quantity %>

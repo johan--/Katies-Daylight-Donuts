@@ -1,41 +1,11 @@
-<% title "Delivery" %>
+<% title "Delivery for #{@delivery.customer.name}" %>
 
-<p>
-  <strong>Customer:</strong>
-  <%=h @delivery.customer.name %>
-</p>
-<p>
-  <strong>Status:</strong>
-  <%=h @delivery.state.titleize %>
-</p>
-
-<p>
-  <strong>Driver:</strong>
-  <%=h @delivery.employee.fullname %>
-</p>
-
-<h2>Items</h2>
-
-<% unless @delivery.items.empty? %>
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Price</th>
-  </tr>
-<% for item in @delivery.items %>
-  <tr>
-    <td><%= item.name %></td>
-    <td><%= number_to_currency item.price %></td>
-  </tr>
-<% end %>
-</table>
+<% content_for :head do %>
+  <%= GMap.header(:with_vml => false, :host => request.host) %>
+  <%= @map.to_html %>
 <% end %>
 
-<p>
-  <%= link_to "Edit", edit_delivery_path(@delivery) %> |
-  <%= link_to icon("cross-circle-frame"), @delivery, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", deliveries_path %>
-</p>
+<%= @map.div(:width => 600, :height => 500) %>
 
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) %>
@@ -47,4 +17,58 @@
       <%= render "buy_backs" %>
     <% end %>
   <% end # if @delivery.delivered? %>
+  <p>
+    <strong>Created:</strong><br />
+    <%= @delivery.created_at.strftime("%B %d, %Y at %H:%m %p") %>
+  </p>
+  
+  <p>
+    <strong>Customer:</strong><br />
+    <%=h @delivery.customer.name %>
+  </p>
+  <p>
+    <strong>Location:</strong><br />
+    <%= @delivery.location.full_address %>
+  </p>
+  <p>
+    <strong>Status:</strong><br />
+    <%=h @delivery.state.titleize %>
+  </p>
+
+  <p>
+    <strong>Driver:</strong><br />
+    <%=h @delivery.employee.fullname %>
+  </p>
+  
+  <% unless @delivery.items.empty? %>
+  <h2>Items</h2>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+  <% for line_item in @delivery.line_items %>
+    <tr>
+      <td><%= line_item.item.name %></td>
+      <td><%= line_item.quantity %></td>
+      <td><%= number_to_currency line_item.item.price %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td colspan="3" style="text-align: right;">
+      <strong>Total:</strong> <%= number_to_currency(@delivery.total) %>
+    </td>
+  </tr>
+  </table>
+  <% end %>
+  
+  
+  <p>
+    <%= link_to "Edit", edit_delivery_path(@delivery) %> |
+    <%= link_to icon("cross-circle-frame"), @delivery, :confirm => 'Are you sure?', :method => :delete %> |
+    <%= link_to "View All", deliveries_path %>
+  </p>
+  
 <% end %>

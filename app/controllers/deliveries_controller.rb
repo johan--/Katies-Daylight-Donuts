@@ -42,14 +42,31 @@ class DeliveriesController < ApplicationController
   
   def show
     @delivery = Delivery.find(params[:id])
+    @map = GMap.new("map")
+    @map.control_init(:large_map => true,:map_type => true)
+    @map.center_zoom_init(@delivery.location.geocode_array, 11)
+    @map.icon_global_init(GIcon.new(:image => "/images/daylight_donuts_gmarker.png",
+        :shadow => "/images/daylight_donuts_gmarker.png",
+        :shadow_size => GSize.new(50,28),
+        :icon_anchor => GPoint.new(7,7),
+        :info_window_anchor => GPoint.new(9,2)), "daylight_donuts_icon")
+    icon = Variable.new("daylight_donuts_icon")
+    location_marker = GMarker.new(@delivery.location.geocode_array,
+      :title => "#{@delivery.location.customer.name}",
+      :info_window => "#{@delivery.location.full_address} <br />#{@delivery.location.phone}",
+      :icon => icon)
+     @map.overlay_init location_marker
   end
   
   def new
     @delivery = Delivery.new
+    @delivery.add_items
   end
   
   def create
+    line_items = params[:delivery].delete(:line_items)
     @delivery = Delivery.new(params[:delivery])
+    line_items.each{ |l| @delivery.line_items.build(l) }
     if @delivery.save
       flash[:notice] = "Successfully created delivery."
       redirect_to @delivery
@@ -64,7 +81,8 @@ class DeliveriesController < ApplicationController
   
   def update
     @delivery = Delivery.find(params[:id])
-    if @delivery.update_attributes(params[:delivery])
+    line_items = params[:delivery].delete(:line_items)
+    if @delivery.update_attributes(params[:delivery]) && @delivery.update_line_items(line_items)
       flash[:notice] = "Successfully updated delivery."
       redirect_to @delivery
     else

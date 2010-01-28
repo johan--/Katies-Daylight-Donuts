@@ -141,6 +141,10 @@ ul#links li a{
   text-decoration: none;
 }
 
+ul.inline li{
+  display: inline;
+}
+
 div#sidebar{
   padding: 0.5em;
   margin: 1em;
@@ -263,4 +267,8 @@ li.sidebar{
   border: 1px solid #aaa; 
   padding: 0.5em; 
   margin: 0.8em 0;
+}
+
+input.price{
+  text-align: right;
 }

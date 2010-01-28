@@ -13,6 +13,14 @@ class Location < ActiveRecord::Base
   
   acts_as_mappable
   
+  def self.grouped_options
+    all(:include => :customer).group_by{ |location| 
+      location.customer 
+    }.collect do |customer, locations| 
+      [customer.name, locations.collect{ |l| [l.id,l.address] }.flatten]
+    end
+  end
+  
   def full_address
     <<-EOF
     #{address}<br />
@@ -23,7 +31,7 @@ class Location < ActiveRecord::Base
   
   def address_option
     return to_google unless self.customer
-    "#{self.customer.name} - " + to_google
+    to_google
   end
   
   def to_google

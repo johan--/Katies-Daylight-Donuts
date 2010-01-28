@@ -2,53 +2,51 @@
   <%= f.error_messages %>
   <p>
     <%= f.label :delivery_date %><br />
-    <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now) %>
+    <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now), :value => Time.now.strftime("%B %d, %Y %I:%m %p") %>
   </p>
   <p>
     <%= f.label :location_id %><br />
     <% if Customer.count > 0 %>
-      <%= f.collection_select :location_id, Location.all(:include => :customer), :id, :address_option %>
+      <%= select_tag :"delivery[location_id]", option_groups_from_collection_for_select(Customer.all, :locations, :name, :id, :to_google) %>
     <% end %>
   </p>
   <% if Employee.drivers.size > 0 %>
   <p>
-    <%= f.label :employee_id %><br />
+    <%= f.label :employee_id, "Driver" %><br />
     <%= f.collection_select :employee_id, Employee.drivers, :id, :fullname %>
   </p>
   <% end %>
   <br />
-  <table id="items_table" style="display: <%= @delivery.items.empty? ? 'none' : '' %>">
-    <thead>
+  
+  <table style="width: 100%; ">
     <tr>
       <th>Name</th>
       <th>Type</th>
       <th>Quantity</th>
       <th>Price</th>
+      <th>&nbsp;</th>
     </tr>
-    </thead>
-    <tbody id="items">
-      <%= render :partial => "line_item", :collection => @delivery.line_items %>
-      <tr>
-      </tr>
-    </tbody>
+    
+      <% for line_item in @delivery.line_items %>
+        <% fields_for "delivery[line_items][]", line_item, :index => nil do |builder| %>
+        <tr>
+          <td><strong><%= line_item.item.name %></strong></td>
+          <td><strong><%= line_item.item.item_type %></strong></td>
+          <td align="right"><%= builder.text_field :quantity, :value => line_item.quantity, :size => 5 %></td>
+          <td align="right" style="text-align: right;">
+            <%= builder.text_field :price, :value => line_item.item.price, :size => 10, :class => "price" %>
+            <%= builder.hidden_field :item_id, :value => line_item.item.id %>
+          </td>
+          <td><%= link_to(icon("pencil-small"), edit_item_path(line_item.item))%></td>
+        
+        </tr>
+        <% end %>
+     <% end %>
   </table>
   <%= f.submit :save %>
   
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= delivery_action_link(@delivery, true) %>
-  <br />
-  <p>Select an item from the list and click "add item" ti add an existing item. You can also click "New item" to add a new item.</p>
-  
-  <%= collection_select :item, :id, Item.available, :id, :name %>
-  <label>QTY:</label> <%= text_field_tag :item_quantity, nil, :value => 12, :size => 3 %><br />
-  <% if !@delivery.new_record? %>
-    <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value + '&quantity='+$('item_quantity').value" %>
-  <% else %>
-    <%= button_to_function("Add Item") do |page|
-        page.insert_html(:top, :items, :partial => "line_item")
-      end %>
-  <% end %>
-  
+  <%= delivery_action_link(@delivery, true) %>  
 <% end %>

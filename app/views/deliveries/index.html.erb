@@ -12,16 +12,18 @@
     <% deliveries.each do |delivery| %>
       <table>
         <tr>
+          <th>&nbsp;</th>
           <th>Address</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
         <tr>
-          <td><%= delivery.location.to_google %></td>
-          <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>
-          <td><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
-          <td><%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %></td>
+          <td><%= delivery_action_link(delivery) %></td>
+          <td><%= link_to delivery.location.to_google, delivery %></td>
+          <td align="right"><%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>
+          <td align="right"><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
+          <td align="right"><%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %></td>
         </tr>
       </table>
     <% end %>

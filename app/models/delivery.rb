@@ -46,7 +46,21 @@ class Delivery < ActiveRecord::Base
   end
   
   def total
-    items.map(&:price).to_a.sum
+    line_items.collect{ |i| i.quantity * i.price }.sum
+  end
+  
+  def update_line_items(*args)
+    args.first.each do |line_item|
+      if existing_line_item = self.line_items.detect{ |l| l.item_id == line_item[:item_id].to_i }
+        existing_line_item.quantity = line_item[:quantity]
+        existing_line_item.price    = line_item[:price]
+        existing_line_item.save!
+      end
+    end
+  end
+  
+  def add_items
+    Item.available.each{ |item| add_item(item, 12) }
   end
   
   def add_item(item, quantity)
