@@ -12,7 +12,8 @@
   </p>
   <p>
     <%= f.submit "Submit" %> 
-    <%= link_to_function("Forgot password?") do |page|
+    <%= link_to "Forgot Password", password_resets_url %>
+    <%#= link_to_function("Forgot password?") do |page|
       page.show("forgot_password_form")
       page.hide("login_form")
     end %>

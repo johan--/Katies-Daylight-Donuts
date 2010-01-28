@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :password_resets
+
   map.resources :clockin_times
 
   map.resources :items, :collection => {

@@ -2,8 +2,8 @@ class UserObserver < ActiveRecord::Observer
   def before_update(user)
     
     # Deliver the forgotten password
-    if user.crypted_password_changed?
-      UserNotifier.deliver_password(user, user.password)
+    if user.perishable_token_changed?
+      UserNotifier.deliver_password(user)
     end
     
   end
