@@ -1,26 +1,30 @@
 <% form_for @user do |f| %>
   <%= f.error_messages %>
+  
+  <% if @user.new_record? %>
   <p>
-    <%= f.label :username %><br />
-    <%= f.text_field :username, :readonly => !@user.new_record? %>
+    <%= icon("person") %><%= f.label :username, nil, {:class => "with-icon"} %><br />
+    <%= f.text_field :username %>
   </p>
+  <% end %>
+  
   <p>
-    <%= f.label :email %><br />
+    <%= f.label :email, nil, {:class => "with-icon"} %><br />
    <%= icon "mail" %> <%= f.text_field :email %>
   </p>
   <p>
-    <%= f.label :time_zone %><br />
+    <%= f.label :time_zone, nil, {:class => "with-icon"} %><br />
     <%= icon "clock-frame" %>  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
   </p>
   <p>
     <%= f.check_box :api_enabled %> <%= f.label :api_enabled %>
   </p>
   <p>
-    <%= f.label :password %><br />
+    <%= f.label :password, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password %>
   </p>
   <p>
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password_confirmation %>
   </p>
   <p><%= f.submit "Submit" %></p>

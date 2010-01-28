@@ -17,7 +17,7 @@
         <% if current_user %>
         <li class="<%= current "employees" %>"><%= link_to "#{icon("users")} Employees",  employees_path %></li>
         <li class="<%= current "customers" %>"><%= link_to "#{icon("user-business-boss")} Customers",  customers_path %></li>
-        <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} Deliveries", deliveries_path %></li>
+        <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} Deliveries", pending_deliveries_path %></li>
         <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
         <li class="<%= current "users" %>"><%= link_to "My Account", edit_user_path(current_user.record) %></li>
         <li class="<%= current "locations" %>">

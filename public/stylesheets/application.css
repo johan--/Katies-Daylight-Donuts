@@ -272,3 +272,7 @@ li.sidebar{
 input.price{
   text-align: right;
 }
+
+label.with-icon{
+  margin-left: 24px;
+}
