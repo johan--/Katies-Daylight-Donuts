@@ -45,6 +45,10 @@
   <label>QTY:</label> <%= text_field_tag :item_quantity, nil, :value => 12, :size => 3 %><br />
   <% if !@delivery.new_record? %>
     <%= button_to_remote "Add Item", :url => add_item_delivery_path(@delivery), :with => "'item_id=' + $('item_id').value + '&quantity='+$('item_quantity').value" %>
+  <% else %>
+    <%= button_to_function("Add Item") do |page|
+        page.insert_html(:top, :items, :partial => "line_item")
+      end %>
   <% end %>
   
 <% end %>

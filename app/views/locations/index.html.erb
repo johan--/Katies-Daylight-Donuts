@@ -43,9 +43,8 @@
 
 
 <% content_for :sidebar do %>
-  <%= button "Add Location", new_location_path %>
   <% if @current_user %>
-  <%= link_to image_tag("buttons/mocha-blues/add-location.png", :alt => "Add Location"), new_customer_location_path(@customer)%>
+    <%= button "Add Location", new_location_path %>
   <% else %>
     <strong>Locations</strong>
     <p>You can find Katies Daylight Donuts at any of our distributors stores.</p>
