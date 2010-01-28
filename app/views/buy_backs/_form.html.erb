@@ -1,35 +1,52 @@
 <% form_for [@delivery,@buy_back] do |f| %>
   <%= f.error_messages %>
-  <p>
-    <%= f.label :delivery_id %><br />
-    <%= f.text_field :delivery_id %>
-  </p>
+  <table style="width: 100%;">
+    <tr>
+      <th>Counts</th>
+      <th>Quantity</th>
+      <th>Price</th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.label :delivery_id %>
+      </td>
+      <td colspan="2">
+        <%= f.collection_select :delivery_id, Delivery.delivered, :id, :address %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label :raised_donut_count %><td/>
+      <td>&nbsp;</td>  
+      <td><%= f.text_field :raised_donut_count %></td>
+    </tr>
+      <p>
+        <%= f.label :cake_donut_count %><br />
+        <%= f.text_field :cake_donut_count %>
+      </p>
+      <p>
+        <%= f.label :roll_count %><br />
+        <%= f.text_field :roll_count %>
+      </p>
+      <p>
+        <%= f.label :donuthole_count %><br />
+        <%= f.text_field :donuthole_count %>
+      </p>
+    </tr>
+    <tr>
+      <td><%= f.label :tax %></td>
+      <td colspan="2" style="text-align: right;">
+        <%= f.text_field :tax %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= f.label :price %></td>
+      <td colspan="2" style="text-align: right;">
+        <%= f.text_field :price %>
+      </td>
+    </tr>
+  </table>
   <p>
     Status: <%= @buy_back.state || "New" %>
-  </p>
-  <p>
-    <%= f.label :tax %><br />
-    <%= f.text_field :tax %>
-  </p>
-  <p>
-    <%= f.label :price %><br />
-    <%= f.text_field :price %>
-  </p>
-  <p>
-    <%= f.label :raised_donut_count %><br />
-    <%= f.text_field :raised_donut_count %>
-  </p>
-  <p>
-    <%= f.label :cake_donut_count %><br />
-    <%= f.text_field :cake_donut_count %>
-  </p>
-  <p>
-    <%= f.label :roll_count %><br />
-    <%= f.text_field :roll_count %>
-  </p>
-  <p>
-    <%= f.label :donuthole_count %><br />
-    <%= f.text_field :donuthole_count %>
   </p>
   <p><%= f.submit "Submit" %></p>
 <% end %>

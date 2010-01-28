@@ -12,8 +12,6 @@ class ScreenCalculation
         data << [item, params[:item][:counts][index]]
       end
       return parse(data)
-    else
-      raise Exception, "Fuck"
     end
     []
   end
@@ -36,7 +34,7 @@ class ScreenCalculation
       if count < 25
         count = 25
       end
-      @results << [item.name, (count / item.number_per_screen).ceil]
+      @results << [item.name, (count / (item.number_per_screen || 0)).ceil]
     end
     @results
   end

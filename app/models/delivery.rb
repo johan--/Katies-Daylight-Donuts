@@ -37,6 +37,10 @@ class Delivery < ActiveRecord::Base
   named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:location,:employee]
   named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:location,:employee]
 
+  def address
+    "#{location.customer.name} ##{id} - #{location.to_google}"
+  end
+
   def delivery_time
     @delivery_time ||= created_at.strftime("%m/%d/%Y %H:%M:%S %p")
   end
