@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :home
   map.resources :password_resets
 
   map.resources :clockin_times
@@ -50,7 +51,7 @@ ActionController::Routing::Routes.draw do |map|
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
   
-  map.root :locations
+  map.root :home
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end
