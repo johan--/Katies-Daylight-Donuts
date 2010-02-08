@@ -46,20 +46,41 @@ p{
 }
 
 #flash_notice, #flash_error {
+  display: block;
   padding: 5px 8px;
   margin: 10px;
 }
 
 #flash_notice {
-  background: url("../images/icons/default/plus-shield.png") no-repeat #CFC;
+  background: url("../images/icons/default/plus-shield.png") no-repeat #CFC 0.5% 50%;
   background-position: auto left;
   padding: 0.5em 0 0 2em;
+  border: 1px solid green;
 }
 
 #flash_error {
-  border: solid 1px #C66;
-  background: url("../images/icons/default/minus-shield.png") no-repeat center left #FCC;
+  border: 1px solid red;
+  background: url("../images/icons/default/minus-shield.png") no-repeat  0.5% 50% #FCC;
   padding: 0.5em 0 0 2em;
+}
+
+.top_nav{
+  text-align: right;
+}
+
+.top_nav ul li{
+  padding: 0.1em 0.4em;
+  display: inline;
+}
+
+.top_nav ul li a{
+  color: #fff;
+  text-decoration: none;
+}
+
+.top_nav ul li a:hover, .top_nav ul li.current a{
+  color: #E3EC09;
+  text-decoration: none;
 }
 
 .fieldWithErrors {
@@ -275,4 +296,27 @@ input.price{
 
 label.with-icon{
   margin-left: 24px;
+}
+
+.debug{
+  border: 1px solid red;
+}
+
+li.username{
+  color: #fff ;
+}
+
+div.metric{
+  border: 1px solid #aaa;
+  padding: 0.4em;
+  margin: 0.5em;
+}
+
+div.metric h1{
+  background: #D4D4D4;
+  padding: 5px;
+}
+
+div.metric h1 img{
+  vertical-align: middle;
 }

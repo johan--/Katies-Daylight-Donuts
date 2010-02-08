@@ -3,7 +3,7 @@ class PasswordResetsController < ApplicationController
   
   def create
     if @user = User.find_by_email(params[:email])
-      @user.reset_perishable_token! 
+      @user.reset_perishable_token! && UserNotifier.deliver_password(@user)
       flash[:notice] = "Please check your email for instructions on resetting your password."
       redirect_to login_url
     else

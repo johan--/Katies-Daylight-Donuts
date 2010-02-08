@@ -1,0 +1,20 @@
+admin:
+  id: 1
+  name: admin
+
+employee:
+  id: 2
+  name: employee
+  
+driver:
+  id: 3
+  name: driver
+
+fryer:
+  id: 4
+  name: fryer
+  
+customer:
+  id: 5
+  name: customer
+  

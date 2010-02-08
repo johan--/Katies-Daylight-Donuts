@@ -1,6 +1,6 @@
 one:
   delivery_id: 1
-  state: MyString
+  state: pending
   tax: 9.99
   price: 9.99
   raised_donut_count: 1
@@ -10,9 +10,72 @@ one:
 
 two:
   delivery_id: 1
-  state: MyString
+  state: pending
   tax: 9.99
   price: 9.99
+  raised_donut_count: 1
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+  
+three:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 9.99
+  raised_donut_count: 1
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+  
+four:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 9.99
+  raised_donut_count: 1
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+  
+five:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 69.99
+  raised_donut_count: 1
+  created_at: <%= Time.now+(rand(3)+1).month %>
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+
+six:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 59.99
+  raised_donut_count: 1
+  created_at: <%= Time.now+(rand(3)+1).month %>
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+
+seven:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 19.99
+  raised_donut_count: 1
+  created_at: <%= Time.now+(rand(3)+1).month %>
+  cake_donut_count: 1
+  roll_count: 1
+  donuthole_count: 1
+
+eight:
+  delivery_id: 1
+  state: paid
+  tax: 9.99
+  price: 19.99
   raised_donut_count: 1
   cake_donut_count: 1
   roll_count: 1

@@ -19,7 +19,7 @@ class BuyBacksController < ApplicationController
     @buy_back = @delivery.buy_backs.new(params[:buy_back])
     if @buy_back.save
       flash[:notice] = "Successfully created buyback."
-      redirect_to @buy_back
+      redirect_to @buy_back.delivery
     else
       render :action => 'new'
     end

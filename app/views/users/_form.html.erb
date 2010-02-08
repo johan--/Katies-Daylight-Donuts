@@ -3,8 +3,8 @@
   
   <% if @user.new_record? %>
   <p>
-    <%= icon("person") %><%= f.label :username, nil, {:class => "with-icon"} %><br />
-    <%= f.text_field :username %>
+    <%= f.label :username, nil, {:class => "with-icon"} %><br />
+    <%= icon("user-silhouette") %> <%= f.text_field :username %>
   </p>
   <% end %>
   
@@ -12,13 +12,12 @@
     <%= f.label :email, nil, {:class => "with-icon"} %><br />
    <%= icon "mail" %> <%= f.text_field :email %>
   </p>
-  <p>
-    <%= f.label :time_zone, nil, {:class => "with-icon"} %><br />
-    <%= icon "clock-frame" %>  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
-  </p>
-  <p>
-    <%= f.check_box :api_enabled %> <%= f.label :api_enabled %>
-  </p>
+  
+  <% unless @user.new_record? %>
+    <p><label class="with-icon"><%= link_to_function "Change Password", %($('password_fields').show();) %></label></p>
+  <% end %>
+  
+  <fieldset id="password_fields" style="<%= @user.new_record? ? '' : 'display: none;' %>">
   <p>
     <%= f.label :password, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password %>
@@ -27,5 +26,32 @@
     <%= f.label :password_confirmation, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password_confirmation %>
   </p>
-  <p><%= f.submit "Submit" %></p>
+  </fieldset>
+  
+  <p>
+    <%= f.label :time_zone, nil, {:class => "with-icon"} %><br />
+    <%= icon "clock-frame" %>  <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones %>
+  </p>
+  
+  <% if @current_user.super? || @user.admin? %>
+  <p>
+    <h2>Roles and Permissions</h2>
+    <ul>
+    <% Role.all.each do |role| %>
+      <li><%= check_box_tag "user[roles_ids][]", role.id, @user.roles.include?(role), :disabled => (@user.super? && role.name=="admin") %> <%= role.name.titleize %>
+      <% if (@user.super? && role.name=="admin") %>  
+        <%= hidden_field_tag "user[roles_ids][]", role.id %>
+        &nbsp;&nbsp;<em>(Admin must remain admin)</em>
+      <% end %>
+      </li>
+    <% end %>
+    </ul>
+  </p>
+  <% end %>
+
+  <p>
+    <%= f.check_box :api_enabled %> <%= f.label :api_enabled %>
+  </p>
+  
+  <p><%= image_submit_tag "buttons/mocha-blues/form-save.png" %></p>
 <% end %>

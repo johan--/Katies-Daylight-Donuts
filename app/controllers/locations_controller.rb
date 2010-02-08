@@ -17,9 +17,28 @@ class LocationsController < ApplicationController
     end
   end
   
+  def presets
+    @presets = []
+    if @location = Location.find(params[:id])
+      @presets = @location.deliveries.delivered(:include => :items, :limit => 10, :order => "delivered_at asc")
+    end
+    
+    render :update do |page|
+      page.replace_html(:presets,"") # empty the list
+
+      @presets.each do |preset| # Add to the new list
+        page.insert_html(:top, :presets, :partial => "preset", :locals => {:delivery => preset})
+      end
+    end
+  end
+  
   def index
     # Only need Customer Locations
-    @customers = Customer.find(:all, :include => [:locations])
+    if params[:customer_id]
+      @customers = [Customer.find(params[:customer_id], :include => [:locations])]
+    else
+      @customers = Customer.find(:all, :include => [:locations])
+    end
   end
   
   def show

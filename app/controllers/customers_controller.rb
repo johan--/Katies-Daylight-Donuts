@@ -1,5 +1,6 @@
 class CustomersController < ApplicationController
   before_filter :login_required
+  before_filter :customer_role_required
   
   def index
     @customers = Customer.all
@@ -12,6 +13,12 @@ class CustomersController < ApplicationController
   def new
     @customer = Customer.new
     @customer.locations.build
+  end
+  
+  def signup
+    @customer = Customer.new
+    @customer.locations.build
+    render :partial => "form"
   end
   
   def create

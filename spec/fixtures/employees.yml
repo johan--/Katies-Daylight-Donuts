@@ -1,0 +1,19 @@
+one:
+  id: 1
+  firstname: Tim
+  lastname: Matheson
+  position_type: nil
+  phone: 9492945624
+  born_on: <%= Time.now-28.years %>
+  clockin_id: 420
+  state: clocked_out
+
+two:
+  id: 2
+  firstname: Klynn
+  lastname: Knoll
+  position_type: nil
+  phone: 3089400060
+  born_on: <%= Time.now-45.years %>
+  clockin_id: 421
+  state: clocked_out

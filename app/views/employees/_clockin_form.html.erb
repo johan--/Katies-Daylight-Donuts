@@ -5,4 +5,6 @@
     <%= icon "clock--arrow" %> <%= text_field_tag :employee_id, :clockin_id, :value => "", :class => "large", :size => 5 %><br />
     <%= submit_tag "Clock In" %>
   <% end %>
+  <div id="clockin_response" style="display: none;"></div>
+  <a id="clockin_notification" href="#clockin_response" rel="ibox&amp;width=200&amp;height=80">&nbsp;</a>
 </div>

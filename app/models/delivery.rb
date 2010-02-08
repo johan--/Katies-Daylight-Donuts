@@ -18,7 +18,7 @@ class Delivery < ActiveRecord::Base
   aasm_state :canceled
   
   aasm_event :deliver do
-    transitions :from => :pending, :to => :delivered
+    transitions :from => :pending, :to => :delivered, :guard => :record_delivery_time
   end
   
   aasm_event :undeliver do
@@ -86,5 +86,11 @@ class Delivery < ActiveRecord::Base
     if line_item = link_items.detect{ |li| li.item_id == item.id }
       line_items -= line_item
     end
+  end
+  
+  private
+  
+  def record_delivery_time
+    self.delivered_at = Time.now.utc
   end
 end

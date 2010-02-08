@@ -6,5 +6,8 @@ class AddUsersPasswordResetFields < ActiveRecord::Migration
   end
 
   def self.down
+    remove_column :users, :perishable_token
+    remove_index :users, :perishable_token  
+    remove_index :users, :email
   end
 end

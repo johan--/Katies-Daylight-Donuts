@@ -1,0 +1,98 @@
+--- !ruby/object:Gem::Specification 
+name: yahoo-weather
+version: !ruby/object:Gem::Version 
+  version: 1.2.0
+platform: ruby
+authors: 
+- Walter Korman
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2009-12-26 00:00:00 -06:00
+default_executable: 
+dependencies: 
+- !ruby/object:Gem::Dependency 
+  name: nokogiri
+  type: :runtime
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 1.4.1
+    version: 
+- !ruby/object:Gem::Dependency 
+  name: hoe
+  type: :development
+  version_requirement: 
+  version_requirements: !ruby/object:Gem::Requirement 
+    requirements: 
+    - - ">="
+      - !ruby/object:Gem::Version 
+        version: 2.4.0
+    version: 
+description: |
+  The yahoo-weather rubygem provides a Ruby object-oriented interface to the
+  Yahoo! Weather service described in detail at:
+  
+  http://developer.yahoo.com/weather
+
+email: shaper@fatgoose.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- CHANGELOG.rdoc
+- README.rdoc
+files: 
+- CHANGELOG.rdoc
+- examples/example.rb
+- examples/get-weather.rb
+- lib/yahoo-weather/astronomy.rb
+- lib/yahoo-weather/atmosphere.rb
+- lib/yahoo-weather/client.rb
+- lib/yahoo-weather/condition.rb
+- lib/yahoo-weather/forecast.rb
+- lib/yahoo-weather/image.rb
+- lib/yahoo-weather/location.rb
+- lib/yahoo-weather/response.rb
+- lib/yahoo-weather/units.rb
+- lib/yahoo-weather/wind.rb
+- lib/yahoo-weather.rb
+- LICENSE
+- Rakefile
+- README.rdoc
+- test/test_api.rb
+has_rdoc: true
+homepage: http://rubyforge.org/projects/yahoo-weather
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --main
+- README.rdoc
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+requirements: []
+
+rubyforge_project: yahoo-weather
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: A Ruby object-oriented interface to the Yahoo! Weather service.
+test_files: 
+- test/test_api.rb

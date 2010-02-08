@@ -1,0 +1,41 @@
+one:
+  id: 1
+  delivered: false
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now+10.minutes %>
+  location_id: 1
+  employee_id: 1
+  state: pending
+  delivered_at: nil
+  delivery_date: <%= DateTime.now %>
+  created_at: <%= DateTime.now %>
+  updated_at: <%= DateTime.now %>
+  location_id: 1
+  
+two:
+  id: 2
+  delivered: false
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now+10.minutes %>
+  location_id: 1
+  employee_id: 1
+  state: pending
+  delivered_at: nil
+  delivery_date: <%= DateTime.now %>
+  created_at: <%= DateTime.now %>
+  updated_at: <%= DateTime.now %>
+  location_id: 2
+  
+three:
+  id: 3
+  delivered: false
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now+10.minutes %>
+  location_id: 1
+  employee_id: 1
+  state: pending
+  delivered_at: nil
+  delivery_date: <%= DateTime.now %>
+  created_at: <%= DateTime.now %>
+  updated_at: <%= DateTime.now %>
+  location_id: 3

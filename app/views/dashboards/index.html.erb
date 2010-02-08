@@ -1,0 +1,18 @@
+<% title "Dashboard" %>
+
+<% content_for :toolbar do %>
+  Weather: <%= weather_icon(@weather.condition) %> <%= @weather.condition.text %> and <%= @weather.condition.temp %> <%= @weather.units.temperature %>
+<% end %>
+
+<div class="span-24">
+  <div class="span-11 metric">
+    <h1><%= icon "money" %> Buybacks</h1>
+    <%= image_tag BuyBack.metric_chart.to_url %>
+  </div>
+  
+  <div class="span-11 metric">
+    <h1><%= icon "flask" %> Items</h1>
+    <%= image_tag Item.metric_chart.to_url %>
+  </div>
+</div>
+

@@ -1,0 +1,13 @@
+one:
+  id: 1
+  username: admin
+  email: me@timmatheson.com
+  password_salt: n8pXmZsOiq-6LT-Pm87i
+  crypted_password: 9c3e125d2e64ca95541e28779fa7e87a855449f0ee3076dd6ee2307c20462c4dae00e41804b6a7b6bbb4004957708d6bdd55b9e0a59205468fe04356ba723261 # longjohn
+
+two:
+  id: 2
+  username: tim
+  email: timmy.matheson@gmail.com
+  password_salt: n8pXmZsOiq-6LT-Pm87i
+  crypted_password: 9c3e125d2e64ca95541e28779fa7e87a855449f0ee3076dd6ee2307c20462c4dae00e41804b6a7b6bbb4004957708d6bdd55b9e0a59205468fe04356ba723261 # longjohn

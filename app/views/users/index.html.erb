@@ -1,0 +1,26 @@
+<% title "Users" %>
+
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Roles</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <% for user in @users %>
+  <tr>
+    <td><%= link_to h(user.username), user %></td>
+    <td><%= mail_to h(user.email), h(user.email) %></td>
+    <td><%= user.roles.map(&:name).join(", ") %></td>
+    <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), user %></td>
+    <td><%= link_to icon("pencil-small"), edit_user_path(user) %></td>
+    <td><%= link_to icon("cross-circle-frame"), user, :method => :delete, :confirm => "Are you sure you want to delete this user?" %></td>
+  </tr>
+  <% end %>
+</table>
+
+<% content_for :sidebar do %>
+  <%= button "Add User", new_user_path %>
+<% end %>

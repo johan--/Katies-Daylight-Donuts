@@ -7,9 +7,30 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_timezone
   # Scrub sensitive parameters from your log
-  filter_parameter_logging :password
+  # filter_parameter_logging :password
 
-  private
+  protected
+
+  def employee_role_required
+    unless @current_user.admin? || @current_user.employee?
+      flash[:error] = "Employee role required." 
+      redirect_to user_url(@current_user) 
+    end
+  end
+
+  def customer_role_required
+    unless @current_user.admin? || @current_user.customer?
+      flash[:error] = "Customer role required." 
+      redirect_to user_url(@current_user)
+    end
+  end
+
+  def admin_role_required
+    unless @current_user.admin?
+      flash[:error] = "Admin role required." 
+      redirect_to user_url(@current_user)
+    end
+  end
   
   def set_timezone
     Time.zone = current_user.time_zone if current_user_session
@@ -22,7 +43,7 @@ class ApplicationController < ActionController::Base
   
   def current_user
     return @current_user if defined?(@current_user)
-    @current_user = @current_user_session && @current_user_session.record
+    @current_user = current_user_session && current_user_session.record
   end
   
   def login_required

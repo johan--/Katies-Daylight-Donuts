@@ -1,0 +1,3 @@
+<li id="preset_<%= delivery.id %>">
+  #<%= delivery.id %> <%= link_to(distance_of_time_in_words(Time.zone.now,delivery.delivered_at)) if delivery.delivered? %> ago.
+</li>

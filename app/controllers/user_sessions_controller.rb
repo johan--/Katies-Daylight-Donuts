@@ -7,7 +7,11 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:notice] = "Successfully logged in."
-      redirect_to root_url
+      if current_user and current_user.has_roles?(:admin, :employee)
+        redirect_to deliveries_url
+      elsif current_user
+        redirect_to edit_user_path(current_user)
+      end
     else
       render :action => 'new'
     end
@@ -15,7 +19,9 @@ class UserSessionsController < ApplicationController
   
   def destroy
     @user_session = UserSession.find
-    @user_session.destroy
+    if @user_session
+      @user_session.destroy
+    end
     flash[:notice] = "Successfully logged out."
     redirect_to login_path
   end

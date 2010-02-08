@@ -1,0 +1,29 @@
+one:
+  id: 1
+  name: "Pump and Pantry"
+  website: "http://example.com"
+  
+two:
+  id: 2
+  name: "Conestoga Mall"
+  website: "http://example.com"
+  
+three:
+  id: 3
+  name: "Sapp Bros."
+  website: "http://example.com"
+  
+four:
+  id: 4
+  name: "Flying J Truckstop"
+  website: "http://example.com"
+  
+five:
+  id: 5
+  name: "Diamond Shamrock"
+  website: "http://example.com"
+  
+six:
+  id: 6
+  name: "Conoco"
+  website: "http://example.com"

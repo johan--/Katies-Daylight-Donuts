@@ -11,7 +11,7 @@
   </tr>
   <% for customer in @customers %>
     <tr>
-      <td><%=h customer.name %></td>
+      <td><%= link_to h(customer.name), customer_url(customer) %></td>
       <td><%= link_to(h(customer.website),customer.website, :target => "_blank") %></td>
       <td><%= link_to "Locations", customer_locations_path(customer) %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), customer %></td>
@@ -20,8 +20,6 @@
     </tr>
   <% end %>
 </table>
-
-<p><%= link_to "New Customer", new_customer_path %></p>
 
 <% content_for :sidebar do %>
   <%= button "Add Customer", new_customer_path %>

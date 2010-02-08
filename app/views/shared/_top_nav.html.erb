@@ -1,0 +1,16 @@
+<ul>
+  <% if current_user %>
+  <li class="username">
+    ( <%= @current_user.username %> )
+  </li>
+  <li class="<%= current "settings" %>">
+    <%= link_to "Settings", settings_url %>
+  </li>
+  <li class="<%= current "users" %>">
+    <%= link_to "My Account", edit_user_path(current_user.record) %>
+  </li>
+  <li class="<%= current "user_sessions" %>">
+    <%= link_to "Logout", logout_url %>
+  </li>
+  <% end %>
+</ul>

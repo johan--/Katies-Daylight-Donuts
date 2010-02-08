@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :dashboards
+
   map.resources :home
   map.resources :password_resets
 
@@ -16,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :positions
 
   map.resources :locations, :has_many => [:deliveries, :customers, :settings], :collection => {
+    :presets => :post,
     :search => :get, 
     :auto_complete_for_location_address => :get, 
     :auto_complete_for_location_zipcode => :get, 
@@ -46,12 +49,12 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :user_sessions
   map.resources :users
   
-  map.forgot_password "forgot_password", :controller => "user_sessions", :action => "forgot_password"
+  map.customer_signup "/customers/signup", :controller => "customers", :action => "new"
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
   
-  map.root :home
+  map.root :dashboards
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

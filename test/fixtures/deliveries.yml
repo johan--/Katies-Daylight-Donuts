@@ -1,7 +1,0 @@
-one:
-  customer_id: 1
-  delivered: false
-
-two:
-  customer_id: 1
-  delivered: false

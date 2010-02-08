@@ -7,3 +7,9 @@
   <%= link_to "View All", deliveries_path %>
 </p>
 
+<% content_for :sidebar do %>
+  <div class="side content">
+    <%= render :partial => "presets" %>
+  </div>
+<% end %>
+

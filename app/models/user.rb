@@ -1,14 +1,46 @@
 class User < ActiveRecord::Base  
   require 'digest/md5' unless defined?(Digest::MD5)
+
+  attr_accessor :roles_ids
   
   acts_as_authentic
-  
+    
   validates_presence_of :email
   validates_presence_of :username
   validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
   validates_format_of   :username, :with => /[A-Za-z0-9]/, :message => "Username can only be letters and/or numbers"
   
   before_validation :generate_api_key
+  
+  has_and_belongs_to_many :roles
+  
+  perishable_token_valid_for = 2.hours
+  
+  after_save :update_roles
+  
+  def has_role?(role)
+    roles.find_by_name(role.to_s)
+  end
+  
+  def has_roles?(*args)
+    self.roles.collect{ |role| args.include?(role.name.to_sym) }.all?
+  end
+  
+  def super?
+    self.username == "admin"
+  end
+  
+  def admin?
+    has_role?(:admin)
+  end
+  
+  def employee?
+    has_role?(:employee)
+  end
+  
+  def customer?
+    has_role?(:customer)
+  end
 
   def to_param
     username
@@ -25,6 +57,11 @@ class User < ActiveRecord::Base
   end
   
   private
+
+  def update_roles
+    return if self.roles_ids.nil? || self.roles_ids.empty? 
+    self.roles = Role.find(self.roles_ids)
+  end
   
   def digest(value)
     Digest::MD5.hexdigest(value)

@@ -7,7 +7,7 @@
   <p>
     <%= f.label :location_id %><br />
     <% if Customer.count > 0 %>
-      <%= select_tag :"delivery[location_id]", option_groups_from_collection_for_select(Customer.all, :locations, :name, :id, :to_google) %>
+      <%= select_tag :"delivery[location_id]", "<option value=''>-- Choose a location --</option>" << option_groups_from_collection_for_select(Customer.with_locations, :locations, :name, :id, :to_google) %>
     <% end %>
   </p>
   <% if Employee.drivers.size > 0 %>
@@ -50,3 +50,17 @@
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) %>  
 <% end %>
+
+<%= observe_field :delivery_location_id, :url => { :controller => "locations", :action => "presets", :format => :js}, :with => 'id' %>
+
+
+<div id="no_drivers_alert" style="display: none;">
+  Please assign atleast one <%= link_to 'Employee', employees_path %> as a driver first. Then come back and create the delivery.
+</div>
+<a id="no_drivers_alert_link" href="#no_drivers_alert" rel="ibox&amp;width=200&amp;height=80">&nbsp;</a>
+
+<script type="text/javascript" charset="utf-8">
+  document.observe("dom:loaded", function() {
+    $('no_drivers_alert_link').onclick();
+  });
+</script>

@@ -25,6 +25,7 @@ class ClockinTimesController < ApplicationController
     end
     render :update do |page|
       page.replace_html(:clockin_response, msg)
+      page << "$('clockin_notification').onclick();"
     end
   end
 end

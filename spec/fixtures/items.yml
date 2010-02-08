@@ -1,0 +1,26 @@
+one:
+  id: 1
+  name: "Cake Donut"
+  item_type: "raised"
+  price: 0.23
+  available: true
+  number_per_screen: 25
+  weight: 1 # oz
+
+two:
+  id: 2
+  name: "Raised Donut"
+  item_type: "raised"
+  price: 0.36
+  available: true
+  number_per_screen: 25
+  weight: 1 # oz
+  
+three:
+  id: 3
+  name: "Long John"
+  item_type: "raised"
+  price: 0.45
+  available: true
+  number_per_screen: 27
+  weight: 1 # oz

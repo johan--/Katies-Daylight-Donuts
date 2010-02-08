@@ -2,6 +2,7 @@ class SettingsController < ApplicationController
   before_filter :login_required
   before_filter :load_setting_record
   before_filter :load_setting, :except => [:edit, :update]
+  before_filter :admin_role_required
   
   def update
     if @setting.update_attributes(params[:setting])

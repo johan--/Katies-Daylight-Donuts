@@ -13,15 +13,5 @@
   <p>
     <%= f.submit "Submit" %> 
     <%= link_to "Forgot Password", password_resets_url %>
-    <%#= link_to_function("Forgot password?") do |page|
-      page.show("forgot_password_form")
-      page.hide("login_form")
-    end %>
   </p>
-<% end %>
-
-<% form_remote_for(@user_session, :url => forgot_password_url, :html => {:id => "forgot_password_form", :style => "display: none;"}) do |f| %>
-  <p id="forgot_password_form_error"></p>
-  <%= f.label :username, "Login or Email" %> <%= f.text_field :username %>
-  <%= f.submit :submit %>
 <% end %>

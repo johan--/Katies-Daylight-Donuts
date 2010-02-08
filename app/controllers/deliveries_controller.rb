@@ -2,6 +2,7 @@ class DeliveriesController < ApplicationController
   before_filter :login_required, :except => [:index]
   before_filter :current_user_session
   before_filter :find_delivery_with_item, :only => [:add_item, :remove_item]
+  before_filter :employee_role_required, :only => [:index,:pending,:delivered]
 
   auto_complete_for :item, :name
   auto_complete_for :item, :item_type
@@ -164,4 +165,5 @@ class DeliveriesController < ApplicationController
     @delivery = Delivery.find(params[:id])
     @item = Item.available.find(params[:item_id])
   end
+  
 end

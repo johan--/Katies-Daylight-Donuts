@@ -1,9 +1,0 @@
-one:
-  name: MyString
-  time_zone: MyString
-  email: MyString
-
-two:
-  name: MyString
-  time_zone: MyString
-  email: MyString
