@@ -6,7 +6,6 @@ one:
   location_id: 1
   employee_id: 1
   state: pending
-  delivered_at: nil
   delivery_date: <%= DateTime.now %>
   created_at: <%= DateTime.now %>
   updated_at: <%= DateTime.now %>
@@ -20,7 +19,6 @@ two:
   location_id: 1
   employee_id: 1
   state: pending
-  delivered_at: nil
   delivery_date: <%= DateTime.now %>
   created_at: <%= DateTime.now %>
   updated_at: <%= DateTime.now %>
@@ -34,7 +32,6 @@ three:
   location_id: 1
   employee_id: 1
   state: pending
-  delivered_at: nil
   delivery_date: <%= DateTime.now %>
   created_at: <%= DateTime.now %>
   updated_at: <%= DateTime.now %>
