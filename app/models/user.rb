@@ -56,6 +56,17 @@ class User < ActiveRecord::Base
     save
   end
   
+  # Creates a user from a customer,
+  # Called on the after_create callback of Customer
+  def self.create_from_customer(customer)
+    create(
+      :username => "#{customer.to_param}",
+      :password => "katies",
+      :password_confirmation => "katies",
+      :email => customer.email
+    )
+  end
+  
   private
 
   def update_roles

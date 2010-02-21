@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100129085017) do
+ActiveRecord::Schema.define(:version => 20100221204026) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax",                :limit => 10, :precision => 10, :scale => 0
-    t.integer  "price",              :limit => 10, :precision => 10, :scale => 0
+    t.integer  "tax",                :limit => 10
+    t.integer  "price",              :limit => 10
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(:version => 20100129085017) do
     t.string   "website"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "email"
   end
 
   create_table "deliveries", :force => true do |t|
@@ -127,9 +128,11 @@ ActiveRecord::Schema.define(:version => 20100129085017) do
     t.string "name"
   end
 
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
+  create_table "roles_users", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "settings", :force => true do |t|

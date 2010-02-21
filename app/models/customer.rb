@@ -4,6 +4,8 @@ class Customer < ActiveRecord::Base
 
   named_scope :with_locations, :include => :locations, :conditions => 'locations.id is not null'
 
+  after_create :create_user_for_customer
+
   def to_param
     "#{id}-#{name.gsub(/[^a-z0-9]+/i, '-')}"
   end
@@ -15,4 +17,11 @@ class Customer < ActiveRecord::Base
   def self.delivered_deliveries
     deliveries.delivered
   end
+  
+  private
+  
+  def create_user_for_customer
+    User.create_from_customer(self)
+  end
+
 end
