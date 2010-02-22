@@ -1,9 +1,9 @@
-<li style="background: #D7D7D7; padding: 1em; margin: 1em;">
+<li style="background: #D7D7D7; padding: 1em;">
+  <% fields_for location_record do |location| %>
 <fieldset>
 <legend><strong>Location</strong></legend>
-<% fields_for location_record do |location| %>
   <%= location.error_messages %>
   <%= render :partial => "location", :locals => {:f => location} %>
-<% end %>
 </fieldset>
+<% end %>
 </li>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100221204026) do
+ActiveRecord::Schema.define(:version => 20100221235004) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
@@ -155,6 +155,7 @@ ActiveRecord::Schema.define(:version => 20100221204026) do
     t.string   "api_key"
     t.boolean  "api_enabled",       :default => false
     t.string   "perishable_token",  :default => "",                           :null => false
+    t.string   "user_type"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

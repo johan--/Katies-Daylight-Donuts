@@ -9,7 +9,6 @@ class Location < ActiveRecord::Base
   validates_presence_of :address, :city, :state, :country, :zipcode
   validates_numericality_of :zipcode
   validates_length_of :state, :is => 2
-  validates_uniqueness_of :lng, :lat
   
   acts_as_mappable
   

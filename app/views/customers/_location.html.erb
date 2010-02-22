@@ -8,21 +8,26 @@
   <%= f.text_field :address %>
 </p>
 <p>
-  <%= f.label :city %><br />
-  <%= f.text_field :city %>
+  <table style="width: 300px;">
+    <tr>
+      <td><%= f.label :city %></td>
+      <td><%= f.label :state %></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :city, :size => 12 %></td>
+      <td><%= f.select :state, State.list, {:selected => "NE"} %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :zipcode %></td>
+      <td><%= f.label :country %></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :zipcode, :size => 8 %></td>
+      <td><%= f.select :country, Country.list, {:selected => "United States"}, {:style => "width: 100px"} %></td>
+    </tr>
+  </table>
 </p>
-<p>
-  <%= f.label :state %><br />
-  <%= f.select :state, State.list, {:selected => "NE" } %>
-</p>
-<p>
-  <%= f.label :country %><br />
-  <%= f.select :country, Country.list, {:selected => "United States"} %>
-</p>
-<p>
-  <%= f.label :zipcode %><br />
-  <%= f.text_field :zipcode %>
-</p>
+
 <p>
   <%= f.label :phone %><br />
   <%= f.text_field :phone %>

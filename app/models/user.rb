@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   
   acts_as_authentic
     
-  validates_presence_of :email
+  validates_presence_of :email, :unless => Proc.new{ |u| u.customer? }
   validates_presence_of :username
   validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
   validates_format_of   :username, :with => /[A-Za-z0-9]/, :message => "Username can only be letters and/or numbers"
@@ -59,12 +59,19 @@ class User < ActiveRecord::Base
   # Creates a user from a customer,
   # Called on the after_create callback of Customer
   def self.create_from_customer(customer)
-    create(
+    user = create!(
       :username => "#{customer.to_param}",
       :password => "katies",
       :password_confirmation => "katies",
+      :user_type => customer.class.to_s,
       :email => customer.email
     )
+    user.roles << Role.customer
+    user
+  end
+  
+  def customer?
+    user_type == "Customer"
   end
   
   private
