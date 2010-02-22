@@ -7,8 +7,4 @@ describe Customer do
     @customer = customers(:pump_and_pantry)
   end
   
-  it "should create a user record after create" do
-    User.expects(:create).once
-    customer = Customer.create(:name => "Foo Company")
-  end
 end

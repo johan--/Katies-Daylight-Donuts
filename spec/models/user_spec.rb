@@ -10,16 +10,6 @@ describe User do
     }
   end
   
-  it "should not require an email when customer" do
-    user = User.create(@attributes.merge({:user_type => "Customer"}))
-    user.errors.on(:email).should be_nil
-  end
-  
-  it "should require an email when not a customer" do
-    user = User.create(@attributes.merge(:email => nil))
-    user.errors.on(:email).should include("can't be blank")
-  end
-  
   it "should require api_key when api is enabled" do
     User.create(@attributes.merge({:api_enabled => true})).api_key.should_not be_nil
   end

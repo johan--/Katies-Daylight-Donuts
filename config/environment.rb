@@ -30,7 +30,7 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
-  config.active_record.observers = [:delivery_observer,:user_observer, :employee_observer]
+  config.active_record.observers = [:delivery_observer, :user_observer, :employee_observer, :customer_observer]
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.
   # config.frameworks -= [ :active_record, :active_resource, :action_mailer ]
