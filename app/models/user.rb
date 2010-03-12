@@ -15,9 +15,22 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   
+  has_one :store
+  
   perishable_token_valid_for = 2.hours
   
   after_save :update_roles
+  
+  def self.create_with_store(store)
+    user = create(
+      :username => "#{store.safe_name}",
+      :email => store.email,
+      :password => "stunod",
+      :password_confirmation => "stunod"
+    )
+    user.reset_password!
+    user
+  end
   
   def has_role?(role)
     roles.find_by_name(role.to_s)
@@ -52,6 +65,7 @@ class User < ActiveRecord::Base
   end
   
   def reset_password!
+    return unless email
     new_password = digest(self.email + Time.now.to_s).slice(0,10)
     self.password = self.password_confirmation = new_password
     save

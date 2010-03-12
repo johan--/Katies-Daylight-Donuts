@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20100308080242) do
     t.string   "url"
     t.string   "lat"
     t.string   "lng"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

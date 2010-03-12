@@ -1,13 +1,18 @@
 class Store < ActiveRecord::Base
   
+  belongs_to :user # customer
   has_many :deliveries, :dependent => :destroy
     
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
-    
-  validates_presence_of :address, :city, :state, :country, :zipcode
+  
+  validates_uniqueness_of :name # important!
+  
+  validates_presence_of :name, :email, :address, :city, :state, :country, :zipcode # important!
+  
   validates_numericality_of :zipcode
+  
   validates_length_of :state, :is => 2
   
   acts_as_mappable
@@ -38,6 +43,11 @@ class Store < ActiveRecord::Base
 
   def geocode_array
     [lat,lng]
+  end
+
+  # Returns a safe name for creating a username
+  def safe_name
+    name.gsub(/[^A-Za-z0-9\.\_]/,'').downcase
   end
 
   private

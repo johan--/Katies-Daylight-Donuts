@@ -5,14 +5,8 @@
     <th>Name</th>
     <th>Store No</th>
     <th>Address</th>
-    <th>City</th>
-    <th>State</th>
-    <th>Country</th>
     <th>Zipcode</th>
     <th>Phone</th>
-    <th>Fax</th>
-    <th>Email</th>
-    <th>Url</th>
     <th></th>
     <th></th>
     <th></th>
@@ -22,14 +16,8 @@
       <td><%=h store.name %></td>
       <td><%=h store.store_no %></td>
       <td><%=h store.address %></td>
-      <td><%=h store.city %></td>
-      <td><%=h store.state %></td>
-      <td><%=h store.country %></td>
       <td><%=h store.zipcode %></td>
       <td><%=h store.phone %></td>
-      <td><%=h store.fax %></td>
-      <td><%=h store.email %></td>
-      <td><%=h store.url %></td>
       <td><%= link_to icon('eye'), store %></td>
       <td><%= link_to icon('pencil'), edit_store_path(store) %></td>
       <td><%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -37,4 +25,7 @@
   <% end %>
 </table>
 
-<p><%= link_to "New Store", new_store_path %></p>
+
+<% content_for :sidebar do %>
+  <%= button "Add Store", new_store_path %>
+<% end %>
