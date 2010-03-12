@@ -1,5 +1,5 @@
-class Location < ActiveRecord::Base
-  belongs_to :customer
+class Store < ActiveRecord::Base
+  
   has_many :deliveries, :dependent => :destroy
     
   # Geocode the locations for mapping
@@ -12,6 +12,10 @@ class Location < ActiveRecord::Base
   
   acts_as_mappable
   
+  def display_name
+    @display_name ||= [name, store_no].join(" - ")
+  end
+  
   def full_address
     <<-EOF
     #{address}<br />
@@ -21,7 +25,6 @@ class Location < ActiveRecord::Base
   end
   
   def address_option
-    return to_google unless self.customer
     to_google
   end
   

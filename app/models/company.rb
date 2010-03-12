@@ -1,3 +1,3 @@
 class Company < ActiveRecord::Base
-  has_many :locations, :dependent => :destroy
+  has_many :stores, :dependent => :destroy
 end

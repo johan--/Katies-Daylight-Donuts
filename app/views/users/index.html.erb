@@ -16,11 +16,19 @@
     <td><%= user.roles.map(&:name).join(", ") %></td>
     <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), user %></td>
     <td><%= link_to icon("pencil-small"), edit_user_path(user) %></td>
-    <td><%= link_to icon("cross-circle-frame"), user, :method => :delete, :confirm => "Are you sure you want to delete this user?" %></td>
+    <td><%= link_to icon("cross-circle-frame"), user, :method => :delete, :confirm => "Are you sure you want to delete this user?" unless user.admin? %></td>
   </tr>
   <% end %>
 </table>
 
 <% content_for :sidebar do %>
   <%= button "Add User", new_user_path %>
+  <h2>User Accounts</h2>
+  <p>User accounts give your staff access to the app.
+    Create an manage users using this page.</p>
+  
+  <p>You can revoke access at any time by removing a user account.</p>
+  
+  <h2>Admin Account</h2>
+  <p>The admin account <strong>can not</strong> be removed. You need at least one account to access the app at all times.</p>
 <% end %>

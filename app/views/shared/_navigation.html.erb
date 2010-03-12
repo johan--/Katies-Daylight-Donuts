@@ -4,19 +4,11 @@
       <li class="<%= current "dashboards" %>"><%= link_to "#{icon("application-monitor")} Dashboard",  dashboards_path %></li>
       <li class="<%= current "users" %>"><%= link_to "#{icon("users")} Users",  users_path %></li>
       <li class="<%= current "employees" %>"><%= link_to "#{icon("users")} Employees",  employees_path %></li>
-      <li class="<%= current "customers" %>"><%= link_to "#{icon("user-business-boss")} Customers",  customers_path %></li>
+      <li class="<%= current "stores" %>"><%= link_to "#{icon("user-business-boss")} Stores",  stores_path %></li>
       <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
     <% end %>
   <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} Deliveries", pending_deliveries_path %></li>
-    <% if @current_user.has_role?(:admin) %>
-    <li class="<%= current "locations" %>">
-      <%= link_to "#{icon("store")} Locations", locations_url %>
-    </li>
-    <% end %>
   <% else %>
-  <li class="<%= current "locations" %>">
-    <%= link_to "Locations", locations_url %>
-  </li>
   <li class="<%= current "user_sessions" %>">
     <%= link_to "Login", login_url %>
   </li>

@@ -19,3 +19,7 @@ function paginate(target){
 function setText(selector, text){
   $(selector).innerHTML = text;
 }
+
+function show_comment_fields(comment_id){
+  $(comment_id).show();
+}

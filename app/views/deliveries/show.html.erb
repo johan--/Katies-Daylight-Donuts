@@ -1,4 +1,4 @@
-<% title "Delivery for #{@delivery.customer.name}" %>
+<% title "Delivery for #{@delivery.store.name}" %>
 
 <% content_for :head do %>
   <%= GMap.header(:with_vml => false, :host => request.host) %>
@@ -23,12 +23,12 @@
   </p>
   
   <p>
-    <strong>Customer:</strong><br />
-    <%=h @delivery.customer.name %>
+    <strong>Store:</strong><br />
+    <%=h @delivery.store.name %>
   </p>
   <p>
-    <strong>Location:</strong><br />
-    <%= @delivery.location.full_address %>
+    <strong>Store:</strong><br />
+    <%= @delivery.store.full_address %>
   </p>
   <p>
     <strong>Status:</strong><br />

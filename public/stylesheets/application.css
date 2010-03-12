@@ -320,3 +320,8 @@ div.metric h1{
 div.metric h1 img{
   vertical-align: middle;
 }
+
+div.tip{
+  padding: 1em;
+  background: #F0FCBA;
+}

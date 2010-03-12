@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100221235004) do
+ActiveRecord::Schema.define(:version => 20100308080242) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax",                :limit => 10
-    t.integer  "price",              :limit => 10
+    t.integer  "tax",                :limit => 10, :precision => 10, :scale => 0
+    t.integer  "price",              :limit => 10, :precision => 10, :scale => 0
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -28,6 +28,15 @@ ActiveRecord::Schema.define(:version => 20100221235004) do
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.integer  "employee_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -57,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20100221235004) do
     t.string   "state"
     t.datetime "delivered_at"
     t.datetime "delivery_date"
+    t.integer  "store_id"
   end
 
   create_table "deliveries_items", :id => false, :force => true do |t|
@@ -128,17 +138,33 @@ ActiveRecord::Schema.define(:version => 20100221235004) do
     t.string "name"
   end
 
-  create_table "roles_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "settings", :force => true do |t|
     t.string   "name"
     t.string   "time_zone"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "stores", :force => true do |t|
+    t.string   "name"
+    t.string   "store_no"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.string   "zipcode"
+    t.string   "phone"
+    t.string   "fax"
+    t.string   "email"
+    t.string   "url"
+    t.string   "lat"
+    t.string   "lng"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -156,6 +182,7 @@ ActiveRecord::Schema.define(:version => 20100221235004) do
     t.boolean  "api_enabled",       :default => false
     t.string   "perishable_token",  :default => "",                           :null => false
     t.string   "user_type"
+    t.boolean  "show_tips",         :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

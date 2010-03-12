@@ -1,0 +1,52 @@
+<% title "Store" %>
+
+<p>
+  <strong>Name:</strong>
+  <%=h @store.name %>
+</p>
+<p>
+  <strong>Store No:</strong>
+  <%=h @store.store_no %>
+</p>
+<p>
+  <strong>Address:</strong>
+  <%=h @store.address %>
+</p>
+<p>
+  <strong>City:</strong>
+  <%=h @store.city %>
+</p>
+<p>
+  <strong>State:</strong>
+  <%=h @store.state %>
+</p>
+<p>
+  <strong>Country:</strong>
+  <%=h @store.country %>
+</p>
+<p>
+  <strong>Zipcode:</strong>
+  <%=h @store.zipcode %>
+</p>
+<p>
+  <strong>Phone:</strong>
+  <%=h @store.phone %>
+</p>
+<p>
+  <strong>Fax:</strong>
+  <%=h @store.fax %>
+</p>
+<p>
+  <strong>Email:</strong>
+  <%=h @store.email %>
+</p>
+<p>
+  <strong>Url:</strong>
+  <%=h @store.url %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_store_path(@store) %> |
+  <%= link_to "Destroy", @store, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", stores_path %>
+</p>

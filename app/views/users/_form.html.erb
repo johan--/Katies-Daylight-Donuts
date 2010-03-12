@@ -49,9 +49,11 @@
   </p>
   <% end %>
 
+  <% unless @current_user.customer? %>
   <p>
     <%= f.check_box :api_enabled %> <%= f.label :api_enabled %>
   </p>
+  <% end %>
   
   <p><%= image_submit_tag "buttons/mocha-blues/form-save.png" %></p>
 <% end %>

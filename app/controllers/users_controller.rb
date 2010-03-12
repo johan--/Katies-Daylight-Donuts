@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   end
   
   def destroy
-    if @user = User.find(params[:id])
+    if @user = User.find_by_username(params[:id])
       if @user.destroy
         flash[:notice] = "User successfully removed."
       else

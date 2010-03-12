@@ -1,15 +1,14 @@
 class Delivery < ActiveRecord::Base
   include AASM
   
+  has_many :comments, :as => :commentable
+  
   has_many :line_items, :dependent => :destroy
   has_many :items, :through => :line_items
   
   has_many :buy_backs
-  belongs_to :location, :include => [:customer]
   belongs_to :employee
-  has_one :customer, :through => :location
-  
-  acts_as_mappable :through => :location
+  belongs_to :store
   
   aasm_column :state
   aasm_initial_state :pending
@@ -30,15 +29,22 @@ class Delivery < ActiveRecord::Base
   end
   
   
-  validates_presence_of :location, :message => "Must be assigned a delivery location."
-  validates_presence_of :employee, :message => "Must be assigned to an employee."
+  validates_presence_of :store, :message => "Must be assigned a store location."
+  validates_presence_of :employee, :message => "Driver required."
   
-  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:location,:employee]
-  named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:location,:employee]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:location,:employee]
+  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
+  named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:employee]
+
+  def self.create_default_delivery(options = {})
+    delivery = self.new
+    delivery.add_items
+    delivery.employee = Employee.default
+    delivery.save!
+  end
 
   def address
-    "#{location.customer.name} ##{id} - #{location.to_google}"
+    "#{store.name} ##{id} - #{store.to_google}"
   end
 
   def delivery_time
@@ -46,7 +52,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def customer_name
-    @customer_name ||= location.customer.name rescue ""
+    @customer_name ||= store.name rescue ""
   end
   
   def total

@@ -57,8 +57,8 @@ class User < ActiveRecord::Base
     save
   end
   
-  def customer?
-    user_type == "Customer"
+  def store?
+    user_type == "Store"
   end
   
   private

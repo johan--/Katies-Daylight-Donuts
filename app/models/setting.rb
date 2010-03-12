@@ -4,6 +4,11 @@ class Setting < ActiveRecord::Base
   end
   
   def self.email
-    first.email
+    if first
+      first.email
+    else
+      logger.warning " == You need to setup the default Setting record, sending mail to #{DEFAULT_EMAIL} for now."
+      DEFAULT_EMAIL # failsafe
+    end
   end
 end

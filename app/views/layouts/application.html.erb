@@ -9,6 +9,16 @@
     <%= javascript_include_tag :defaults %>
     <%= iboxify_page %>
     <%= calendar_date_select_includes "red" %>
+    <% if @current_user %>
+    <style type="text/css" media="screen">
+      /* Hide Tooltips based on user setting */
+      <% unless @current_user.show_tips? %>
+        div.tip{
+          display: none;
+        }
+      <% end %>
+    </style>
+    <% end %>
   </head>
   <body>
     <div class="container">

@@ -1,0 +1,25 @@
+one:
+  name: MyString
+  store_no: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  zipcode: MyString
+  phone: MyString
+  fax: MyString
+  email: MyString
+  url: MyString
+
+two:
+  name: MyString
+  store_no: MyString
+  address: MyString
+  city: MyString
+  state: MyString
+  country: MyString
+  zipcode: MyString
+  phone: MyString
+  fax: MyString
+  email: MyString
+  url: MyString

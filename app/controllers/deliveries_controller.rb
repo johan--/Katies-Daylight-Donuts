@@ -16,7 +16,7 @@ class DeliveriesController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.xml{ render :xml => @deliveries.to_xml(:include => [:customer, :location]) }
+      format.xml{ render :xml => @deliveries.to_xml(:include => [:store]) }
     end
   end
   
@@ -44,18 +44,18 @@ class DeliveriesController < ApplicationController
     @delivery = Delivery.find(params[:id])
     @map = GMap.new("map")
     @map.control_init(:large_map => true,:map_type => true)
-    @map.center_zoom_init(@delivery.location.geocode_array, 11)
+    @map.center_zoom_init(@delivery.store.geocode_array, 11)
     @map.icon_global_init(GIcon.new(:image => "/images/daylight_donuts_gmarker.png",
         :shadow => "/images/daylight_donuts_gmarker.png",
         :shadow_size => GSize.new(50,28),
         :icon_anchor => GPoint.new(7,7),
         :info_window_anchor => GPoint.new(9,2)), "daylight_donuts_icon")
     icon = Variable.new("daylight_donuts_icon")
-    location_marker = GMarker.new(@delivery.location.geocode_array,
-      :title => "#{@delivery.location.customer.name}",
-      :info_window => "#{@delivery.location.full_address} <br />#{@delivery.location.phone}",
+    store_marker = GMarker.new(@delivery.store.geocode_array,
+      :title => "#{@delivery.store.name}",
+      :info_window => "#{@delivery.store.full_address} <br />#{@delivery.store.phone}",
       :icon => icon)
-     @map.overlay_init location_marker
+     @map.overlay_init store_marker
   end
   
   def new
@@ -127,13 +127,13 @@ class DeliveriesController < ApplicationController
       :origin => "68826", 
       :within => 500, 
       :order => "distance asc",
-      :include => [:location]
+      :include => [:store]
     )
-    @locations = @deliveries.map(&:location)
+    @stores = @deliveries.map(&:store)
        @map = GMap.new("map")
        @map.control_init(:large_map => true,:map_type => true)
-       @map.center_zoom_init(@locations.first.geocode_array, 11)
-       @locations.each do |location|
+       @map.center_zoom_init(@stores.first.geocode_array, 11)
+       @stores.each do |store|
          
          @map.icon_global_init(GIcon.new(:image => "/images/daylight_donuts_gmarker.png",
              :shadow => "/images/daylight_donuts_gmarker.png",
@@ -142,13 +142,20 @@ class DeliveriesController < ApplicationController
              :info_window_anchor => GPoint.new(9,2)), "daylight_donuts_icon")
           icon = Variable.new("daylight_donuts_icon")
          
-         location_marker = GMarker.new(location.geocode_array,
-          :title => "#{location.customer.name}",
-          :info_window => "#{location.full_address} <br />#{location.phone}",
+         store_marker = GMarker.new(store.geocode_array,
+          :title => "#{store.name}",
+          :info_window => "#{store.full_address} <br />#{store.phone}",
           :icon => icon)
-         #@map.overlay_init GPolyline.new(@locations.map(&:geocode_array))
-         @map.overlay_init location_marker
+         #@map.overlay_init GPolyline.new(@stores.map(&:geocode_array))
+         @map.overlay_init store_marker
        end
+  end
+  
+  def generate_todays
+    Store.all.each do |store|
+      store.deliveries.create_default_delivery
+    end
+    redirect_to deliveries_path
   end
   
   def destroy

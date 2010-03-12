@@ -5,9 +5,9 @@
     <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now), :value => Time.now.strftime("%B %d, %Y %I:%m %p") %>
   </p>
   <p>
-    <%= f.label :location_id %><br />
-    <% if Customer.count > 0 %>
-      <%= select_tag :"delivery[location_id]", "<option value=''>-- Choose a location --</option>" << option_groups_from_collection_for_select(Customer.with_locations, :locations, :name, :id, :to_google) %>
+    <%= f.label :store_id %><br />
+    <% if Store.count > 0 %>
+      <%= f.collection_select :store_id, Store.all, :id, :display_name %>
     <% end %>
   </p>
   <% if Employee.drivers.size > 0 %>
@@ -51,7 +51,7 @@
   <%= delivery_action_link(@delivery, true) %>  
 <% end %>
 
-<%= observe_field :delivery_location_id, :url => { :controller => "locations", :action => "presets", :format => :js}, :with => 'id' %>
+<%= observe_field :delivery_store_id, :url => { :controller => "stores", :action => "presets", :format => :js}, :with => 'id' %>
 
 
 <div id="no_drivers_alert" style="display: none;">
