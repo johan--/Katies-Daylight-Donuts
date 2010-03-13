@@ -15,7 +15,7 @@
   </p>
   <p>
     <%= f.label :city %><br />
-    <%= f.text_field :city %>
+    <%= f.select :city, City.list %>
   </p>
   <p>
     <%= f.label :state %><br />
