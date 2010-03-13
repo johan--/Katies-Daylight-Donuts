@@ -56,7 +56,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def total
-    line_items.collect{ |i| i.quantity * i.price }.sum
+    line_items.collect{ |i| i.quantity.to_i * i.price }.sum
   end
   
   def update_line_items(*args)

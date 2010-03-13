@@ -19,7 +19,10 @@
   <% end %>
   <br />
   
-  <table style="width: 100%; ">
+  <%= link_to_function "Add Item" do |page|
+    page.insert_html(:bottom, :line_items, :partial => "line_item", :object => @delivery.line_items.build)
+  end %>
+  <table style="width: 100%;" id="line_items">
     <tr>
       <th>Name</th>
       <th>Type</th>
@@ -29,19 +32,7 @@
     </tr>
     
       <% for line_item in @delivery.line_items %>
-        <% fields_for "delivery[line_items][]", line_item, :index => nil do |builder| %>
-        <tr>
-          <td><strong><%= line_item.item.name %></strong></td>
-          <td><strong><%= line_item.item.item_type %></strong></td>
-          <td align="right"><%= builder.text_field :quantity, :value => line_item.quantity, :size => 5 %></td>
-          <td align="right" style="text-align: right;">
-            <%= builder.text_field :price, :value => line_item.item.price, :size => 10, :class => "price" %>
-            <%= builder.hidden_field :item_id, :value => line_item.item.id %>
-          </td>
-          <td><%= link_to(icon("pencil-small"), edit_item_path(line_item.item))%></td>
-        
-        </tr>
-        <% end %>
+        <%= render :partial => "deliveries/line_item", :object => line_item %>
      <% end %>
   </table>
   <%= f.submit :save %>

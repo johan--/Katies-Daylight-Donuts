@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   
   named_scope :available, :conditions => {:available => true}
   
-  TYPES = ["roll","raised","cake","donut_hole"]
+  TYPES = ["roll","raised","cake","donut_hole","Supplies"]
   
   def self.types
     @types ||= TYPES.collect{ |t| t.titleize }
