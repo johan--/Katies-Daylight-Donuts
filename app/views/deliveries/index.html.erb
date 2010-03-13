@@ -36,12 +36,28 @@
           <td align="right"><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
           <td align="right"><%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %></td>
         </tr>
+        <% unless delivery.comments.empty?%>
+          <tr>
+            <td colspan="5"><strong><%= delivery.comments.size %> Comments</strong></td>
+          </tr>
+        <% end %>
+        <% for comment in delivery.comments %>
+          <tr>
+            <td>Created: <%= comment.created_at.strftime("%m/%d/%y %H:%M:%S %p") %></td>
+            <td><%= comment.body %></td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>
+        <% end %>
         <tr style="display: none;" id="<%= delivery.object_id %>">
           <td colspan="<%= @current_user.store? ? 4 : 5 %>">
             <% form_for delivery.comments.new do |f| %>
             <form>
               <%= f.text_area :body, :rows => 4, :cols => 40 %>
               <br />
+              <%= f.hidden_field :commentable_id, :value => delivery.id %>
+              <%= f.hidden_field :commentable_type, :value => "Delivery" %>
               <%= f.submit "Save" %>
             <% end %>
           </td>
