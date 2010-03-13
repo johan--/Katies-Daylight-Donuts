@@ -19,15 +19,15 @@
   </p>
   <p>
     <%= f.label :state %><br />
-    <%= f.text_field :state %>
+    <%= f.select :state, State.list, :selected => "NE" %>
   </p>
   <p>
     <%= f.label :country %><br />
-    <%= f.text_field :country %>
+    <%= f.select :country, Country.list, :selected => "United States" %>
   </p>
   <p>
     <%= f.label :zipcode %><br />
-    <%= f.text_field :zipcode %>
+    <%= f.text_field :zipcode, :size => 8 %>
   </p>
   <p>
     <%= f.label :phone %><br />

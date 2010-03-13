@@ -8,6 +8,7 @@
     <%= f.label :store_id %><br />
     <% if Store.count > 0 %>
       <%= f.collection_select :store_id, Store.all, :id, :display_name %>
+      <%= link_to "Add a new store", new_store_path %>
     <% end %>
   </p>
   <% if Employee.drivers.size > 0 %>
