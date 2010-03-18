@@ -1,5 +1,10 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :stores
+  map.resources :delivery_presets, :member => {
+    :remove_item => :any,
+    :add_item => :any
+  }
+
+  map.resources :stores, :has_many => :delivery_presets
 
   map.resources :comments
 

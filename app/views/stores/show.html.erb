@@ -1,9 +1,4 @@
-<% title "Store" %>
-
-<p>
-  <strong>Name:</strong>
-  <%=h @store.name %>
-</p>
+<% title h(@store.display_name) %>
 <p>
   <strong>Store No:</strong>
   <%=h @store.store_no %>
@@ -44,6 +39,29 @@
   <strong>Url:</strong>
   <%=h @store.url %>
 </p>
+
+<table>
+  <tr>
+    <th colspan="7">Default Delivery Schedule</th>
+  </tr>
+  <tr>
+    <% %w(sun mon tue wed thu fri sat).each do |day| %>
+      <th><%= day.upcase %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% @store.delivery_presets.sort_by{|dp| dp.day_of_week }.each do |dp| %>
+      <td>
+        <ul>
+        <% dp.line_items.each do |line_item| %>
+          <li><small><%= line_item.quantity %> <%= line_item.item.name %></small></li>
+        <% end %>
+          <li><%= link_to "Edit", edit_store_delivery_preset_path(@store,dp) %></li>
+        </ul>
+      </td>
+    <% end %>
+  </tr>
+</table>
 
 <p>
   <%= link_to "Edit", edit_store_path(@store) %> |

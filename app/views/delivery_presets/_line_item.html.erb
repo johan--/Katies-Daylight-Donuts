@@ -1,0 +1,9 @@
+<% fields_for "delivery_preset[line_items]" do |line_item_field| %>
+<tr>
+  <td class="line"><%= line_item_field.collection_select :item_id, Item.available, :id, :name %></td>
+  <td class="line"><%= line_item_field.text_field :quantity, :size => 4 %></td>
+  <td class="line"><%= link_to "Remove", remove_item_delivery_preset_path(line_item.delivery_preset, :item_id => line_item.id) %></td>
+  <td class="line">&nbsp;</td>
+  
+</tr>
+<% end %>

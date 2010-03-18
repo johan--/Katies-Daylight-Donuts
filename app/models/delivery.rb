@@ -89,7 +89,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def remove_item(item)
-    if line_item = link_items.detect{ |li| li.item_id == item.id }
+    if line_item = link_items.detect{ |li| li.item_id == item.object_id }
       line_items -= line_item
     end
   end

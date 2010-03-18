@@ -7,6 +7,7 @@ class StoresController < ApplicationController
   
   def show
     @store = Store.find(params[:id])
+    @store.delivery_presets.build_defaults if @store.delivery_presets.empty?
   end
   
   def new

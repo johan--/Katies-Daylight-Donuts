@@ -13,7 +13,7 @@
   </tr>
   <% for store in @stores %>
     <tr>
-      <td><%=h store.name %></td>
+      <td><%= link_to h(store.name), store %></td>
       <td><%=h store.store_no %></td>
       <td><%=h store.address %></td>
       <td><%=h store.zipcode %></td>

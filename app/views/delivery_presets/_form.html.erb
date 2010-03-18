@@ -1,0 +1,24 @@
+<% form_for @delivery_preset do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <strong><%= @delivery_preset.store.display_name %></strong>
+  </p>
+  <p>
+    <%= f.label :day_of_week %><br />
+    <%= f.select :day_of_week, %w(SUN MON TUE WED THU FRI SAT), {},{:disabled => true} %>
+  </p>
+  
+  <table id="line_items">
+    <tr>
+      <th>Item</th>
+      <th>Quantity</th>
+      <th>&nbsp;</th>
+      <th><%= link_to_remote "Add Item", :url => add_item_delivery_preset_path(@delivery_preset) %></th>
+    </tr>
+  <% @delivery_preset.line_items.each do |line_item| %>
+      <%= render :partial => "line_item", :locals => {:line_item => line_item} %>
+  <% end %>
+  </table>
+  
+  <p><%= f.submit "Save" %></p>
+<% end %>
