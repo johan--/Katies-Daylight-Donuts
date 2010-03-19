@@ -20,7 +20,11 @@ class UserNotifier < ActionMailer::Base
   
   # User
   def signup_notification(recipients, user)
-    
+    recipients   recipients
+    from         "noreply@katiesdaylightdonuts.com"
+    body         :user => user
+    subject      "Welcome to Katies Daylight Donuts, Online Ordering Service." 
+    content_type "text/html"
   end
   
   # Employee
