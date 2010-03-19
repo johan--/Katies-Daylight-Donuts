@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :faqs
+
   map.resources :delivery_presets, :member => {
     :remove_item => :any,
     :add_item => :any

@@ -1,48 +1,33 @@
 <% title h(@store.display_name) %>
-<p>
+<% content_tag :p do %>
   <strong>Store No:</strong>
   <%=h @store.store_no %>
-</p>
+<% end if @store.store_no %>
+
 <p>
   <strong>Address:</strong>
-  <%=h @store.address %>
-</p>
-<p>
-  <strong>City:</strong>
-  <%=h @store.city %>
-</p>
-<p>
-  <strong>State:</strong>
-  <%=h @store.state %>
-</p>
-<p>
-  <strong>Country:</strong>
-  <%=h @store.country %>
-</p>
-<p>
-  <strong>Zipcode:</strong>
-  <%=h @store.zipcode %>
-</p>
-<p>
-  <strong>Phone:</strong>
-  <%=h @store.phone %>
-</p>
-<p>
-  <strong>Fax:</strong>
-  <%=h @store.fax %>
-</p>
-<p>
-  <strong>Email:</strong>
-  <%=h @store.email %>
-</p>
-<p>
-  <strong>Url:</strong>
-  <%=h @store.url %>
+  <%=h @store.address %><br />
+  <%=h @store.city %>, <%=h @store.state %> <%=h @store.country %><br />
+  <%=h @store.zipcode %><br />
+  
+  <% if @store.phone %>
+    <%=h @store.phone %><br />
+  <% end %>
+  
+  <% if @store.fax %>
+    <%=h @store.fax %><br />
+  <% end %>
+  
+  <%= link_to h(@store.email), "mailto:#{h(@store.email)}" %>
+  <%=h @store.url if @store.url %>
 </p>
 
+<div id="delivery_schedule">
 <table>
   <tr>
-    <th colspan="7">Default Delivery Schedule</th>
+    <th colspan="7">
+      Default Delivery Schedule
+    </th>
   </tr>
   <tr>
     <% %w(sun mon tue wed thu fri sat).each do |day| %>
@@ -62,9 +47,15 @@
     <% end %>
   </tr>
 </table>
+</div>
 
 <p>
   <%= link_to "Edit", edit_store_path(@store) %> |
   <%= link_to "Destroy", @store, :confirm => 'Are you sure?', :method => :delete %> |
   <%= link_to "View All", stores_path %>
 </p>
+
+
+<% content_for :sidebar do %>
+  <p>The "Default Delivery Schedule" will be invoked automatically each weekday. However you can modify the resulting ticket at anytime before printing the tickets for the corresponding day of the week.</p>
+<% end %>

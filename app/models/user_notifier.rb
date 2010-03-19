@@ -18,6 +18,11 @@ class UserNotifier < ActionMailer::Base
     content_type "text/html"
   end
   
+  # User
+  def signup_notification(recipients, user)
+    
+  end
+  
   # Employee
   def new_employee_notification(recipients, employee)
     recipients   recipients
