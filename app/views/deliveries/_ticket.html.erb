@@ -1,0 +1,70 @@
+<div class="ticket">
+<table>
+  <tr>
+    <th colspan="5" class="heading">
+      <center>INVOICE</center>
+    </th>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <%= image_tag "logo-small.png" %><br />
+      Katies Daylight Donuts<br />
+      1501 18th St.<br />
+      Central City, NE 68826<br />
+      308-946-5555
+    </td>
+    <td colspan="2">
+      <strong>Invoice #:</strong> <%= delivery.object_id %><br />
+      <strong>Date :</strong> <%= (delivery.created_at + 1.day).strftime("%m/%d/%Y") %><br />
+      <strong>Email:</strong> katiesdaylight@hotmail.com<br />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <strong>Customer</strong><br />
+      <strong>Sold To:</strong> <%= delivery.store.display_name %><br />
+      <strong>Phone:</strong> <%= delivery.store.phone %>
+      <% if delivery.updated_at > delivery.created_at %>
+      <br />
+        <div style="padding: 0.2em; background: black; color: white; font-weight: bold;">
+          CHANGED
+        </div>
+      <% end %>
+    </td>
+    <td colspan="2">
+      <strong>Ship To:</strong> <%= delivery.store.display_name %><br />
+      <strong>Phone:</strong> <%= delivery.store.phone %>
+    </td>
+  </tr>
+  <tr class="heading">
+    <th>Product Code</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Extension</th>
+  </tr>
+  <% delivery.line_items.each do |line_item| %>
+  <tr>
+    <td><%= line_item.item.object_id %></td>
+    <td style="text-align: left;"><%= line_item.item.name %></td>
+    <td style="text-align: right;"><%= line_item.quantity %> units</td>
+    <td style="text-align: right;"><%= number_to_currency line_item.price %></td>
+    <td style="text-align: right;"><%= number_to_currency line_item.total %></td>
+  </tr>
+  <% end %>
+  
+  <tr>
+    <td colspan="2">
+      <strong>Notes:</strong><br />
+      <% delivery.comments.each do |comment| %>
+        <%= comment.body %><br />
+      <% end %>
+    </td>
+    <td colspan="3" style="text-align: right;">
+      <%= number_to_currency delivery.total %>
+    </td>
+  </tr>
+  
+</table>
+</div>
+

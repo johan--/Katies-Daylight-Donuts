@@ -54,6 +54,7 @@ class UsersController < ApplicationController
     if current_user.show_hints?
       current_user.update_attribute(:show_hints, false)
     end
+    render :nothing => true
   end
   
   protected
