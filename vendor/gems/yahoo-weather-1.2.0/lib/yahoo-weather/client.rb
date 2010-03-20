@@ -63,7 +63,7 @@ class YahooWeather::Client
       end
 
       # create the response object
-      doc = Nokogiri::XML.parse(response)
+      doc = Crack::XML.parse(response)
       YahooWeather::Response.new(src, url, doc)
     end
 

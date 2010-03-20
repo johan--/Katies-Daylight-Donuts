@@ -18,7 +18,7 @@
 require 'net/http'
 require 'cgi'
 require 'time'
-require 'nokogiri'
+require 'crack'
 
 class YahooWeather
   VERSION = '1.2.0'

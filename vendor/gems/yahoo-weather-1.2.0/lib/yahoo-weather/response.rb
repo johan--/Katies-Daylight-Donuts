@@ -59,27 +59,30 @@ class YahooWeather::Response
     # save off the request params
     @request_location = request_location
     @request_url = request_url
+    
+    doc.symbolize_keys!
 
     # parse the nokogiri xml document to gather response data
-    root = doc.xpath('/rss/channel').first
+    root = doc[:rss]["channel"]
+    
+    @astronomy = YahooWeather::Astronomy.new(root['yweather:astronomy'])
+    @location = YahooWeather::Location.new(root['yweather:location'])
+    @units = YahooWeather::Units.new(root['yweather:units'])
+    @wind = YahooWeather::Wind.new(root['yweather:wind'])
+    @atmosphere = YahooWeather::Atmosphere.new(root['yweather:atmosphere'])
+    @image = YahooWeather::Image.new(root['image'])
 
-    @astronomy = YahooWeather::Astronomy.new(root.xpath('yweather:astronomy').first)
-    @location = YahooWeather::Location.new(root.xpath('yweather:location').first)
-    @units = YahooWeather::Units.new(root.xpath('yweather:units').first)
-    @wind = YahooWeather::Wind.new(root.xpath('yweather:wind').first)
-    @atmosphere = YahooWeather::Atmosphere.new(root.xpath('yweather:atmosphere').first)
-    @image = YahooWeather::Image.new(root.xpath('image').first)
-
-    item = root.xpath('item').first
+    item = root["item"]
+    puts item.inspect
     @condition = YahooWeather::Condition.
-      new(item.xpath('yweather:condition').first)
+      new(item['yweather:condition'])
     @forecasts = []
-    item.xpath('yweather:forecast').each { |forecast| 
+    item['yweather:forecast'].each { |forecast| 
       @forecasts << YahooWeather::Forecast.new(forecast) }
-    @latitude = item.xpath('geo:lat').first.content.to_f
-    @longitude = item.xpath('geo:long').first.content.to_f
-    @page_url = item.xpath('link').first.content
-    @title = item.xpath('title').first.content
-    @description = item.xpath('description').first.content
+    @latitude = item['geo:lat'].to_f
+    @longitude = item['geo:long'].to_f
+    @page_url = item['link']
+    @title = item['title']
+    @description = item['description']
   end
 end
