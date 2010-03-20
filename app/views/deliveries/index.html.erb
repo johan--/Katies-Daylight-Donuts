@@ -34,6 +34,7 @@
           <td><%= link_to delivery.store.to_google, delivery %></td>
           <td align="right">
           <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
+            
             <%= render :partial => "ticket", :locals => {:delivery => delivery } %>
           </div>
           <%= link_to icon("ticket"), "#ticket_for_#{delivery.object_id}", {:rel => "ibox&width=600&height=500", :onclick => %($('#ticket_for_#{delivery.object_id}').show())} %> 
