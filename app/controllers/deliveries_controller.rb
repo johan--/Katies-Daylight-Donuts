@@ -155,7 +155,7 @@ class DeliveriesController < ApplicationController
   end
 
   def print_todays
-    @deliveries = Delivery.by_date
+    @deliveries = Delivery.pending.by_date
     render :layout => false
   end
   

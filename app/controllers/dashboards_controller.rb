@@ -4,7 +4,6 @@ class DashboardsController < ApplicationController
   #before_filter :get_current_weather
   
   def index
-    debugger
     @dashboard = Dashboard.new
   end
   
