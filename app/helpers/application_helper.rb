@@ -12,7 +12,7 @@ module ApplicationHelper
   def button(action, route)
     content_tag :p, :class => "button" do
       content_tag(:a, :class => "button", :href => route) do
-        content_tag :p do
+        content_tag :span do
           action
         end
       end

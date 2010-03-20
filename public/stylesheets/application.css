@@ -252,6 +252,7 @@ p.button{
 }
 
 a.button{
+  display: block;
   text-decoration: none;
   font-weight: bold;
 }
