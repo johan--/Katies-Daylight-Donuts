@@ -9,6 +9,12 @@ describe User do
       :password_confirmation => "password",
     }
   end
+
+  it "should be admin with and admin role" do
+    user = User.create(@attributes)
+    user.roles << Role.find_by_name("admin")
+    user.admin?.should == true
+  end
   
   it "should require api_key when api is enabled" do
     User.create(@attributes.merge({:api_enabled => true})).api_key.should_not be_nil
