@@ -11,8 +11,8 @@ Rails::Initializer.run do |config|
   config.gem "geokit"
   config.gem "aasm", :lib => false
   config.gem "calendar_date_select"
-  # config.gem "nokogiri"
-  # config.gem "yahoo-weather"
+  config.gem "nokogiri"
+  config.gem "yahoo-weather"
   # config.gem "twitter"
 
   config.active_record.observers = [:delivery_observer, :user_observer, :employee_observer,:store_observer]

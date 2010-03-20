@@ -1,9 +1,8 @@
 <% title "Dashboard" %>
 
-<!--
-<%# content_for :toolbar do %>
-  Weather: <%#= weather_icon(@weather.condition) %> <%#= @weather.condition.text %> and <%#= @weather.condition.temp %> <%#= @weather.units.temperature %>
-<%# end %>-->
+<% content_for :toolbar do %>
+  Weather: <%= weather_icon(@weather.condition) %> <%= @weather.condition.text %> and <%= @weather.condition.temp %> <%= @weather.units.temperature %>
+<% end %>
 
 <div class="span-24">
   <div class="span-11 metric">
