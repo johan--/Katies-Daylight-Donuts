@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   
   has_and_belongs_to_many :roles
   
-  has_one :store
+  has_one :store, :dependent => :destroy
   
   perishable_token_valid_for = 2.hours
   
@@ -28,7 +28,6 @@ class User < ActiveRecord::Base
       :password => "stunod",
       :password_confirmation => "stunod"
     )
-    user.reset_password!
     user
   end
   

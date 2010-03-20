@@ -55,5 +55,8 @@
   </p>
   <% end %>
   
-  <p><%= image_submit_tag "buttons/mocha-blues/form-save.png" %></p>
+  <p>
+    <%= image_submit_tag "buttons/mocha-blues/form-save.png", :style => "vertical-align: middle;" %>
+    &nbsp;&nbsp;<%= link_to "Cancel", @current_user.super? ? users_path : "javascript:histroy.go(-1)" %>
+  </p>
 <% end %>

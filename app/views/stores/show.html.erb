@@ -57,5 +57,10 @@
 
 
 <% content_for :sidebar do %>
+  <% if @current_user.super? %>
+    <p>This store belongs to <%= link_to @store.user.username, @store.user %></p>
+    <br />
+  <% end %>
+  
   <p>The "Default Delivery Schedule" will be invoked automatically each weekday. However you can modify the resulting ticket at anytime before printing the tickets for the corresponding day of the week.</p>
 <% end %>

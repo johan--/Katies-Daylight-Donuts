@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     :add_item => :any
   }
 
-  map.resources :stores, :has_many => :delivery_presets
+  map.resources :stores, :has_many => [:delivery_presets, :deliveries]
 
   map.resources :comments
 
@@ -66,7 +66,7 @@ ActionController::Routing::Routes.draw do |map|
   map.login "login", :controller => "user_sessions", :action => "new"
   map.logout "logout", :controller => "user_sessions", :action => "destroy"
   map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
-  
+  map.turn_off_hints "hints/disabled", :controller => "users", :action => "turn_off_hints"
   map.root :dashboards
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'

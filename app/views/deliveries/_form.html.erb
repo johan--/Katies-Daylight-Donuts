@@ -4,6 +4,8 @@
     <%= f.label :delivery_date %><br />
     <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now), :value => Time.now.strftime("%B %d, %Y %I:%m %p") %>
   </p>
+  
+  <% if @current_user.super? %>
   <p>
     <%= f.label :store_id %><br />
     <% if Store.count > 0 %>
@@ -11,13 +13,21 @@
       <%= link_to "Add a new store", new_store_path %>
     <% end %>
   </p>
-  <% if Employee.drivers.size > 0 %>
-  <p>
-    <%= f.label :employee_id, "Driver" %><br />
-    <%= f.collection_select :employee_id, Employee.drivers, :id, :fullname %>
-  </p>
+  <% else %>
+    <%= f.hidden_field :store_id, :value => @current_user.store.object_id %>
   <% end %>
-  <br />
+  
+  <% if @current_user.super? %>
+    <% if Employee.drivers.size > 0 %>
+    <p>
+      <%= f.label :employee_id, "Driver" %><br />
+      <%= f.collection_select :employee_id, Employee.drivers, :id, :fullname %>
+    </p>
+    <% end %>
+  <% else %>
+    <%= f.hidden_field :employee_id, :value => Employee.drivers.first unless Employee.drivers.empty? %>
+  <% end %>
+    <br />
   
   <%= link_to_function "Add Item" do |page|
     page.insert_html(:bottom, :line_items, :partial => "line_item", :object => @delivery.line_items.build)
@@ -25,9 +35,9 @@
   <table style="width: 100%;" id="line_items">
     <tr>
       <th>Name</th>
-      <th>Type</th>
+      <th><%= "Type" if @current_user.super? %></th>
       <th>Quantity</th>
-      <th>Price</th>
+      <th><%= "Price"  if @current_user.super? %></th>
       <th>&nbsp;</th>
     </tr>
     

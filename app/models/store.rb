@@ -1,6 +1,6 @@
 class Store < ActiveRecord::Base
   
-  belongs_to :user # customer
+  belongs_to :user, :dependent => :destroy # customer
   has_many :deliveries, :dependent => :destroy
   has_many :delivery_presets, :dependent => :destroy
     

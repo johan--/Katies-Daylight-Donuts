@@ -1,10 +1,12 @@
-<% title(@controller.action_name =~ /index/ ? "Deliveries" : "Deliveries / #{@controller.action_name.titleize}") %>
+<% title(@controller.action_name =~ /index/ ? "#{'My ' unless @current_user.super?} Deliveries" : "#{'My ' unless @current_user.super?}Deliveries / #{@controller.action_name.titleize}") %>
 
-<div class="tip">
-<h2>Welcome</h2>
+<% if @current_user.show_hints? %>
+<div class="tip" id="help">
+<h2>Welcome <%= @current_user.username %>,</h2>
 <p>You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.</p>
-<div style="text-align: right;"><%= link_to_remote "Turn Off hints?", "", {:alt => "Turn off application hints and tips?",:title => "Turn off application hints and tips?"} %></div>
+<div style="text-align: right;"><%= link_to_remote "Turn Off hints?", {:url => turn_off_hints_path, :success => %($('help').hide();)}, {:alt => "Turn off application hints and tips?",:title => "Turn off application hints and tips?"} %></div>
 </div>
+<% end %>
 
 <% @deliveries.group_by{|d| d.created_at.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
   <% deliveries.group_by{|d| d.store }.each do |store, deliveries| %>
@@ -78,9 +80,9 @@
 <% end %>
 
 <% content_for :sidebar do %>
-  <%= button "Generate Today's Tickets", generate_todays_deliveries_path %>
-  <%= button "Add Delivery", new_delivery_path %>
+  <%= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.super? %>
+  <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
   <h2>Deliveries</h2>
-  (<%= Delivery.pending.count %>) <%= link_to "Pending Deliveries", pending_deliveries_path %><br />
-  (<%= Delivery.delivered.count %>) <%= link_to "Delivered Deliveries", delivered_deliveries_path %>
+  (<%= @delivery_klass.pending.count %>) <%= link_to "Pending Deliveries", pending_deliveries_path %><br />
+  (<%= @delivery_klass.delivered.count %>) <%= link_to "Delivered Deliveries", delivered_deliveries_path %>
 <% end %>

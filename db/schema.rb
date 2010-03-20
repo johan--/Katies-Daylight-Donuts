@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100313223815) do
+ActiveRecord::Schema.define(:version => 20100320025933) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(:version => 20100313223815) do
     t.string   "perishable_token",  :default => "",                           :null => false
     t.string   "user_type"
     t.boolean  "show_tips",         :default => true
+    t.boolean  "show_hints",        :default => true
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

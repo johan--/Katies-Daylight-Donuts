@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_filter :login_required, :only => [:new, :edit,:update]
-  before_filter :admin_role_required, :except => [:edit, :update, :show]
+  before_filter :admin_role_required, :except => [:edit, :update, :show, :turn_off_hints]
   
   def index
     @users = User.all
@@ -48,6 +48,12 @@ class UsersController < ApplicationController
       end
     end
     redirect_to users_path
+  end
+  
+  def turn_off_hints
+    if current_user.show_hints?
+      current_user.update_attribute(:show_hints, false)
+    end
   end
   
   protected

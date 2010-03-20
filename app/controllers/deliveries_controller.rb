@@ -7,12 +7,13 @@ class DeliveriesController < ApplicationController
   auto_complete_for :item, :item_type
   
   def index
+    @delivery_klass = current_user.super? ? Delivery : current_user.store.deliveries
     if params[:status] == "pending"
-      @deliveries = Delivery.pending
+      @deliveries = @delivery_klass.pending
     elsif params[:status] == "delivered"
-      @deliveries = Delivery.delivered
+      @deliveries = @delivery_klass.delivered
     else
-      @deliveries = Delivery.all
+      @deliveries = @delivery_klass.all
     end
     respond_to do |format|
       format.html
@@ -113,12 +114,14 @@ class DeliveriesController < ApplicationController
   end
   
   def delivered
-    @deliveries = Delivery.delivered
+    @delivery_klass = current_user.super? ? Delivery : current_user.store.deliveries
+    @deliveries = @delivery_klass.delivered
     render :action => "index"
   end
   
   def pending
-    @deliveries = Delivery.pending
+    @delivery_klass = current_user.super? ? Delivery : current_user.store.deliveries
+    @deliveries = @delivery_klass.pending
     render :action => "index"
   end
   
