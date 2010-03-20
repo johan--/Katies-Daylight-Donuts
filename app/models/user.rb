@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   end
   
   def has_role?(role)
-    roles.find_by_name(role.to_s)
+    roles.find_by_name(role.to_s).nil?
   end
   
   def has_roles?(*args)
