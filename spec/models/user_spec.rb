@@ -11,8 +11,9 @@ describe User do
   end
 
   it "should be admin with and admin role" do
+    User.any_instance.stubs(:valid?).returns(true)
     user = User.create(@attributes)
-    user.roles << Role.find_by_name("admin")
+    user.roles <<  Role.find_or_create_by_name("admin")
     user.admin?.should == true
   end
   

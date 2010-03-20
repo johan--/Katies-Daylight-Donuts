@@ -247,6 +247,7 @@ p.grey-box{
 
 p.button{
   background: url("../images/buttons/default/button-bg.png") no-repeat;
+  display: block;
   padding: 5px 0 6px 30px;
 }
 
