@@ -153,6 +153,11 @@ class DeliveriesController < ApplicationController
          @map.overlay_init store_marker
        end
   end
+
+  def print_todays
+    @deliveries = Delivery.by_date
+    render :layout => false
+  end
   
   def generate_todays
     Store.all.each do |store|

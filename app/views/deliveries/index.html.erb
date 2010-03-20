@@ -82,6 +82,7 @@
 <% content_for :sidebar do %>
   <%= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.super? %>
   <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
+  <%= button "Print Tickets", print_todays_deliveries_path %>
   <h2>Deliveries</h2>
   (<%= @delivery_klass.pending.count %>) <%= link_to "Pending Deliveries", pending_deliveries_path %><br />
   (<%= @delivery_klass.delivered.count %>) <%= link_to "Delivered Deliveries", delivered_deliveries_path %>

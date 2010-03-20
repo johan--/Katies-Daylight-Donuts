@@ -1,0 +1,72 @@
+<style type="text/css" media="print,screen">
+  table tr td, table tr th{ vertical-align: top;}
+  table{ border: 1px solid black; }
+  table tr th.heading,table tr.heading{background: #8A8A8A; text-align: center; vertical-align: center;}
+</style>
+<% @deliveries.each do |delivery| %>
+<table border="1" cellpadding="1" cellspacing="0" style="width: 8.5in; height: 11in;">
+  <tr>
+    <th colspan="5" class="heading">
+      <center>INVOICE</center>
+    </th>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <%= image_tag "logo-small.png" %><br />
+      Katies Daylight Donuts<br />
+      1501 18th St.<br />
+      Central City, NE 68826<br />
+      308-946-5555
+    </td>
+    <td colspan="2">
+      <strong>Invoice #:</strong> <%= delivery.object_id %><br />
+      <strong>Date :</strong> <%= delivery.created_at.strftime("%m/%d/%Y") %><br />
+      <strong>Email:</strong> katiesdaylight@hotmail.com<br />
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3">
+      <strong>Customer</strong><br />
+      <strong>Sold To:</strong> <%= delivery.store.display_name %><br />
+      <strong>Phone:</strong> <%= delivery.store.phone %>
+    </td>
+    <td colspan="2">
+      <strong>Ship To:</strong> <%= delivery.store.display_name %><br />
+      <strong>Phone:</strong> <%= delivery.store.phone %>
+    </td>
+  </tr>
+  <tr class="heading">
+    <th>Product Code</th>
+    <th>Description</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Extension</th>
+  </tr>
+  <% delivery.line_items.each do |line_item| %>
+  <tr>
+    <td><%= line_item.item.object_id %></td>
+    <td><%= line_item.item.name %></td>
+    <td><%= line_item.quantity %></td>
+    <td style="text-align: right;"><%= number_to_currency line_item.price %></td>
+    <td style="text-align: right;"><%= number_to_currency line_item.total %></td>
+  </tr>
+  <% end %>
+  
+  <tr>
+    <td colspan="2">
+      <strong>Notes:</strong><br />
+      <% delivery.comments.each do |comment| %>
+        <%= comment.body %><br />
+      <% end %>
+    </td>
+    <td colspan="3" style="text-align: right;">
+      <%= number_to_currency delivery.total %>
+    </td>
+  </tr>
+  
+</table>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  window.print();
+</script>

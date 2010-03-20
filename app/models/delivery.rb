@@ -35,12 +35,23 @@ class Delivery < ActiveRecord::Base
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:employee]
+  named_scope :by_date, lambda { |*args|
+    args[0] ||= Time.zone.now
+    {
+      :order => "created_at asc",
+      :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
+    }
+  }
 
   def self.create_default_delivery(options = {})
     delivery = self.new
     delivery.add_items
     delivery.employee = Employee.default
     delivery.save!
+  end
+  
+  def description
+    line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")
   end
 
   def address

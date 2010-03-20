@@ -53,6 +53,7 @@ ActionController::Routing::Routes.draw do |map|
       :remove_item => :any
      }, :collection => {
     :generate_todays => :any,
+    :print_todays => :any,
     :map => :get,
     :delivered => :get,
     :pending => :get
