@@ -42,7 +42,7 @@ class Delivery < ActiveRecord::Base
       :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
     }
   }
-
+  
   def self.create_default_delivery(options = {})
     delivery = self.new
     delivery.add_items

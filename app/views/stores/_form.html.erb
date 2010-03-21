@@ -14,8 +14,8 @@
     <%= f.text_field :address %>
   </p>
   <p>
-    <%= f.label :city %><br />
-    <%= f.select :city, City.list %>
+    <%= f.label :city_id %><br />
+    <%= f.collection_select :city_id, City.find(:all, :order => "name ASC"), :id, :name %> or type it <%= f.text_field :manual_city, :size => 6 %>
   </p>
   <p>
     <%= f.label :state %><br />

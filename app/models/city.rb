@@ -1,4 +1,7 @@
-class City
+class City < ActiveRecord::Base
+  has_many :stores, :dependent => :destroy
+  has_many :deliveries, :through => :stores
+  
   # All Cities in Nebraska
   def self.list
     [

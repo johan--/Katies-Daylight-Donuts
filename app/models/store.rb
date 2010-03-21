@@ -1,5 +1,5 @@
 class Store < ActiveRecord::Base
-  
+  belongs_to :city
   belongs_to :user, :dependent => :destroy # customer
   has_many :deliveries, :dependent => :destroy
   has_many :delivery_presets, :dependent => :destroy
@@ -7,6 +7,7 @@ class Store < ActiveRecord::Base
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
+  before_validation :find_or_create_city
   
   validates_uniqueness_of :name # important!
   
@@ -17,6 +18,8 @@ class Store < ActiveRecord::Base
   validates_length_of :state, :is => 2
   
   acts_as_mappable
+  
+  attr_accessor :manual_city
   
   def display_name
     @display_name ||= [name, store_no].join(" - ")
@@ -52,6 +55,10 @@ class Store < ActiveRecord::Base
   end
 
   private
+
+  def find_or_create_city
+    self.city = City.find_or_create_by_name(self.manual_city) unless self.manual_city.nil?
+  end
   
   def get_geocode
     gc = Geokit::Geocoders::YahooGeocoder.geocode "#{address}, #{city}, #{state}"
