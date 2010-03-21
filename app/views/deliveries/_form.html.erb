@@ -28,6 +28,10 @@
     <%= f.hidden_field :employee_id, :value => Employee.drivers.first unless Employee.drivers.empty? %>
   <% end %>
     <br />
+    
+    <p>
+      <%= icon "lock" %> <%= f.check_box :locked %> <%= f.label :locked %>
+    </p>
   
   <%= link_to_function "Add Item" do |page|
     page.insert_html(:bottom, :line_items, :partial => "line_item", :object => @delivery.line_items.build)

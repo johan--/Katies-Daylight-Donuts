@@ -8,6 +8,12 @@ class DeliveriesController < ApplicationController
   
   def index
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    
+    # Order History
+    if params[:store_id] && store = Store.find(params[:store_id])
+      @delivery_klass = store.deliveries
+    end
+    
     if params[:status] == "pending"
       @deliveries = @delivery_klass.pending
     elsif params[:status] == "delivered"
@@ -156,6 +162,7 @@ class DeliveriesController < ApplicationController
 
   def print_todays
     @deliveries = Delivery.pending.by_date
+    @deliveries.update_all(:locked => true)
     render :layout => false
   end
   

@@ -57,6 +57,8 @@
 
 
 <% content_for :sidebar do %>
+  <%= button "Order History", store_deliveries_path(@store, :status => "delivered") %>
+
   <% if @current_user.super? %>
     <p>This store belongs to <%= link_to @store.user.username, @store.user %></p>
     <br />
