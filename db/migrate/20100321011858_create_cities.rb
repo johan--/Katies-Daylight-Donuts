@@ -7,7 +7,7 @@ class CreateCities < ActiveRecord::Migration
     
     City.list.each do |city|
       city = City.find_or_create_by_name(city)
-      stores_in_city = Store.find(:all, :conditions => ["city = ?", city])
+      stores_in_city = Store.find(:all, :conditions => ["city = ?", city.name])
       stores_in_city.each do |store|
         store.city = city
         store.save
