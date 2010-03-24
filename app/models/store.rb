@@ -58,7 +58,7 @@ class Store < ActiveRecord::Base
   private
 
   def find_or_create_city
-    self.city = City.find_or_create_by_name(self.manual_city) unless self.manual_city.nil?
+    self.city = City.find_or_create_by_name(self.manual_city) unless self.manual_city.blank?
   end
   
   def get_geocode

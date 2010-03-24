@@ -1,8 +1,26 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Store do
-  fixtures :stores
+  fixtures :stores, :cities
   
+  
+  context "with a new city" do
+    it "should create the store and the city" do
+      store = stores(:one)
+      store.manual_city = "Timbucktu"
+      store.save
+      store.city.name.should == "Timbucktu"
+    end
+  end
+  
+  context "with an existing city" do
+    it "should create the store with the city" do
+      store = stores(:one)
+      store.city = cities(:one)
+      store.save
+      store.city.name.should == "Grand Island"
+    end
+  end
   
   context "without an email" do
     it "should be valid without an email" do
