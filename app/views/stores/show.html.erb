@@ -59,7 +59,11 @@
   <%= button "Order History", delivered_store_deliveries_path(@store) %>
 
   <% if @current_user.super? %>
-    <p>This store belongs to <%= link_to @store.user.username, @store.user %></p>
+    <% if @store.user %>
+      <p>This store belongs to <%= link_to @store.user.username, @store.user %></p>
+  <% else %>
+    <p>This store does <strong>NOT</strong> have a user account. Please add an email address to create their account.</p>
+  <% end %>
     <br />
   <% end %>
   
