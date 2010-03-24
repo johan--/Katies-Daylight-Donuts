@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   end
   
   def super?
-    self.username == "admin"
+    self.username == "admin" || self.admin?
   end
   
   def admin?

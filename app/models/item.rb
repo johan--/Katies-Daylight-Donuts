@@ -15,15 +15,16 @@ class Item < ActiveRecord::Base
     @types ||= TYPES.collect{ |t| t.titleize }
   end
   
-  def self.metric_chart
-    chrt = GoogleChart.pie_3d_400x100(metrics.freeze)
+  def self.metric_chart(store = nil)
+    chrt = GoogleChart.pie_3d_400x100(metrics(store).freeze)
     chrt.colors = CHART_COLORS[:pie] * (self.count / 2).round
     chrt
   end
   
-  def self.metrics
+  def self.metrics(store = nil)
     m = {}
-    all.each do |item|
+    collection = store.nil? ? all : store.line_items.map(&:items)
+    collection.each do |item|
       m["#{item.name}"] = item.line_items.map(&:quantity).to_s.sum
     end
     m

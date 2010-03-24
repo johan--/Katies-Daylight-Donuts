@@ -2,6 +2,7 @@ class DeliveriesController < ApplicationController
   before_filter :login_required, :except => [:index]
   before_filter :current_user_session
   before_filter :find_delivery_with_item, :only => [:add_item, :remove_item]
+  before_filter :get_current_weather, :only => [:index,:pending,:delivered]
 
   auto_complete_for :item, :name
   auto_complete_for :item, :item_type

@@ -1,25 +1,13 @@
 one:
-  name: MyString
-  store_no: MyString
-  address: MyString
-  city: MyString
-  state: MyString
-  country: MyString
-  zipcode: MyString
-  phone: MyString
-  fax: MyString
-  email: MyString
-  url: MyString
+  name: Pump and Pantry
+  store_no: 23
+  address: 110 W. Schuff
+  city_id: 1
+  state: NE
+  country: US
+  zipcode: 68802
+  phone: 3083815555
+  fax: 3083815555
+  email: test@example.com
+  url: example.com
 
-two:
-  name: MyString
-  store_no: MyString
-  address: MyString
-  city: MyString
-  state: MyString
-  country: MyString
-  zipcode: MyString
-  phone: MyString
-  fax: MyString
-  email: MyString
-  url: MyString

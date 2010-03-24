@@ -1,10 +1,19 @@
 <% title "Dashboard" %>
 
 <% content_for :toolbar do %>
-  Weather: <%= weather_icon(@weather.condition) %> <%= @weather.condition.text %> and <%= @weather.condition.temp %> <%= @weather.units.temperature %>
+  <%= render :partial => "shared/weather" %>
 <% end %>
 
 <div class="span-24">
+  <div class="span-11 metric">
+    <h1><%= icon "money" %> Recent Activity</h1>
+    <ol>
+    <% Delivery.all(:limit => 4).each do |delivery| %>
+      <li><strong><%= delivery.store.display_name %></strong>, <%= link_to delivery.description, store_delivery_path(delivery.store, delivery) %></li>
+    <% end %>
+    </ol>
+  </div>
+  
   <div class="span-11 metric">
     <h1><%= icon "money" %> Buybacks</h1>
     <%= image_tag BuyBack.metric_chart.to_url %>
@@ -12,7 +21,7 @@
   
   <div class="span-11 metric">
     <h1><%= icon "flask" %> Items</h1>
-    <%= image_tag Item.metric_chart.to_url %>
+    <%= image_tag Item.metric_chart(Store.first).to_url %>
   </div>
 </div>
 

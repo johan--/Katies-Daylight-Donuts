@@ -71,19 +71,22 @@
   <% end %>
 <% end %>
 
-<% if current_user.user.admin? %>
+
 <% content_for :toolbar do %>
-  <% if Delivery.pending.size > 0 %>
-    <%= link_to "Show Route", map_deliveries_path, :class => "toolbutton" %>
+  <% if current_user.user.admin? %>
+    <% if Delivery.pending.size > 0 %>
+      <%= link_to "Show Route", map_deliveries_path, :class => "toolbutton" %>
+    <% end %>
+    <%= link_to "Pending", pending_deliveries_path, :class => "toolbutton" %>    <%= link_to "Delivered", delivered_deliveries_path, :class => "toolbutton" %>
   <% end %>
-  <%= link_to "Pending", pending_deliveries_path, :class => "toolbutton" %> <%= link_to "Delivered", delivered_deliveries_path, :class => "toolbutton" %>
+  <span><%= render :partial => "shared/weather" if @weather %></span>
 <% end %>
-<% end %>
+
 
 <% content_for :sidebar do %>
   <%= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.super? %>
   <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
-  <%= button "Print Tickets", print_todays_deliveries_path %>
+  <%= button "Print Tickets", print_todays_deliveries_path if @current_user.super? %>
   <h2>Deliveries</h2>
   (<%= @delivery_klass.pending.count %>) <%= link_to "Pending Deliveries", pending_deliveries_path %><br />
   (<%= @delivery_klass.delivered.count %>) <%= link_to "Delivered Deliveries", delivered_deliveries_path %>

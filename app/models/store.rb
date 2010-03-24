@@ -2,6 +2,7 @@ class Store < ActiveRecord::Base
   belongs_to :city
   belongs_to :user, :dependent => :destroy # customer
   has_many :deliveries, :dependent => :destroy
+  has_many :line_items, :through => :deliveries
   has_many :delivery_presets, :dependent => :destroy
     
   # Geocode the locations for mapping
@@ -11,8 +12,8 @@ class Store < ActiveRecord::Base
   
   validates_uniqueness_of :name # important!
   
-  validates_presence_of :name, :email, :address, :city, :state, :country, :zipcode # important!
-  
+  validates_presence_of :name, :address, :city, :state, :country, :zipcode # important!
+    
   validates_numericality_of :zipcode
   
   validates_length_of :state, :is => 2

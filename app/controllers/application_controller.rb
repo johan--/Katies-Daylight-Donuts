@@ -10,6 +10,11 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
 
   protected
+  
+  def get_current_weather
+    @client = YahooWeather::Client.new
+    @weather = @client.lookup_by_woeid(12787871) # central city
+  end
 
   def employee_role_required
     unless @current_user.admin? || @current_user.employee?

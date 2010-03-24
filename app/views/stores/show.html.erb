@@ -22,6 +22,12 @@
   <%=h @store.url if @store.url %>
 </p>
 
+<p>
+  <%= link_to "Edit", edit_store_path(@store) %> |
+  <%= link_to "Destroy", @store, :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", stores_path %>
+</p>
+
 <div id="delivery_schedule">
 <table>
   <tr>
@@ -49,15 +55,8 @@
 </table>
 </div>
 
-<p>
-  <%= link_to "Edit", edit_store_path(@store) %> |
-  <%= link_to "Destroy", @store, :confirm => 'Are you sure?', :method => :delete %> |
-  <%= link_to "View All", stores_path %>
-</p>
-
-
 <% content_for :sidebar do %>
-  <%= button "Order History", store_deliveries_path(@store, :status => "delivered") %>
+  <%= button "Order History", delivered_store_deliveries_path(@store) %>
 
   <% if @current_user.super? %>
     <p>This store belongs to <%= link_to @store.user.username, @store.user %></p>
