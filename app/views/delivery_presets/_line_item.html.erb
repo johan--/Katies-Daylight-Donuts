@@ -1,4 +1,4 @@
-<% fields_for "delivery_preset[line_items]" do |line_item_field| %>
+<% fields_for "delivery_preset[line_items][]", line_item, :index => nil do |line_item_field| %>
 <% if line_item.item.nil? %>
     <tr>
       <td><%= line_item_field.collection_select :item_id, Item.all, :id, :name %></td>

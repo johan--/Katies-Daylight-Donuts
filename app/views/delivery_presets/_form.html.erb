@@ -10,13 +10,7 @@
       <th>&nbsp;</th>
       <th>&nbsp;</th>
     </tr>
-    <% Item.available.each do |item| %>
-      <% if line_item = @delivery_preset.line_items.detect{|li| li.item == item} %>
-        <%= render :partial => "delivery_presets/line_item", :object => line_item %>
-      <% else %>
-        <%= render :partial => "delivery_presets/line_item", :object => @delivery_preset.line_items.build(:quantity => 0, :item => item) %>
-      <% end %>
-    <% end %>
+    <%= render :partial => "delivery_presets/line_item", :collection => @delivery_preset.line_items %>
   </table>
   
   <p><%= f.submit "Save" %></p>
