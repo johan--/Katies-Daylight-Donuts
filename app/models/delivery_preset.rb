@@ -22,9 +22,13 @@ class DeliveryPreset < ActiveRecord::Base
     args.first.each do |line_item|
       item = Item.find(line_item[:item_id])
       if existing_line_item = self.line_items.detect{ |l| l.item == item }
-        existing_line_item.quantity = line_item[:quantity]
-        existing_line_item.price    = line_item[:price]
-        existing_line_item.save!
+        if line_item[:quantity].to_i == 0 
+          existing_line_item.destroy
+        else
+          existing_line_item.quantity = line_item[:quantity]
+          existing_line_item.price    = line_item[:price]
+          existing_line_item.save!
+        end
       else
         self.line_items.create(:item => item, :quantity => line_item[:quantity], :price => line_item[:price])
       end
