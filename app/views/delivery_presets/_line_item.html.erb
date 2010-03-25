@@ -1,9 +1,26 @@
 <% fields_for "delivery_preset[line_items]" do |line_item_field| %>
-<tr>
-  <td class="line"><%= line_item_field.collection_select :item_id, Item.available, :id, :name %></td>
-  <td class="line"><%= line_item_field.text_field :quantity, :size => 4 %></td>
-  <td class="line"><%= link_to "Remove", remove_item_delivery_preset_path(line_item.delivery_preset, :item_id => line_item.id) %></td>
-  <td class="line">&nbsp;</td>
-  
-</tr>
+<% if line_item.item.nil? %>
+    <tr>
+      <td><%= line_item_field.collection_select :item_id, Item.all, :id, :name %></td>
+      <td>&nbsp;</td>
+      
+      <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :value => 12, :size => 5 %></td>
+      <td align="right" style="text-align: right;">
+        <%= line_item_field.text_field :price, :value => 0.00, :size => 10, :class => "price" if @current_user.super?  %>
+      </td>
+      <td>&nbsp;</td>
+    </tr>    
+<% else %>
+  <tr>
+    <td><strong><%= line_item.item.name %></strong></td>
+    <td><strong><%= line_item.item.item_type.titleize if @current_user.super?  %></strong></td>
+    <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :size => 5 %></td>
+    <td align="right" style="text-align: right;">
+      <%= line_item_field.text_field :price, :value => line_item.item.price, :size => 10, :class => "price" if @current_user.super?  %>
+      <%= line_item_field.hidden_field :item_id, :value => line_item.item.id %>
+    </td>
+    <td><%= link_to(icon("pencil-small"), edit_item_path(line_item.item)) if @current_user.super? %></td>
+
+  </tr>
+<% end %>
 <% end %>

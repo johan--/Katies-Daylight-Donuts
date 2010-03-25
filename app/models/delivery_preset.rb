@@ -19,7 +19,7 @@ class DeliveryPreset < ActiveRecord::Base
   end
   
   def update_line_items(*args)
-    args.first.each do |line_item|
+    args.each do |line_item|
       item = Item.find(line_item[:item_id])
       if existing_line_item = self.line_items.detect{ |l| l.item == item }
         existing_line_item.quantity = line_item[:quantity]
