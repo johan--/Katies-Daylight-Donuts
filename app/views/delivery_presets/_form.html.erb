@@ -1,5 +1,6 @@
 <% form_for @delivery_preset do |f| %>
   <%= f.error_messages %>
+  <h1><%= @delivery_preset.day_of_week.titleize %></h1>
   <p>
     <strong><%= @delivery_preset.store.display_name %></strong>
   </p>  
