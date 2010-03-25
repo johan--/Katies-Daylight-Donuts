@@ -30,7 +30,8 @@ class DeliveryPresetsController < ApplicationController
   def copy
     @delivery_preset = DeliveryPreset.find(params[:id])
     @copy_from_delivery_preset = DeliveryPreset.find(params[:copy_from_id])
-    if @delivery_preset.line_items = @copy_from_delivery_preset.line_items && @delivery_preset.save
+    @delivery_preset.line_items = @copy_from_delivery_preset.line_items
+    if @delivery_preset.save
       flash[:notice] = "Copy complete"
     else
       flash[:warning] = "Copy failed"
