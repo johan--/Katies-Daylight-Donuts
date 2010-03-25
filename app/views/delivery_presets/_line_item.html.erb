@@ -14,7 +14,7 @@
   <tr>
     <td><strong><%= line_item.item.name %></strong></td>
     <td><strong><%= line_item.item.item_type.titleize if @current_user.super?  %></strong></td>
-    <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :size => 5 %></td>
+    <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :size => 5 %> Units.</td>
     <td align="right" style="text-align: right;">
       <%= line_item_field.text_field :price, :value => line_item.item.price, :size => 10, :class => "price" if @current_user.super?  %>
       <%= line_item_field.hidden_field :item_id, :value => line_item.item.id %>

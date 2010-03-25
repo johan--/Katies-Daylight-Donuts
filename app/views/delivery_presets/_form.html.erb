@@ -11,6 +11,9 @@
       <th>&nbsp;</th>
     </tr>
     <%= render :partial => "delivery_presets/line_item", :collection => @delivery_preset.line_items %>
+    <% (Item.available - @delivery_preset.items).each do |item| %>
+      <%= render :partial => "delivery_presets/line_item", :object => @delivery_preset.line_items.build(:item => item) %>
+    <% end %>
   </table>
   
   <p><%= f.submit "Save" %></p>

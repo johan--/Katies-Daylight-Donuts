@@ -29,7 +29,7 @@ class DeliveryPreset < ActiveRecord::Base
           existing_line_item.price    = line_item[:price]
           existing_line_item.save!
         end
-      else
+      elsif line_item[:quantity].to_i != 0
         self.line_items.create(:item => item, :quantity => line_item[:quantity], :price => line_item[:price])
       end
     end
