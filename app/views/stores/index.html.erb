@@ -1,29 +1,18 @@
 <% title "Stores" %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Store No</th>
-    <th>Address</th>
-    <th>Zipcode</th>
-    <th>Phone</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<ul id="stores">
   <% for store in @stores %>
-    <tr>
-      <td><%= link_to h(store.name), store %></td>
-      <td><%=h store.store_no %></td>
-      <td><%=h store.address %></td>
-      <td><%=h store.zipcode %></td>
-      <td><%=h store.phone %></td>
-      <td><%= link_to icon('eye'), store %></td>
-      <td><%= link_to icon('pencil'), edit_store_path(store) %></td>
-      <td><%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %></td>
-    </tr>
+    <li>
+      <div class="span-12">
+        <%= link_to h(store.name), store %></br>
+        <%=h store.display_name %> 
+      </div>
+      <%= link_to icon('eye'), store %> 
+      <%= link_to icon('pencil'), edit_store_path(store) %> 
+      <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
+    </li>
   <% end %>
-</table>
+</ul>
 
 
 <% content_for :sidebar do %>

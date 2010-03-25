@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to :delivery
-  has_many :line_items
+  has_many :line_items, :dependent => :destroy
   
   validates_presence_of :name, :item_type, :price
   validates_uniqueness_of :name
