@@ -17,7 +17,7 @@ class DeliveryPresetsController < ApplicationController
     @delivery_preset = DeliveryPreset.new(params[:delivery_preset])
     if @delivery_preset.save
       flash[:notice] = "Successfully created deliverypreset."
-      redirect_to edit_store_path(@delivery_preset.store)
+      redirect_to edit_delivery_preset_path(@delivery_preset.store)
     else
       render :action => 'new'
     end
@@ -32,7 +32,7 @@ class DeliveryPresetsController < ApplicationController
     line_items = params[:delivery].delete(:line_items)
     if @delivery_preset.update_attributes(params[:delivery_preset]) && @delivery_preset.update_line_items(line_items)
       flash[:notice] = "Successfully updated deliverypreset."
-      redirect_to edit_store_path(@delivery_preset.store)
+      redirect_to edit_delivery_preset_path(@delivery_preset.store)
     else
       render :action => 'edit'
     end
