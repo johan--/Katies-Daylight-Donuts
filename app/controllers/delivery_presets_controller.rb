@@ -1,4 +1,6 @@
 class DeliveryPresetsController < ApplicationController
+  before_filter :login_required
+  
   def index
     @delivery_presets = DeliveryPreset.all
   end
@@ -27,7 +29,8 @@ class DeliveryPresetsController < ApplicationController
   
   def update
     @delivery_preset = DeliveryPreset.find(params[:id])
-    if @delivery_preset.update_attributes(params[:delivery_preset])
+    line_items = params[:delivery].delete(:line_items)
+    if @delivery_preset.update_attributes(params[:delivery_preset]) && @delivery_preset.update_line_items(line_items)
       flash[:notice] = "Successfully updated deliverypreset."
       redirect_to @delivery_preset
     else

@@ -5,7 +5,7 @@
   </p>
   <p>
     <%= f.label :day_of_week %><br />
-    <%= f.select :day_of_week, %w(SUN MON TUE WED THU FRI SAT), {},{:disabled => true} %>
+    <%= f.select :day_of_week, %w(SUN MON TUE WED THU FRI SAT), {},{:disabled => false} %>
   </p>
   
   <table id="line_items">
@@ -15,9 +15,13 @@
       <th>&nbsp;</th>
       <th><%= link_to_remote "Add Item", :url => add_item_delivery_preset_path(@delivery_preset) %></th>
     </tr>
-  <% @delivery_preset.line_items.each do |line_item| %>
-      <%= render :partial => "line_item", :locals => {:line_item => line_item} %>
-  <% end %>
+    <% Item.available.each do |item| %>
+      <% if line_item = @delivery_preset.line_items.detect{|li| li.item == item} %>
+        <%= render :partial => "deliveries/line_item", :object => line_item %>
+      <% else %>
+        <%= render :partial => "deliveries/line_item", :object => @delivery_preset.line_items.build(:quantity => 0, :item => item) %>
+      <% end %>
+    <% end %>
   </table>
   
   <p><%= f.submit "Save" %></p>
