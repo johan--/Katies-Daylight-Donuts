@@ -2,12 +2,7 @@
   <%= f.error_messages %>
   <p>
     <strong><%= @delivery_preset.store.display_name %></strong>
-  </p>
-  <p>
-    <%= f.label :day_of_week %><br />
-    <%= f.select :day_of_week, %w(SUN MON TUE WED THU FRI SAT), {},{:disabled => false, :value => @delivery_preset.day_of_week.upcase } %>
-  </p>
-  
+  </p>  
   <table id="line_items">
     <tr>
       <th>Item</th>
