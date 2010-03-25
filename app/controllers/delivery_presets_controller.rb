@@ -27,6 +27,20 @@ class DeliveryPresetsController < ApplicationController
     @delivery_preset = DeliveryPreset.find(params[:id])
   end
   
+  def copy
+    @delivery_preset = DeliveryPreset.find(params[:id])
+    @copy_from_delivery_preset = DeliveryPreset.find(params[:copy_from_id])
+    attributes = @copy_from_delivery_preset.attributes.dup
+    attributes.delete(:id)
+    attributes.delete(:day_of_week)
+    if @delivery_preset.update_attributes(attributes)
+      flash[:notice] = "Copy complete"
+    else
+      flash[:warning] = "Copy failed"
+    end
+    redirect_to edit_store_delivery_preset_path(@delivery_preset.store, @delivery_preset)
+  end
+  
   def update
     @delivery_preset = DeliveryPreset.find(params[:id])
     line_items = params[:delivery_preset].delete(:line_items)

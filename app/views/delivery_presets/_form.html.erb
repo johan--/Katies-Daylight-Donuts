@@ -19,3 +19,12 @@
   
   <p><%= f.submit "Save" %> <%= link_to "Cancel", @delivery_preset.store %></p>
 <% end %>
+
+<% content_for :sidebar do %>
+<p>Select a day of the week to copy from.</p>
+  <% form_tag :action => "copy", :controller => "delivery_presets" do %>
+    <%= select_tag :id, @delivery_preset.store.delivery_presets.collect{|dp| "<option value='#{dp.id}'>#{dp.day_of_week.titleize}</option>" if dp != @delivery_preset }.compact %> 
+    <%= hidden_field_tag :copy_from_id, @delivery_preset.id %>
+    <%= submit_tag "Copy" %>
+  <% end %>
+<% end %>

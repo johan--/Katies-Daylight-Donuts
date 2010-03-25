@@ -7,7 +7,9 @@ ActionController::Routing::Routes.draw do |map|
   }
 
   map.resources :stores do |store| 
-    store.resources :delivery_presets
+    store.resources :delivery_presets, :collection => {
+      :copy => :any
+    }
     store.resources :deliveries, :member => { 
         :deliver => :any,
         :undeliver => :any,
