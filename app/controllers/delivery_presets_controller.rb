@@ -30,10 +30,7 @@ class DeliveryPresetsController < ApplicationController
   def copy
     @delivery_preset = DeliveryPreset.find(params[:id])
     @copy_from_delivery_preset = DeliveryPreset.find(params[:copy_from_id])
-    attributes = @copy_from_delivery_preset.attributes.dup
-    attributes.delete(:id)
-    attributes.delete(:day_of_week)
-    if @delivery_preset.update_attributes(attributes)
+    if @delivery_preset.line_items = @copy_from_delivery_preset.line_items && @delivery_preset.save
       flash[:notice] = "Copy complete"
     else
       flash[:warning] = "Copy failed"
