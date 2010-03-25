@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_timezone
   # Scrub sensitive parameters from your log
-  # filter_parameter_logging :password
+  filter_parameter_logging :password
 
   protected
   
