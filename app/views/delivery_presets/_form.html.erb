@@ -1,9 +1,9 @@
 <% form_for @delivery_preset do |f| %>
   <%= f.error_messages %>
-  <h1><%= @delivery_preset.day_of_week.titleize %></h1>
   <p>
-    <strong><%= @delivery_preset.store.display_name %></strong>
-  </p>  
+    <strong><%= link_to h(@delivery_preset.store.display_name), @delivery_preset.store %></strong>
+  </p>
+  <p><%= icon("calendar", :style => "vertical-align: bottom;") %><strong><%= @delivery_preset.day_of_week.titleize %></strong></p>
   <table id="line_items">
     <tr>
       <th>Item</th>
@@ -17,5 +17,5 @@
     <% end %>
   </table>
   
-  <p><%= f.submit "Save" %></p>
+  <p><%= f.submit "Save" %> <%= link_to "Cancel", @delivery_preset.store %></p>
 <% end %>
