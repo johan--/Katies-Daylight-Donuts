@@ -13,7 +13,7 @@
       <th>Item</th>
       <th>Quantity</th>
       <th>&nbsp;</th>
-      <th><%= link_to_remote "Add Item", :url => add_item_delivery_preset_path(@delivery_preset) %></th>
+      <th>&nbsp;</th>
     </tr>
     <% Item.available.each do |item| %>
       <% if line_item = @delivery_preset.line_items.detect{|li| li.item == item} %>
