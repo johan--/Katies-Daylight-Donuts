@@ -33,9 +33,7 @@
       <%= icon "lock" %> <%= f.check_box :locked %> <%= f.label :locked %>
     </p>
   
-  <%= link_to_function "Add Item" do |page|
-    page.insert_html(:bottom, :line_items, :partial => "line_item", :object => @delivery.line_items.build)
-  end %>
+
   <table style="width: 100%;" id="line_items">
     <tr>
       <th>Name</th>
@@ -45,9 +43,13 @@
       <th>&nbsp;</th>
     </tr>
     
-      <% for line_item in @delivery.line_items %>
+    <% Item.available.each do |item| %>
+      <% if line_item = @delivery.line_items.detect{|li| li.item == item} %>
         <%= render :partial => "deliveries/line_item", :object => line_item %>
-     <% end %>
+      <% else %>
+        <%= render :partial => "deliveries/line_item", :object => @delivery.line_items.build(:quantity => 0, :item => item) %>
+      <% end %>
+    <% end %>
   </table>
   <%= f.submit :save %>
   
