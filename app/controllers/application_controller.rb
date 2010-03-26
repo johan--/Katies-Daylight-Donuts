@@ -10,6 +10,18 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   protected
+
+  # Custom Error Pages
+  def rescue_optional_error_file(status_code)
+    known_codes = ["404", "422", "500"]
+    status = interpret_status(status_code)
+
+    if known_codes.include?(status_code)
+      render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'application.html.erb'
+    else
+      render :template => "/errors/unknown.html.erb", :status => status, :layout => 'application.html.erb'
+    end
+  end
   
   def get_current_weather
     @client = YahooWeather::Client.new
@@ -43,7 +55,7 @@ class ApplicationController < ActionController::Base
   
   def current_user_session
     return @current_user if defined?(@current_user_sessiom)
-    @current_user_session = UserSession.find
+    @current_user_session ||= UserSession.find
   end
   
   def current_user
