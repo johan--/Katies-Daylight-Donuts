@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     :add_item => :any
   }
 
-  map.resources :stores do |store| 
+  map.resources :stores, :collection => {:positions => :any} do |store| 
     store.resources :delivery_presets, :collection => {
       :copy => :any
     }
@@ -23,6 +23,7 @@ ActionController::Routing::Routes.draw do |map|
       :pending => :get
     }, :has_many => [:buy_backs, :items, :comments]
   end
+  
 
   map.resources :comments
 
