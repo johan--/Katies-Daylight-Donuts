@@ -1,11 +1,21 @@
 <div style="background-color: #192456; padding: 1em;">
   <h1><a href="http://www.katiesdaylightdonuts.com"><img src="http://www.katiesdaylightdonuts.com/images/logo.png" style="border: none;" /></a></h1>
   <div style="background-color: #fff; padding: 0.5em;">
-    <p style="color: #000; font-family: Helvetica;">Welcome to Katies Daylight Donuts Online Ordering System. Your account <stromg><%= @user.username %></strong> has been created and is ready for you to begin using. Please <a href="<%= edit_password_reset_url(@user.perishable_token, :host => current_host) %>">click here</a> to set your password and begin placing online orders.</p>
+    <p><strong style="color: #000; font-family: Helvetica;">Welcome to Katies Daylight Donuts Online Ordering System. Your account (<em><%= @user.username %></em>) has been created and is ready for you to begin using. Please click the green accept button below to set your password and begin placing online orders.</strong></p>
+    
+    <div style="color: #E5EBE0; border: 1px solid #B9B9B9; width: 85%; padding: 0.5em; margin: 1em;">
+      <a href="<%= edit_password_reset_url(@user.perishable_token, :host => current_host) %>"><img src="http://<%= current_host %>/images/buttons/default/button-accept.png" alt="Accept Invitation" title="Accept Invitation" border="0" valign="middle"/></a>
+    </div>
       
-      <h1>Benefits of placing orders online</h1>
-      <p>
-        Placing orders online allow you to easily review and make changes to your delivery accurately and efficiently. 
-      </p>
+      <font size="4">
+      <strong>Benefits of using the online ordering system</strong>
+      <ol>
+        <li>Easily review current and upcoming orders 'real time'.</li>
+        <li>Make changes on the fly up to the minute we begin preparing the order for delivery.</li>
+        <li>Detailed logs, keep track of Deliveries, Buy Backs, and more using any of our online tools.</li>
+        <li>Leave comments about a delivery.</li>
+        <li>Receive notifications when changes are made to a scheduled delivery.</li>
+      </ol>
+      </font>
   </div>
 </div>

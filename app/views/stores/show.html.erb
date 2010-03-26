@@ -41,7 +41,7 @@
     <% end %>
   </tr>
   <tr>
-    <% @store.delivery_presets.sort_by{|dp| dp.day_of_week }.each do |dp| %>
+    <% @store.delivery_presets.sort_by{|dp| dp.created_at }.each do |dp| %>
       <td>
         <ul>
         <% dp.line_items.each do |line_item| %>

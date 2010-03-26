@@ -25,6 +25,6 @@
   <% form_tag :action => "copy", :controller => "delivery_presets" do %>
     <%= select_tag :id, @delivery_preset.store.delivery_presets.collect{|dp| "<option value='#{dp.id}'>#{dp.day_of_week.titleize}</option>" if dp != @delivery_preset }.compact %> 
     <%= hidden_field_tag :copy_from_id, @delivery_preset.id %>
-    <%= submit_tag "Copy" %>
+    <%= image_submit_tag "buttons/default/button-copy.png" %>
   <% end %>
 <% end %>

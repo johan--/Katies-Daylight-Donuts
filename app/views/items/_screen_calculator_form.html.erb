@@ -5,5 +5,5 @@
     <%= hidden_field_tag :"item[ids][]", {}, {:value => item.id} %>
     <%= item.name %> Count:<%= text_field_tag :"item[counts][]" %><br />
   <% end %>
-  <%= submit_tag "Calculate" %>
+  <%= image_submit_tag "buttons/default/button-calculate.png" %>
 <% end %>

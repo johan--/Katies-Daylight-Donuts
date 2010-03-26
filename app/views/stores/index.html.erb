@@ -1,11 +1,10 @@
 <% title "Stores" %>
 
-<ul id="stores">
+<ul id="stores_list">
   <% for store in @stores %>
     <li>
-      <div class="span-12">
-        <%= link_to h(store.name), store %></br>
-        <%=h store.display_name %> 
+      <div class="span-12 handle">
+        <%= link_to h(store.display_name), store %></br> 
       </div>
       <%= link_to icon('eye'), store %> 
       <%= link_to icon('pencil'), edit_store_path(store) %> 
@@ -14,7 +13,8 @@
   <% end %>
 </ul>
 
-
 <% content_for :sidebar do %>
   <%= button "Add Store", new_store_path %>
 <% end %>
+
+<%= sortable_element("stores_list", :url => positions_stores_url) %>
