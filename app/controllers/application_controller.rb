@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   
   # Custom Error Pages
   def render_optional_error_file(status_code)
-    known_codes = ["404", "422", "500"]
+    known_codes = ["404", "422", "500", :not_found]
     status = interpret_status(status_code)
 
     if known_codes.include?(status_code)
