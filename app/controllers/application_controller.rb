@@ -10,9 +10,9 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
 
   protected
-
+  
   # Custom Error Pages
-  def rescue_optional_error_file(status_code)
+  def render_optional_error_file(status_code)
     known_codes = ["404", "422", "500"]
     status = interpret_status(status_code)
 
