@@ -1,17 +1,18 @@
 <% title "Login" %>
-
+<div>
 <% form_for @user_session, :html => {:id => "login_form"} do |f| %>
   <%= f.error_messages %>
   <p>
     <%= f.label :username %><br />
-    <%= f.text_field :username %>
+    <%= f.text_field :username, :class => "large", :style => "width: 250px;" %>
   </p>
   <p>
     <%= f.label :password %><br />
-    <%= f.password_field :password %>
+    <%= f.password_field :password, :class => "large", :style => "width: 250px;" %>
   </p>
   <p>
-    <%= f.submit "Submit" %> 
+    <%= image_submit_tag "../images/buttons/default/button-ok.png", :style => "vertical-align: middle" %> 
     <%= link_to "Forgot Password", password_resets_url %>
   </p>
 <% end %>
+</div>

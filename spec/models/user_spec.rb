@@ -10,13 +10,6 @@ describe User do
     }
   end
   
-  context " a new account" do
-    it "should send the initation email" do
-      User.any_instance.stubs(:valid?).returns(true)
-      User.create!(@valid_attributes)
-    end
-  end
-
   it "should be admin with and admin role" do
     User.any_instance.stubs(:valid?).returns(true)
     user = User.create(@valid_attributes)

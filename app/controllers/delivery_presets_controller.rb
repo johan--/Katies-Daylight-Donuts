@@ -28,10 +28,9 @@ class DeliveryPresetsController < ApplicationController
   end
   
   def copy
-    @delivery_preset = DeliveryPreset.find(params[:id])
-    @copy_from_delivery_preset = DeliveryPreset.find(params[:copy_from_id])
-    @delivery_preset.line_items = @copy_from_delivery_preset.line_items
-    if @delivery_preset.save
+    @delivery_preset = DeliveryPreset.find(params[:id], :joins => [:line_items])
+    @copy_from_delivery_preset = DeliveryPreset.find(params[:copy_from_id], :joins => [:line_items])
+    if @delivery_preset.copy(@copy_from_delivery_preset)
       flash[:notice] = "Copy complete"
     else
       flash[:warning] = "Copy failed"

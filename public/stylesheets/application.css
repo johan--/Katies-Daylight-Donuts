@@ -332,3 +332,29 @@ td.line{
   padding: 0.5em;
   border-bottom: 1px solid #C0C0C0;
 }
+
+form#login_form{
+  margin: 0 auto;
+  padding: 3.5em 0 0 1em;
+  background: url("../images/login-bg.png") no-repeat;
+  height: 200px;
+  width: 300px;
+}
+
+input.large{
+  font-size: 14pt;
+}
+
+/* Errors */
+
+#flash_error, #flash_warning, #flash_notice{
+  font-weight: bold;
+}
+
+#flash_error, #flash_warning{
+  color: red;
+}
+
+#flash_notice{
+  color: green;
+}

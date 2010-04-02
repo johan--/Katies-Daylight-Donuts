@@ -16,7 +16,7 @@ test:
   timeout: 5000
 
 production:
-  adapter: myswl
-  database: donutdepot_production
+  adapter: mysql
+  database: donutdepot_development
   pool: 5
   timeout: 5000

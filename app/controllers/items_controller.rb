@@ -1,6 +1,5 @@
 class ItemsController < ApplicationController
   before_filter :login_required
-  
   auto_complete_for :item, :name
   
   def index

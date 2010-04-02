@@ -52,7 +52,7 @@ class User < ActiveRecord::Base
   end
   
   def customer?
-    has_role?(:customer)
+    has_role?(:customer) || !store.nil?
   end
 
   def to_param

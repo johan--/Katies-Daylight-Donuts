@@ -56,7 +56,7 @@
           <%- end -%>
         </div>
         
-        <div id="inner" class="span-16">
+        <div id="inner" class="<%= @content_for_sidebar.nil? ? "span-24" : "span-16" %>">
           <%= yield %>
         </div>
         

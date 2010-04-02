@@ -6,7 +6,7 @@ class StoresController < ApplicationController
   end
   
   def show
-    @store = Store.find(params[:id])
+    @store = Store.find(params[:id], :joins => [:delivery_presets], :include => [:deliveries, :user])
     @store.delivery_presets.build_defaults if @store.delivery_presets.empty?
   end
   
@@ -36,6 +36,10 @@ class StoresController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+  
+  def positions
+    raise "Positions Called"
   end
   
   def destroy
