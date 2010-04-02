@@ -38,8 +38,11 @@ class StoresController < ApplicationController
     end
   end
   
-  def positions
-    raise "Positions Called"
+  def sort
+    params[:stores].each_with_index do |id, index|
+      Store.update_all(['position = ?', index+1],['id = ?', id])
+    end
+    render :nothing => true
   end
   
   def destroy
