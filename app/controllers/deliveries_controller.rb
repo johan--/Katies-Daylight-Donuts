@@ -168,7 +168,7 @@ class DeliveriesController < ApplicationController
   end
   
   def generate_todays
-    Store.all.each do |store|
+    Store.all_by_position.each do |store|
       store.deliveries.create_default_delivery
     end
     redirect_to deliveries_path
