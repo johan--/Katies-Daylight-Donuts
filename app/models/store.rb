@@ -22,6 +22,8 @@ class Store < ActiveRecord::Base
   
   attr_accessor :manual_city
   
+  named_scope :all_by_position, :order => "position asc"
+  
   def display_name
     @display_name ||= [name, store_no].join(" - ")
   end

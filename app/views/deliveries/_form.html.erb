@@ -9,7 +9,7 @@
   <p>
     <%= f.label :store_id %><br />
     <% if Store.count > 0 %>
-      <%= f.collection_select :store_id, Store.all, :id, :display_name %>
+      <%= f.collection_select :store_id, Store.all_by_position, :id, :display_name %>
       <%= link_to "Add a new store", new_store_path %>
     <% end %>
   </p>

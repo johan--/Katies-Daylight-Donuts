@@ -2,7 +2,7 @@ class StoresController < ApplicationController
   before_filter :login_required
   
   def index
-    @stores = Store.all
+    @stores = Store.all_by_position
   end
   
   def show
