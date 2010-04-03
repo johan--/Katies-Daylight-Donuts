@@ -1,4 +1,4 @@
-one:
+tim:
   id: 1
   firstname: Tim
   lastname: Matheson
@@ -8,7 +8,7 @@ one:
   clockin_id: 420
   state: clocked_out
 
-two:
+klynn:
   id: 2
   firstname: Klynn
   lastname: Knoll

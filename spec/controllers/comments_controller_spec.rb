@@ -4,34 +4,37 @@ describe CommentsController do
   fixtures :all
   integrate_views
   
+  before(:each) do
+    login
+  end
+  
   it "update action should render edit template when model is invalid" do
     Comment.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Comment.first
-    response.should render_template(:edit)
+    put :update, :id => comments(:one)
+    response.body.should be_blank
   end
   
   it "update action should redirect when model is valid" do
     Comment.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Comment.first
-    response.should redirect_to(root_url)
+    put :update, :id => comments(:one)
+    response.should redirect_to(deliveries_url)
   end
   
   it "create action should render new template when model is invalid" do
     Comment.any_instance.stubs(:valid?).returns(false)
     post :create
-    response.should render_template(:new)
+    response.body.should be_blank
   end
   
   it "create action should redirect when model is valid" do
     Comment.any_instance.stubs(:valid?).returns(true)
     post :create
-    response.should redirect_to(root_url)
+    response.should redirect_to(deliveries_url)
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    comment = Comment.first
-    delete :destroy, :id => comment
-    response.should redirect_to(root_url)
-    Comment.exists?(comment.id).should be_false
+    delete :destroy, :id => comments(:one)
+    response.should redirect_to(deliveries_url)
+    Comment.exists?(comments(:one).id).should be_false
   end
 end

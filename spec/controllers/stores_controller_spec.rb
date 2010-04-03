@@ -4,13 +4,17 @@ describe StoresController do
   fixtures :all
   integrate_views
   
+  before(:each) do
+    login
+  end
+  
   it "index action should render index template" do
     get :index
     response.should render_template(:index)
   end
   
   it "show action should render show template" do
-    get :show, :id => Store.first
+    get :show, :id => stores(:one).id
     response.should render_template(:show)
   end
   
@@ -32,24 +36,24 @@ describe StoresController do
   end
   
   it "edit action should render edit template" do
-    get :edit, :id => Store.first
+    get :edit, :id => stores(:one)
     response.should render_template(:edit)
   end
   
   it "update action should render edit template when model is invalid" do
     Store.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => Store.first
+    put :update, :id => stores(:one)
     response.should render_template(:edit)
   end
   
   it "update action should redirect when model is valid" do
     Store.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => Store.first
+    put :update, :id => stores(:one)
     response.should redirect_to(store_url(assigns[:store]))
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    store = Store.first
+    store = stores(:one)
     delete :destroy, :id => store
     response.should redirect_to(stores_url)
     Store.exists?(store.id).should be_false

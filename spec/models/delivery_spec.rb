@@ -2,11 +2,9 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 
 describe Delivery do
-  it "should require an employee" do
-    Delivery.create.errors.on(:employee).should == "Must be assigned to an employee."
-  end
+  fixtures :employees
   
-  it "should require a location" do
-    Delivery.create.errors.on(:location).should == "Must be assigned a delivery location."
+  it "should require an employee" do
+    Delivery.create.errors.on(:employee).should == "Driver required."
   end
 end

@@ -52,3 +52,26 @@ Spec::Runner.configure do |config|
   #
   # For more information take a look at Spec::Runner::Configuration and Spec::Runner
 end
+
+# returns current fake user 
+def current_user 
+  @current_user ||= users(:two) 
+end 
+
+# returns current session mock 
+def user_session 
+  @user_session = mock 
+  @user_session.stubs(:user).returns(current_user) 
+  @user_session.stubs(:record).returns(current_user)
+  @user_session 
+end 
+
+# logges me in 
+def login 
+  UserSession.stubs(:find).returns( user_session ) 
+end
+ 
+# logges me out 
+def logout 
+  @user_session = nil 
+end
