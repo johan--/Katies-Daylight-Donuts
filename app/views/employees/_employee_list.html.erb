@@ -1,11 +1,10 @@
 <% for employee in @employees %>
-  <tr>
-    <td><%=h employee.firstname %></td>
+  <tr onMouseOver="$('actions_for_<%= employee.object_id %>').show();" onMouseOut="$('actions_for_<%= employee.object_id %>').hide();">
+    <td><%= link_to h(employee.firstname), employee %></td>
     <td><%=h employee.lastname %></td>
     <td><%=h employee.phone %></td>
     <td><%= icon "clock-select" %><%= link_to "Timesheet", timesheet_employee_path(employee) %></td>
-    <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), employee %></td>
-    <td><%= link_to icon("pencil-small"), edit_employee_path(employee) %></td>
-    <td><%= link_to icon("cross-circle-frame"), employee, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><span  style="display: none;" id="actions_for_<%= employee.object_id %>"><%= link_to icon("pencil-small"), edit_employee_path(employee) %>
+     <%= link_to icon("cross-circle-frame"), employee, :confirm => 'Are you sure?', :method => :delete %></span></td>
   </tr>
 <% end %>

@@ -38,6 +38,7 @@
             <%= render :partial => "ticket", :locals => {:delivery => delivery } %>
           </div>
           <%= link_to icon("ticket"), "#ticket_for_#{delivery.object_id}", {:rel => "ibox&width=600&height=500", :onclick => %($('#ticket_for_#{delivery.object_id}').show())} %> 
+          
           <%= link_to_function(icon("balloon-left"), "show_comment_fields('#{ delivery.object_id}')") %>
           <%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>
           <td align="right"><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
