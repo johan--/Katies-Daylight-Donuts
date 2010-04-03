@@ -5,6 +5,7 @@
     <strong><%= link_to h(@delivery_preset.store.display_name), @delivery_preset.store %></strong>
   </p>
   <% end %>
+  <%= f.label :closed %> <%= f.check_box :closed %>
   <p><%= icon("calendar", :style => "vertical-align: bottom;") %><strong><%= @delivery_preset.day_of_week.titleize if !@delivery_preset.day_of_week.nil? %></strong></p>
   <table id="line_items">
     <tr>

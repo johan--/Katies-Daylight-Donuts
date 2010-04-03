@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+mon:
+  store_id: 1
+  day_of_week: MON
+  
+tue:
+  store_id: 2
+  day_of_week: TUE
+  
+wed:
+  store_id: 3
+  day_of_week: WED
+  
+thu:
+  store_id: 4
+  day_of_week: THU
+  
+fri:
+  store_id: 5
+  day_of_week: FRI
+  
+sat:
+  store_id: 6
+  day_of_week: SAT
+  
+sun:
+  store_id: 7
+  day_of_week: SUN
