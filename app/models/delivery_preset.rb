@@ -5,6 +5,7 @@ class DeliveryPreset < ActiveRecord::Base
   has_many :items, :through => :line_items
   
   named_scope :by_day, :order => "day_of_week ASC"
+  named_scope :open, :conditions => {:closed => false}
   
   def self.build_defaults
     %w(sun mon tue wed thu fri sat).each do |day|

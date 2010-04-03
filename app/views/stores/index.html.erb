@@ -2,13 +2,13 @@
 
 <ul id="stores">
   <% for store in @stores %>
-    <% content_tag_for :li, store do %>
+    <% content_tag_for :li, store, {:onmouseover => "$('actions_for_#{store.object_id}').show();", :onmouseout => "$('actions_for_#{store.object_id}').hide();"} do %>
       <div class="span-12 handle">
         <%= link_to h(store.display_name), store %></br> 
       </div>
-      <%= link_to icon('eye'), store %> 
+      <span style="display: none;" id="actions_for_<%= store.object_id %>"> 
       <%= link_to icon('pencil'), edit_store_path(store) %> 
-      <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %></span>
     <% end %>
   <% end %>
 </ul>
