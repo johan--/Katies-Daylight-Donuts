@@ -12,17 +12,11 @@ describe User do
   
   context " when invalid" do
     it "should require username" do
-      attributes = @valid_attributes.dup
-      attributes[:username] = nil
-      user = User.create(attributes)
-      user.errors.on(:username).should == ["is too short (minimum is 3 characters)", "should use only letters, numbers, spaces, and .-_@ please.", "can't be blank","Username can only be letters and/or numbers"]
+      Factory.create(:user, :username => nil).errors.on(:username).should == ["is too short (minimum is 3 characters)", "should use only letters, numbers, spaces, and .-_@ please.", "can't be blank","Username can only be letters and/or numbers"]
     end
 
     it "should be invalid with an invalid username" do
-      User.any_instance.stubs(:valid?).returns(false)
-      attributes = @valid_attributes.dup
-      attributes[:username] = "-4Abcde4321"  
-      User.new(attributes).valid?.should == false
+      Factory.create(:user, :username => ".3321ukd").valid?.should == false
     end
   end
   

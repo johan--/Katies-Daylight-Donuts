@@ -1,5 +1,7 @@
 class DeliveryPreset < ActiveRecord::Base
   belongs_to :store
+
+  validates_presence_of :day_of_week
   
   has_many :line_items, :dependent => :destroy
   has_many :items, :through => :line_items
@@ -20,6 +22,7 @@ class DeliveryPreset < ActiveRecord::Base
   end
   
   def update_line_items(*args)
+    return false if args.first.nil?
     args.first.each do |line_item|
       item = Item.find(line_item[:item_id])
       if existing_line_item = self.line_items.detect{ |l| l.item == item }

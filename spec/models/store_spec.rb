@@ -8,16 +8,6 @@ describe Store do
     Store.all_by_position.should == [stores(:two),stores(:one)]
   end
   
-  context "with a new city" do
-    it "should create the store and the city" do
-      attributes = stores(:one).attributes.dup
-      store = Store.new(attributes)
-      store.manual_city = "Timbucktu"
-      store.save
-      store.city.name.should == "Timbucktu"
-    end
-  end
-  
   context "with an existing city" do
     it "should create the store with the city" do
       store = stores(:one)

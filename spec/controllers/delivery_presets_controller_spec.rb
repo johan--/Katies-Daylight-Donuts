@@ -42,13 +42,13 @@ describe DeliveryPresetsController do
   end
   
   it "update action should render edit template when model is invalid" do
-    put :update, :id => delivery_presets(:tue).id
+    put :update, { :id => delivery_presets(:tue).id, :delivery_preset => { :day_of_week => nil } }
     response.should render_template(:edit)
   end
   
   it "update action should redirect when model is valid" do
     DeliveryPreset.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => delivery_presets(:mon)
+    put :update, :id => delivery_presets(:mon), :delivery_preset => {}
     response.should redirect_to(delivery_preset_url(assigns[:delivery_preset]))
   end
   
