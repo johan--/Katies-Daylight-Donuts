@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
       flash[:notice] = "Successfully updated comment."
       redirect_to deliveries_path
     else
-      render :action => 'edit'
+      render :nothing => true
     end
   end
   
@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
       flash[:notice] = "Successfully created comment."
       redirect_to deliveries_path
     else
-      render :action => 'new'
+      render :nothing => true
     end
   end
   

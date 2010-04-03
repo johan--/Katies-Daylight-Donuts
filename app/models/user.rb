@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   
   validates_presence_of :username
   validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
-  validates_format_of   :username, :with => /[A-Za-z0-9]/, :message => "Username can only be letters and/or numbers"
+  validates_format_of   :username, :with => /[^A-Za-z0-9]/, :message => "Username can only be letters and/or numbers"
   
   before_validation :generate_api_key
   
