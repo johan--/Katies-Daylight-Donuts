@@ -44,13 +44,13 @@
     <% @store.delivery_presets.sort_by{|dp| dp.created_at }.each do |dp| %>
       <td>
         <% if dp.closed? %>
-          <strong>Closed</strong>
+          <li><strong>Closed</strong></li>
         <% else %>
         <ul>
         <% dp.line_items.each do |line_item| %>
           <li><small><%= line_item.quantity %> <%= line_item.item.name %></small></li>
-        <% end %>
           <li><%= link_to "Edit", edit_store_delivery_preset_path(@store,dp) %></li>
+        <% end %>
         </ul>
         <% end %>
       </td>
