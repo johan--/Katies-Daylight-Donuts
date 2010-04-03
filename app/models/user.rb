@@ -3,9 +3,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :roles_ids
   
-  acts_as_authentic
-    
-  validate_email_field = false
+  acts_as_authentic :validate_email_field => false
   
   validates_presence_of :username
   validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
