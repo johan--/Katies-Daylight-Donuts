@@ -54,7 +54,7 @@ class Store < ActiveRecord::Base
 
   # Returns a safe name for creating a username
   def safe_name
-    name.gsub(/[^A-Za-z0-9\.\_]/,'').downcase
+    name.gsub(/[^A-Za-z0-9\_]/,'').downcase
   end
 
   private
