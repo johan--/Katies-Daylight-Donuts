@@ -364,3 +364,7 @@ li.store_list_item{
   margin: 0.2em 0;
   border: 1px solid #C8C8C8;
 }
+
+.handle{
+  cursor: hand;
+}
