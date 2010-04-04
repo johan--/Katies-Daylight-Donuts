@@ -43,9 +43,9 @@ class Delivery < ActiveRecord::Base
     }
   }
   
+  # TODO remove this
   def self.create_default_delivery(options = {})
     delivery = self.new
-    delivery.add_items
     delivery.employee = Employee.default
     delivery.save!
   end

@@ -24,6 +24,25 @@ class Store < ActiveRecord::Base
   
   named_scope :all_by_position, :order => "position asc"
   
+  def create_todays_delivery!
+    unless is_closed_today?
+    delivery = deliveries.create({
+      :employee => Employee.default
+    })
+      todays_ticket.line_items.each do |line_item|
+        delivery.add_item(line_item.item, line_item.quantity)
+      end
+    end
+  end
+  
+  def is_closed_today?
+    todays_ticket.closed?
+  end
+  
+  def todays_ticket
+    @todays_ticket ||= delivery_presets.find_by_day_of_week(Time.now.to_s.split(" ").first)
+  end
+  
   def display_name
     @display_name ||= store_no.blank? ? name.titleize : [name.titleize, store_no].join(" - ")
   end
