@@ -28,13 +28,18 @@ module ApplicationHelper
   end
   
   def icon(name, options = {})
-    if File.exists?(RAILS_ROOT + "/public/images/icons/default/#{name}.png")
+    theme = options.has_key?(:theme) ? options[:theme] : "default"
+    theme = "" if theme == :none
+    name_and_format = name.split(".")
+    name,format = name_and_format[0],name_and_format[1]
+    format = "png" if format.nil?
+    if File.exists?(RAILS_ROOT + "/public/images/icons/#{theme}/#{name}.#{format}")
       if options.has_key?(:class)
         options[:class] << " icon" 
       else
         options[:class] = "icon"
       end
-      image_tag("icons/default/#{name}.png", options)
+      image_tag("icons/#{theme}/#{name}.#{format}", options)
     end
   end
 end
