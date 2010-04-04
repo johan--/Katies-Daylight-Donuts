@@ -40,7 +40,7 @@ class Store < ActiveRecord::Base
   end
   
   def is_closed_today?
-    todays_ticket.closed?
+    todays_ticket && todays_ticket.closed?
   end
   
   def todays_ticket
