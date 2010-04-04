@@ -25,7 +25,7 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc"
   
   def create_todays_delivery!
-    unless is_closed_today?
+    unless is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({
       :employee => Employee.default
     })
@@ -33,6 +33,10 @@ class Store < ActiveRecord::Base
         delivery.add_item(line_item.item, line_item.quantity)
       end
     end
+  end
+  
+  def has_delivery_for_today?
+    @has_delivery_for_today ||= !deliveries.pending.find(:first, :conditions => ["created_at between ? and ?",Time.now.beginning_of_day.to_s(:db),Time.zone.now.midnight.to_s(:db)]).nil?
   end
   
   def is_closed_today?
