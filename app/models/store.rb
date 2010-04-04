@@ -22,7 +22,7 @@ class Store < ActiveRecord::Base
   
   attr_accessor :manual_city
   
-  named_scope :all_by_position, :order => "position asc"
+  named_scope :all_by_position, :order => "position asc", :include => [:deliveries]
   
   def create_todays_delivery!
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
@@ -54,7 +54,7 @@ class Store < ActiveRecord::Base
   def full_address
     <<-EOF
     #{address}<br />
-    #{city}, #{state}<br />
+    #{city.name}, #{state}<br />
     #{country} #{zipcode}
     EOF
   end
@@ -64,7 +64,7 @@ class Store < ActiveRecord::Base
   end
   
   def to_google
-    "#{address} #{city}, #{state}, #{country} #{zipcode}"
+    "#{address} #{city.name}, #{state}, #{country} #{zipcode}"
   end
   
   def geocode
