@@ -42,14 +42,7 @@ class Delivery < ActiveRecord::Base
       :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
     }
   }
-  
-  # TODO remove this
-  def self.create_default_delivery(options = {})
-    delivery = self.new
-    delivery.employee = Employee.default
-    delivery.save!
-  end
-  
+    
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")
   end
@@ -83,10 +76,13 @@ class Delivery < ActiveRecord::Base
     end
   end
   
+  # Used to add all available items to a delivery
+  # This is called in the deliveries controller new action
   def add_items
     Item.available.each{ |item| add_item(item, 12) }
   end
   
+  # Adds a single item to the delivery
   def add_item(item, quantity)
     raise Exception, "Quantity required!" unless quantity.to_i > 0
     options = {

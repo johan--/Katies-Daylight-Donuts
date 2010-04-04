@@ -25,13 +25,7 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc", :include => [:deliveries]
   
   def create_todays_delivery!
-    logger.fatal(<<-EOF
-    Store: #{display_name}\n
-    #{todays_ticket.nil?} #{is_closed_today?} #{has_delivery_for_today?}
-    EOF
-    )
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
-      logger.fatal("Made it past checkpoint")
     delivery = deliveries.create({
       :employee => Employee.default
     })
