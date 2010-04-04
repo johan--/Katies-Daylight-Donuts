@@ -2,10 +2,11 @@
 <div class="handle" onMouseOver="$('actions_for_<%= store.object_id %>').show();" onMouseOut="$('actions_for_<%= store.object_id %>').hide();">
   <span class="span-12">
     <%= link_to h(store.display_name), store %></br> 
+    &nbsp; | <%= link_to "Deliveries", store_deliveries_path(store) %>
     &nbsp;
     <span style="display: none;" id="actions_for_<%= store.object_id %>">
 <%= link_to icon('pencil'), edit_store_path(store) %> 
-    <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
+    <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure you want to remove this store? All associated records will be removed also.', :method => :delete %>
     </span>
   </span>
 </div>
