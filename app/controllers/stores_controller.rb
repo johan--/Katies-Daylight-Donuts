@@ -39,7 +39,8 @@ class StoresController < ApplicationController
   end
   
   def search
-    @stores = Store.find(:all, :conditions => ["name like ?",'%' +params[:store_name] + "%"])
+    params[:store_name] ||= ""
+    @stores = Store.find(:all, :conditions => ["LOWER(name) like ?",'%' +params[:store_name].downcase + "%"])
     render :update do |page|
       page.replace_html(:stores, :partial => @stores)
     end
