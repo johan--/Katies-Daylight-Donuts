@@ -92,7 +92,7 @@ class Delivery < ActiveRecord::Base
     options = {
       :quantity => quantity.to_i,
       :item => item,
-      :price => (quantity.to_i * item.price.to_f)
+      :price => item.price.to_f
     }
     if self.new_record?
       line_item = line_items.build(options)
