@@ -25,6 +25,8 @@ class DeliveryPresetsController < ApplicationController
   
   def edit
     @delivery_preset = DeliveryPreset.find(params[:id])
+    day = @delivery_preset.day_of_week == "sun" ? "mon" : @delivery_preset.day_of_week.next_day_of_week
+    @next_delivery_preset = @delivery_preset.store.delivery_presets.find_by_day_of_week(day)
   end
   
   def copy
@@ -43,7 +45,8 @@ class DeliveryPresetsController < ApplicationController
     line_items = params[:delivery_preset].nil? ? {} : params[:delivery_preset].delete(:line_items)
     if @delivery_preset.update_attributes(params[:delivery_preset]) && @delivery_preset.update_line_items(line_items)
       flash[:notice] = "Successfully Updated Delivery Preset."
-      redirect_to edit_delivery_preset_path(@delivery_preset)
+      next_day_of_week = @delivery_preset.day_of_week.next_day_of_week
+      redirect_to edit_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
     else
       render :action => 'edit'
     end
