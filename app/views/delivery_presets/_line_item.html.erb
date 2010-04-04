@@ -4,7 +4,7 @@
       <td><%= line_item_field.collection_select :item_id, Item.all, :id, :name %></td>
       <td>&nbsp;</td>
       
-      <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :value => 12, :size => 5 %></td>
+      <td align="right"><%= line_item_field.text_field :quantity, :value => line_item.quantity, :value => "", :size => 5 %></td>
       <td align="right" style="text-align: right;">
         <%= line_item_field.text_field :price, :value => 0.00, :size => 10, :class => "price" if @current_user.super?  %>
       </td>
