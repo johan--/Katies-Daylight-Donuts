@@ -2,7 +2,7 @@ class DeliveryObserver < ActiveRecord::Observer
 
   def after_create(delivery)
     # Notify a new delivery was created 
-    UserNotifier.deliver_new_delivery_notification(Setting.email, delivery)
+    #UserNotifier.deliver_new_delivery_notification(Setting.email, delivery)
     return true
   end
   
