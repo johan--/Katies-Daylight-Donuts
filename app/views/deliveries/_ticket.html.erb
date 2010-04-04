@@ -45,7 +45,7 @@
   </tr>
   <% delivery.line_items.each do |line_item| %>
   <tr>
-    <td><%= line_item.item.object_id %></td>
+    <td><%= line_item.item.id %></td>
     <td style="text-align: left;"><%= line_item.item.name %></td>
     <td style="text-align: right;"><%= line_item.quantity %> units</td>
     <td style="text-align: right;"><%= number_to_currency line_item.price %></td>
