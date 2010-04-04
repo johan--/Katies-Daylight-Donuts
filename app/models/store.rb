@@ -25,7 +25,7 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc"
   
   def display_name
-    @display_name ||= store_no.blank? ? name : [name, store_no].join(" - ")
+    @display_name ||= store_no.blank? ? name.titleize : [name.titleize, store_no].join(" - ")
   end
   
   def full_address

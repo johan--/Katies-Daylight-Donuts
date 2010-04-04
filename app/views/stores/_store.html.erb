@@ -1,7 +1,7 @@
 <% content_tag_for :li, store, :class => "store_list_item" do %>
 <div class="handle" onMouseOver="$('actions_for_<%= store.object_id %>').show();" onMouseOut="$('actions_for_<%= store.object_id %>').hide();">
   <span class="span-12">
-    <%= link_to h(store.display_name.titleize), store %></br> 
+    <%= link_to h(store.display_name), store %></br> 
     &nbsp;
     <span style="display: none;" id="actions_for_<%= store.object_id %>">
 <%= link_to icon('pencil'), edit_store_path(store) %> 
