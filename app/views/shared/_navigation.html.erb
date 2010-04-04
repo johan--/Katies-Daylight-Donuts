@@ -4,10 +4,10 @@
       <li class="<%= current "dashboards" %>"><%= link_to "#{icon("application-monitor")} Dashboard", dashboards_path %></li>
       <li class="<%= current "users" %>"><%= link_to "#{icon("users")} Users",  users_path %></li>
       <li class="<%= current "employees" %>"><%= link_to "#{icon("users")} Employees",  employees_path %></li>
-      <li class="<%= current "stores" %>"><%= link_to "#{icon("user-business-boss")} Stores",  stores_path %></li>
+      <li class="<%= current "stores" %>"><%= link_to "#{icon("user-business-boss")} Stores ( #{Store.count} )",  stores_path %></li>
       <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
     <% end %>
-  <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} #{'My ' unless @current_user.super?} Deliveries", pending_deliveries_path %></li>
+  <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} #{'My ' unless @current_user.super?} Deliveries ( #{Delivery.pending.count} )", pending_deliveries_path %></li>
   <li class="<%= current "faqs" %>"><%= link_to "#{icon("users")} FAQ",  faqs_path %></li>
   <% else %>
   <li class="<%= current "user_sessions" %>">

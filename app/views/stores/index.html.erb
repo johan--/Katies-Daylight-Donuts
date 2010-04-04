@@ -5,12 +5,11 @@
 </ul>
 
 <% content_for :sidebar do %>
-  <%= button "Add Store", new_store_path %>
-  
   <% form_remote_tag :url => search_stores_path do %>
     <%= text_field_tag :store_name %> <%= submit_tag "Search" %>
   <% end %>
   
+  <%= button "Add Store", new_store_path %>
 <% end %>
 
 <%= sortable_element("stores", :url => sort_stores_url, :handle => "handle", :method => :post) %>
