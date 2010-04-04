@@ -57,7 +57,7 @@ class EmployeesController < ApplicationController
   
   def timesheet
     @employee = Employee.find(params[:id])
-    @date = Time.parse("#{params[:start_date]} || Time.zone.now")
+    @date = Time.parse("#{params[:start_date]} || Time.now.utc")
     @start_date = Date.new(@date.year, @date.month, @date.day)
     @events = @employee.hours.clocked_out.find(:all, :conditions => ['starts_at between ? and ?', @start_date, @start_date + 7])
   end

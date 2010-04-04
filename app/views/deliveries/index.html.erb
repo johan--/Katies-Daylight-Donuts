@@ -31,7 +31,7 @@
           <% unless @current_user.store? %>
             <td><%= delivery_action_link(delivery) %></td>
           <% end %>
-          <td><%= link_to delivery.store.to_google, delivery %></td>
+          <td><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></td>
           <td align="right">
           <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
             
