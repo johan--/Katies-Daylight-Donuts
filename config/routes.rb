@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     :add_item => :any
   }
 
-  map.resources :stores, :collection => { :sort => :post } do |store| 
+  map.resources :stores, :collection => { :sort => :post, :search => :post } do |store| 
     store.resources :delivery_presets, :collection => {
       :copy => :any
     }

@@ -38,6 +38,13 @@ class StoresController < ApplicationController
     end
   end
   
+  def search
+    @stores = Store.find(:all, :conditions => ["name like ?",'%' +params[:store_name] + "%"])
+    render :update do |page|
+      page.replace_html(:stores, :partial => @stores)
+    end
+  end
+  
   def sort
     params[:stores].each_with_index do |id, index|
       Store.update_all(['position = ?', index+1],['id = ?', id])

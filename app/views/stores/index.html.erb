@@ -1,24 +1,16 @@
 <% title "Stores" %>
 
 <ul id="stores">
-  <% for store in @stores %>
-    <% content_tag_for :li, store, :class => "store_list_item" do %>
-    <div class="handle" onMouseOver="$('actions_for_<%= store.object_id %>').show();" onMouseOut="$('actions_for_<%= store.object_id %>').hide();">
-      <span class="span-12">
-        <%= link_to h(store.display_name), store %></br> 
-        &nbsp;
-        <span style="display: none;" id="actions_for_<%= store.object_id %>">
-  <%= link_to icon('pencil'), edit_store_path(store) %> 
-        <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
-        </span>
-      </span>
-    </div>
-    <% end %>
-  <% end %>
+  <%= render :partial => @stores %>
 </ul>
 
 <% content_for :sidebar do %>
   <%= button "Add Store", new_store_path %>
+  
+  <% form_remote_tag :url => search_stores_path do %>
+    <%= text_field_tag :store_name %> <%= submit_tag "Search" %>
+  <% end %>
+  
 <% end %>
 
 <%= sortable_element("stores", :url => sort_stores_url, :handle => "handle", :method => :post) %>
