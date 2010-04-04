@@ -25,7 +25,7 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc"
   
   def create_todays_delivery!
-    unless is_closed_today? || has_delivery_for_today?
+    unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({
       :employee => Employee.default
     })
