@@ -25,7 +25,13 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc", :include => [:deliveries]
   
   def create_todays_delivery!
+    logger.fatal(<<-EOF
+    Store: #{display_name}\n
+    #{todays_ticket.nil?} #{is_closed_today?} #{has_delivery_for_today?}
+    EOF
+    )
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
+      logger.fatal("Made it past checkpoint")
     delivery = deliveries.create({
       :employee => Employee.default
     })
@@ -36,7 +42,7 @@ class Store < ActiveRecord::Base
   end
   
   def has_delivery_for_today?
-    @has_delivery_for_today ||= !deliveries.pending.find(:first, :conditions => ["created_at between ? and ?",Time.now.beginning_of_day.to_s(:db),Time.zone.now.midnight.to_s(:db)]).nil?
+    @has_delivery_for_today ||= !deliveries.pending.find(:first, :conditions => ["created_at between ? and ?",Time.zone.now.beginning_of_day.to_s(:db),Time.zone.now.midnight.to_s(:db)]).nil?
   end
   
   def is_closed_today?
@@ -44,7 +50,7 @@ class Store < ActiveRecord::Base
   end
   
   def todays_ticket
-    @todays_ticket ||= delivery_presets.find_by_day_of_week(Time.zone.now.to_s.split(" ").first)
+    @todays_ticket ||= delivery_presets.find_by_day_of_week(Time.now.to_s.split(" ").first)
   end
   
   def display_name
