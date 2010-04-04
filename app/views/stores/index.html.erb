@@ -6,7 +6,7 @@
 
 <% content_for :sidebar do %>
   <% form_remote_tag :url => search_stores_path do %>
-    <%= text_field_tag :store_name %> <%= submit_tag "Search" %>
+    <%= icon "magnifier-medium" %> <%= text_field_tag :store_name %> <%= image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom" %>
   <% end %>
   
   <%= button "Add Store", new_store_path %>

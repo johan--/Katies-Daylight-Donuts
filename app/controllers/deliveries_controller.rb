@@ -61,7 +61,7 @@ class DeliveriesController < ApplicationController
     icon = Variable.new("daylight_donuts_icon")
     store_marker = GMarker.new(@delivery.store.geocode_array,
       :title => "#{@delivery.store.name}",
-      :info_window => "#{@delivery.store.full_address} <br />#{@delivery.store.phone}",
+      :info_window => "#{@delivery.store.display_name} <br />#{@delivery.store.full_address} <br />#{@delivery.store.phone}",
       :icon => icon)
      @map.overlay_init store_marker
   end
