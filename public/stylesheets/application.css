@@ -358,3 +358,9 @@ input.large{
 #flash_notice{
   color: green;
 }
+
+li.store_list_item{
+  padding: 0.4em;
+  margin: 0.2em 0;
+  border: 1px solid #C8C8C8;
+}

@@ -2,15 +2,15 @@
 
 <ul id="stores">
   <% for store in @stores %>
-    <% content_tag_for :li, store do %>
-    <div onMouseOver="$('actions_for_<%= store.object_id %>').show();" onMouseOut="$('actions_for_<%= store.object_id %>').hide();">
-      <span class="span-12 handle">
+    <% content_tag_for :li, store, :class => "store_list_item" do %>
+    <div class="handle" onMouseOver="$('actions_for_<%= store.object_id %>').show();" onMouseOut="$('actions_for_<%= store.object_id %>').hide();">
+      <span class="span-12">
         <%= link_to h(store.display_name), store %></br> 
-      </span>
-      &nbsp;
-      <span style="display: none;" id="actions_for_<%= store.object_id %>">
-<%= link_to icon('pencil'), edit_store_path(store) %> 
-      <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
+        &nbsp;
+        <span style="display: none;" id="actions_for_<%= store.object_id %>">
+  <%= link_to icon('pencil'), edit_store_path(store) %> 
+        <%= link_to icon("cross-circle-frame"), store, :confirm => 'Are you sure?', :method => :delete %>
+        </span>
       </span>
     </div>
     <% end %>
