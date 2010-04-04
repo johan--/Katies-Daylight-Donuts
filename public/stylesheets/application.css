@@ -365,6 +365,6 @@ li.store_list_item{
   border: 1px solid #C8C8C8;
 }
 
-.handle{
-  cursor: hand;
+div.handle{
+  cursor: row-resize;
 }
