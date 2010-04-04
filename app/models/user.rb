@@ -87,6 +87,6 @@ class User < ActiveRecord::Base
     
   def generate_api_key
     return unless self.api_enabled?
-    self.api_key = digest(Time.now.to_i.to_s + self.email + rand(999).to_s )
+    self.api_key = digest(Time.zone.now.to_i.to_s + self.email + rand(999).to_s )
   end
 end
