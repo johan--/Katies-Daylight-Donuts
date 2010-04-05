@@ -7,8 +7,9 @@
 <div class="span-24">
   <div class="span-11 metric">
     <h1><%= icon "stats4.gif", :theme => :none %> Recent Activity</h1>
+    <em>( <%= Time.zone.now.at_beginning_of_week.strftime("%m/%d/%Y") %> - <%= Time.zone.now.at_end_of_week.strftime("%m/%d/%Y") %> )</em>
     <ol>
-    <% Delivery.all(:limit => 4).each do |delivery| %>
+    <% Delivery.delivered_this_week.each do |delivery| %>
       <li><strong><%= delivery.store.display_name %></strong>, <%= link_to delivery.description, store_delivery_path(delivery.store, delivery) %></li>
     <% end %>
     </ol>
