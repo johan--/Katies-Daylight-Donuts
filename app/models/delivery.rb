@@ -35,7 +35,7 @@ class Delivery < ActiveRecord::Base
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:employee]
-  named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.zone.now.at_beginning_of_week.to_i} and #{Time.zone.now.at_end_of_week.to_i}"}
+  named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.now.at_beginning_of_week.to_i} and #{Time.now.at_end_of_week}"}
   named_scope :by_date, lambda { |*args|
     args[0] ||= Time.zone.now
     {
