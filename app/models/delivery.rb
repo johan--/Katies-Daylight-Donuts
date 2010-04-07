@@ -49,7 +49,7 @@ class Delivery < ActiveRecord::Base
       :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
     }
   }
-  named_scope :unprinted, :conditions => "state = 'pending' or 'delivered'"
+  named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'"
     
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")

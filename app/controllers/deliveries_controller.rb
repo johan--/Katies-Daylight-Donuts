@@ -64,6 +64,7 @@ class DeliveriesController < ApplicationController
       :info_window => "#{@delivery.store.display_name} <br />#{@delivery.store.full_address} <br />#{@delivery.store.phone}",
       :icon => icon)
      @map.overlay_init store_marker
+     
   end
   
   def new
