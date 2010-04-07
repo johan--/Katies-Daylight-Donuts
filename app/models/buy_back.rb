@@ -19,6 +19,10 @@ class BuyBack < ActiveRecord::Base
     transitions :from => :paid, :to => :pending
   end
   
+  def total
+    (price + tax)
+  end
+  
   def customer
     delivery.customer
   end

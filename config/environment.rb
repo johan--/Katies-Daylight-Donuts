@@ -13,6 +13,7 @@ Rails::Initializer.run do |config|
   config.gem "calendar_date_select"
   config.gem "crack"
   config.gem "yahoo-weather"
+  config.gem "prawn"
   # config.gem "twitter"
 
   config.active_record.observers = [:delivery_observer, :user_observer, :employee_observer,:store_observer]

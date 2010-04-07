@@ -1,31 +1,32 @@
 <% title "Buy Backs" %>
 
+<div class="span-16">
 <table>
   <tr>
     <th>Delivery</th>
-    <th>State</th>
-    <th>Tax</th>
-    <th>Price</th>
-    <th>Raised Donut Count</th>
-    <th>Cake Donut Count</th>
-    <th>Roll Count</th>
-    <th>Donuthole Count</th>
+    <th>Status</th>
+    <th style="text-align: right;">Tax</th>
+    <th style="text-align: right;">Price</th>
+    <th style="text-align: right;">Total</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
   </tr>
   <% for buy_back in @buy_backs %>
     <tr>
-      <td><%=h buy_back.delivery_id %></td>
-      <td><%=h buy_back.state %></td>
-      <td><%=h buy_back.tax %></td>
-      <td><%=h buy_back.price %></td>
-      <td><%=h buy_back.raised_donut_count %></td>
-      <td><%=h buy_back.cake_donut_count %></td>
-      <td><%=h buy_back.roll_count %></td>
-      <td><%=h buy_back.donuthole_count %></td>
+      <td><%= link_to h(buy_back.delivery_id), buy_back.delivery %></td>
+      <td><%=h buy_back.state.upcase %></td>
+      <td style="text-align: right;"><%= number_to_currency buy_back.tax %></td>
+      <td style="text-align: right;"><%= number_to_currency buy_back.price %></td>
+      <td style="text-align: right;"><%= number_to_currency buy_back.total %></td>
       <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), buy_back %></td>
-      <td><%= link_to "Edit", edit_buy_back_path(buy_back) %></td>
+      <td><%= link_to icon("pencil-small"), edit_buy_back_path(buy_back) %></td>
       <td><%= link_to icon("cross-circle-frame"), buy_back, :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
+</div>
 
-<p><%= link_to "New Buy Back", new_buy_back_path %></p>
+<% content_for :sidebar do %>
+  <%= button "Add Buy Back", new_buy_back_path %>
+<% end %>

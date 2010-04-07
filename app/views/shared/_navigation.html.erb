@@ -6,6 +6,7 @@
       <li class="<%= current "employees" %>"><%= link_to "#{icon("users")} Employees",  employees_path %></li>
       <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
       <li class="<%= current "stores" %>"><%= link_to "#{icon("user-business-boss")} Stores ( #{Store.count} )",  stores_path %></li>
+      <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("zone-money")} Buy Backs",  buy_backs_path %></li>
     <% end %>
   <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} #{'My ' unless @current_user.super?} Deliveries ( #{Delivery.pending.count} )", pending_deliveries_path %></li>
   <li class="<%= current "faqs" %>"><%= link_to "#{icon("users")} FAQ",  faqs_path %></li>

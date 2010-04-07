@@ -1,6 +1,6 @@
 class BuyBacksController < ApplicationController
   before_filter :login_required, :except => [:index, :search]
-  before_filter :find_delivery
+  before_filter :find_delivery, :except => [:index]
   before_filter :current_user_session
   
   def index

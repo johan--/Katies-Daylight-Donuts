@@ -1,0 +1,47 @@
+<table>
+  <tr>
+    <% unless @current_user.store? %>
+      <th>&nbsp;</th>
+    <% end %>
+    <th>Address</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+    <th>&nbsp;</th>
+  </tr>
+  <tr>
+    <% unless @current_user.store? %>
+      <td><%= delivery_action_link(delivery) %></td>
+    <% end %>
+    <td><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></td>
+    <td align="right">
+      
+    <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
+      <%= render :partial => "ticket", :locals => {:delivery => delivery } %>
+    </div>
+    <%= link_to icon("ticket"), "#ticket_for_#{delivery.object_id}", {:rel => "ibox&width=600&height=500", :onclick => %($('#ticket_for_#{delivery.object_id}').show())} %> 
+    
+    <%= link_to_function(icon("balloon-left"), "show_comment_fields('#{ delivery.object_id}')") %>
+    <%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>
+    <td align="right"><%= link_to icon("pencil-small"), edit_delivery_path(delivery) %></td>
+    <td align="right"><%= link_to icon("cross-circle-frame"), delivery, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+  <% unless delivery.comments.empty?%>
+    <tr>
+      <td colspan="5"><strong><%= delivery.comments.size %> Comments</strong></td>
+    </tr>
+  <% end %>
+  <%= render :partial => delivery.comments %>
+
+  <tr style="display: none;" id="<%= delivery.object_id %>">
+    <td colspan="<%= @current_user.store? ? 4 : 5 %>">
+      <% form_for delivery.comments.new do |f| %>
+      <form>
+        <%= f.text_area :body, :rows => 4, :cols => 40 %>
+        <br />
+        <%= f.hidden_field :commentable_id, :value => delivery.id %>
+        <%= f.hidden_field :commentable_type, :value => "Delivery" %>
+        <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function "Cancel", %($('#{ delivery.object_id}').fade()) %>
+      <% end %>
+    </td>
+  </tr>
+</table>
