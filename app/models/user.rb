@@ -21,6 +21,7 @@ class User < ActiveRecord::Base
   
   after_save :update_roles
   
+    
   def self.create_with_store(store)
     user = create(
       :username => "#{store.safe_name}",

@@ -60,5 +60,4 @@ describe User do
       User.new(:username => "foo").to_param.should == "foo"
     end
   end
-  
 end
