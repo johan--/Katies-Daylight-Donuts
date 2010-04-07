@@ -48,7 +48,7 @@ describe DeliveryPresetsController do
   
   it "update action should redirect when model is valid" do
     DeliveryPreset.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => delivery_presets(:mon), :delivery_preset => { :day_of_the_week }
+    put :update, :id => delivery_presets(:mon), :delivery_preset => {:day_of_the_week => nil }
     response.should redirect_to(delivery_preset_url(assigns[:delivery_preset]))
   end
   
