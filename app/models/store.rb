@@ -64,7 +64,7 @@ class Store < ActiveRecord::Base
   end
   
   def to_google
-    "#{address} #{city.name}, #{state}, #{country} #{zipcode}"
+    "#{address} #{city.name}, #{state}\n #{country} #{zipcode}"
   end
   
   def geocode
