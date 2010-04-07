@@ -163,7 +163,9 @@ class DeliveriesController < ApplicationController
 
   def print_todays
     @deliveries = Delivery.pending.by_date
-    @deliveries.update_all(:locked => true)
+    @deliveries.map do |delivery|
+      delivery.print!
+    end
     render :layout => false
   end
   

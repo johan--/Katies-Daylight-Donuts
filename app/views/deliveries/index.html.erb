@@ -12,7 +12,7 @@
   <% deliveries.group_by{|d| d.store }.each do |store, deliveries| %>
     <div class="span-16" style="margin: 1em 0;padding: 1em 0.0em; background: #eee; border: 1px solid #aaa">
       <strong style="padding: 0.6em">
-        <%= store.name %>
+        <%= store.name.titleize %>
         <%= icon "calendar-day" %> <%= created %>
       </strong>
     </div>    

@@ -13,11 +13,16 @@ class Delivery < ActiveRecord::Base
   aasm_column :state
   aasm_initial_state :pending
   aasm_state :pending
+  aasm_state :printed
   aasm_state :delivered
   aasm_state :canceled
   
+  aasm_event :print do
+    transitions :from => [:pending], :to => :printed
+  end
+  
   aasm_event :deliver do
-    transitions :from => :pending, :to => :delivered, :guard => :record_delivery_time
+    transitions :from => [:printed,:pending], :to => :delivered, :guard => :record_delivery_time
   end
   
   aasm_event :undeliver do
@@ -33,7 +38,7 @@ class Delivery < ActiveRecord::Base
   validates_presence_of :employee, :message => "Driver required."
   
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
-  named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
+  named_scope :pending, :conditions => "deliveries.state = 'pending' or deliveries.state = 'printed'", :order => "created_at ASC", :include => [:store,:employee]
   named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:employee]
   # This does not work with postgresql db's for some reason
   named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}"}
@@ -44,6 +49,7 @@ class Delivery < ActiveRecord::Base
       :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
     }
   }
+  named_scope :unprinted, :conditions => "state = 'pending' or 'delivered'"
     
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")

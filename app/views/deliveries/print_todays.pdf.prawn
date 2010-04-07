@@ -1,5 +1,5 @@
 # Black and White colors
-stripes = ["ACACAC","FFFFFF"]
+stripes = ["EBEBEB","FFFFFF"]
 
 @deliveries.each_with_index do |delivery, index|
   # Only generate an invoice if the delivery has items, this is simply
@@ -10,7 +10,7 @@ stripes = ["ACACAC","FFFFFF"]
   
   # Add Headers
   pdf.table [
-    [{:text => "Invoice", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
+    [{:text => "Invoice #{delivery.created_at.strftime('%m/%d/%Y')}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
     [{:text => "Katies Daylight Donuts \n1501 18TH ST.\nCentral City, NE\nUSA 68826\n\nPhone: 308-946-5555", :align => :left},
      {:text => "Invoice #: #{delivery.id}\nDate : #{Time.zone.now.strftime('%m/%d/%Y')}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
     [{:text => "Customer Sold to: \n#{delivery.address}"},
