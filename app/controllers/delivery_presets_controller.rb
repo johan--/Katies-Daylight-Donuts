@@ -26,7 +26,7 @@ class DeliveryPresetsController < ApplicationController
   def edit
     @delivery_preset = DeliveryPreset.find(params[:id])
     day = @delivery_preset.day_of_week == "sun" ? "mon" : @delivery_preset.day_of_week.next_day_of_week
-    @next_delivery_preset = @delivery_preset.store.delivery_presets.find_by_day_of_week(day)
+    @next_delivery_preset = @delivery_preset.store.delivery_presets.find_or_create_by_day_of_week(day)
   end
   
   def copy
