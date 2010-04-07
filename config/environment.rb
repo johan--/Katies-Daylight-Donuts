@@ -14,6 +14,7 @@ Rails::Initializer.run do |config|
   config.gem "crack"
   config.gem "yahoo-weather"
   config.gem "prawn"
+  config.gem "prawn-layout"
 
   # config.gem "twitter"
 

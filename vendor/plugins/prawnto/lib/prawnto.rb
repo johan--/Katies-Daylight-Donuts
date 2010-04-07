@@ -2,10 +2,10 @@ require 'action_controller'
 require 'action_view'
 
 require 'prawn'
-#begin 
+begin 
   require "prawn/layout" # give people what they probably want
-#rescue LoadError
-#end
+rescue LoadError
+end
 
 require 'prawnto/action_controller'
 require 'prawnto/action_view'
