@@ -49,6 +49,10 @@ class Delivery < ActiveRecord::Base
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")
   end
 
+  def email
+    (store.nil? || store.user.nil?) ? "" : store.user.email
+  end
+
   def address
     "#{store.name} ##{id} - #{store.to_google}"
   end
