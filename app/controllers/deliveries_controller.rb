@@ -162,7 +162,7 @@ class DeliveriesController < ApplicationController
   end
 
   def print_todays
-    @deliveries = Delivery.pending.by_date
+    @deliveries = Delivery.pending.by_date.unprinted
     @deliveries.map do |delivery|
       delivery.print!
     end
