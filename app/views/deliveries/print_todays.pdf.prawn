@@ -1,9 +1,5 @@
-require 'prawn/layout'
 # Black and White colors
 stripes = ["ACACAC","FFFFFF"]
-
-# I love this font
-pdf.font "Helvetica"
 
 @deliveries.each_with_index do |delivery, index|
   # Only generate an invoice if the delivery has items, this is simply
