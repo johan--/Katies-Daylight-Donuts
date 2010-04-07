@@ -30,7 +30,7 @@
       <td colspan="5"><strong><%= delivery.comments.size %> Comments</strong></td>
     </tr>
   <% end %>
-  <%= render :partial => delivery.comments %>
+  <%= render :partial => "deliveries/comment", :collection => delivery.comments %>
 
   <tr style="display: none;" id="<%= delivery.object_id %>">
     <td colspan="<%= @current_user.store? ? 4 : 5 %>">
