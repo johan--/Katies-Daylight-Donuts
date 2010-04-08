@@ -121,6 +121,12 @@ class DeliveriesController < ApplicationController
     end
   end
   
+  def printed
+    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @deliveries = @delivery_klass.printed
+    render :action => "index"
+  end
+  
   def delivered
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.delivered

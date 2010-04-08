@@ -37,6 +37,9 @@
   <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
   <%= button "Print Tickets #{Delivery.unprinted.size}", print_todays_deliveries_path(:format => :pdf) if @current_user.super? %>
   <h2>Deliveries</h2>
-  (<%= @delivery_klass.pending.count %>) <%= link_to "Pending Deliveries", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@store) %><br />
-  (<%= @delivery_klass.delivered.count %>) <%= link_to "Delivered Deliveries", @current_user.super? ? delivered_deliveries_path : delivered_store_deliveries_path(@store) %> <small><em>(History)</em></small>
+  <%= link_to "Pending Deliveries", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@store) %> (<%= @delivery_klass.pending.count %>)<br />
+  <%= link_to "Delivered Deliveries", @current_user.super? ? delivered_deliveries_path : delivered_store_deliveries_path(@store) %> (<%= @delivery_klass.delivered.count %>)  <small><em>(History)</em></small><br />
+  <% if @current_user.super? %>
+    <%= link_to "Printed Deliveries", printed_deliveries_path %> (<%= @delivery_klass.printed.count %>)
+  <% end %>
 <% end %>

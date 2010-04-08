@@ -27,21 +27,27 @@
   </tr>
   <% unless delivery.comments.empty?%>
     <tr>
-      <td colspan="5"><strong><%= delivery.comments.size %> Comments</strong></td>
+      <td colspan="5"><strong id="comments_count_for_<%= delivery.id %>"><%= delivery.comments.size %> Comments</strong></td>
     </tr>
   <% end %>
-  <%= render :partial => "deliveries/comment", :collection => delivery.comments %>
-
   <tr style="display: none;" id="<%= delivery.object_id %>">
     <td colspan="<%= @current_user.store? ? 4 : 5 %>">
-      <% form_for delivery.comments.new do |f| %>
+      <% form_remote_for delivery.comments.new do |f| %>
       <form>
         <%= f.text_area :body, :rows => 4, :cols => 40 %>
         <br />
         <%= f.hidden_field :commentable_id, :value => delivery.id %>
         <%= f.hidden_field :commentable_type, :value => "Delivery" %>
+        <%= hidden_field_tag :object, delivery.object_id %>
         <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function image_tag("buttons/default/button-cancel.png"), %($('#{ delivery.object_id}').fade()) %>
       <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <ol id="comments_for_<%= delivery.id %>">
+        <%= render :partial => "deliveries/comment", :collection => delivery.comments %>
+      </ol>
     </td>
   </tr>
 </table>
