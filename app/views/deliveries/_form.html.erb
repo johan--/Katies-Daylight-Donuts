@@ -10,7 +10,7 @@
     <%= f.label :store_id %><br />
     <% if Store.count > 0 %>
       <%= f.collection_select :store_id, Store.all_by_position, :id, :display_name %>
-      <%= link_to "Add a new store", new_store_path %>
+      or type it <%= f.text_field :store_name, :size => 15 %><%#= link_to "Add a new store", new_store_path %>
     <% end %>
   </p>
   <% else %>
@@ -52,7 +52,7 @@
     <% end %>
   </table>
   <%= image_submit_tag "buttons/default/button-save.png" %>
-  
+  <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()) %>
 <% end %>
 
 <% content_for :sidebar do %>

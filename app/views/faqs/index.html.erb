@@ -1,5 +1,20 @@
 <% title "Frequently Asked Questions" %>
 
+<style type="text/css" media="screen">
+  #faq p{
+    font-size: 12pt;
+  }
+  
+  #faq hr{
+    margin-top: 0.5em;
+  }
+  
+  #faq p, #faq hr{
+    width: 90%;
+  }
+</style>
+
+<div id="faq">
 <ol>
   <li><h3><a href="#how-can-i-change-a-scheduled-delivery">How can I change a scheduled delivery?</a></h3></li>
   <li><h3><a href="#how-can-i-change-my-password">How can I change my password?</a></h3></li>
@@ -19,4 +34,5 @@
     How can I change a scheduled delivery?
   </h1>
   <p>Click on the '<%= link_to 'My Deliveries', deliveries_path %>' tab and click the pencil icon next to the delivery you would like to change. <strong>NOTE:</strong> You can <strong>NOT</strong> modify an order once we begin filling it.</p>
+</div>
 </div>

@@ -1,5 +1,15 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+
+  def link_to_ibox(text, id, options = {}, &block)
+    content_tag(:div, :id => id, :style => "display: none;") do
+      yield block if block_given?
+    end.concat(
+      content_tag(:a, :href => "##{id}", :rel => "ibox&amp;" + options.map{ |k,v| 
+        "#{k}=#{v}"}.join("&")){
+        text
+      })
+  end
   
   def current_user
     @current_user_session
@@ -39,7 +49,11 @@ module ApplicationHelper
       else
         options[:class] = "icon"
       end
-      image_tag("icons/#{theme}/#{name}.#{format}", options)
+      unless theme.blank?
+        image_tag("icons/#{theme}/#{name}.#{format}", options)
+      else
+        image_tag("icons/#{name}.#{format}", options)
+      end
     end
   end
 end

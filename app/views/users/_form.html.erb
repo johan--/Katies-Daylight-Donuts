@@ -57,6 +57,6 @@
   
   <p>
     <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
-    &nbsp;&nbsp;<%= link_to image_tag("buttons/default/button-cancel.png"), @current_user.super? ? users_path : "javascript:histroy.go(-1)" %>
+    &nbsp;<%= link_to image_tag("buttons/default/button-cancel.png", :style => "vertical-align: middle;"), @current_user.super? ? users_path : "javascript:history.back()" %>
   </p>
 <% end %>

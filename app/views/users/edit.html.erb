@@ -2,8 +2,11 @@
 
 <%= render :partial => 'form' %>
 
-<% if !@user.api_key.blank? %>
-  <% content_for :sidebar do %>
+<% content_for :sidebar do %>
+  <div class="store-balance">
+    Your Balance: <%= number_to_currency @user.store.balance %>
+  </div>
+  <% if !@user.api_key.blank? %>
     <ul>
       <li class="sidebar">
         <p>
@@ -15,4 +18,10 @@
       </li>
     </ul>
   <% end %>
+  <h2>Recent Deliveries</h2>
+  <ul>
+    <% @user.store.deliveries.delivered(:limit => 10).reverse.each do |delivery| %>
+      <li><%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: top;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@store, delivery, :format => :pdf) %> <%= link_to delivery.delivered_at.strftime("%m / %d / %Y"), @current_user.super? ? delivery : store_delivery_path(@store, delivery) %> <%= number_to_currency(delivery.total) %></li>
+    <% end %>
+  </ul>
 <% end %>

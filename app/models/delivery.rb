@@ -1,6 +1,8 @@
 class Delivery < ActiveRecord::Base
   include AASM
   
+  attr_accessor :store_name
+  
   has_many :comments, :as => :commentable
   
   has_many :line_items, :dependent => :destroy
@@ -50,6 +52,8 @@ class Delivery < ActiveRecord::Base
     }
   }
   named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'"
+  named_scope :unpaid, :conditions => {:paid => false}
+  named_scope :paid, :conditions => {:paid => true}
     
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")

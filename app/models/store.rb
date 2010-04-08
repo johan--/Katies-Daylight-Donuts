@@ -4,6 +4,7 @@ class Store < ActiveRecord::Base
   has_many :deliveries, :dependent => :destroy
   has_many :line_items, :through => :deliveries
   has_many :delivery_presets, :dependent => :destroy
+  has_many :buy_backs, :through => :deliveries
     
   # Geocode the locations for mapping
   after_update  :get_geocode
@@ -33,6 +34,11 @@ class Store < ActiveRecord::Base
         delivery.add_item(line_item.item, line_item.quantity)
       end
     end
+  end
+
+  # Returns the current balance for a store (includes discounts for buy backs)
+  def balance
+     @balance ||= (deliveries.delivered.unpaid.map(&:total).sum - buy_backs.map(&:total).sum)
   end
   
   def has_delivery_for_today?

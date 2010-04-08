@@ -8,13 +8,13 @@
 <%= @map.div(:width => 600, :height => 500) %>
 
 <% content_for :sidebar do %>
-  <%= delivery_action_link(@delivery, true) %>
+  <%= delivery_action_link(@delivery, true) if @current_user.super? %>
   <%= button "Print Ticket", delivery_path(@delivery, :format => :pdf) %>
-  <% if @delivery.delivered? %>
+  <% if @current_user.super? and @delivery.delivered? %>
   <%= button "Add Buy Back", new_delivery_buy_back_path(@delivery) %>
   <p>You can manually enter a buy back for this  delivery.
     Generally BuyBacks are created via the API from the iPhone application.</p>
-    <% unless @delivery.buy_backs.empty? %>
+    <% unless !@current_user.super? or @delivery.buy_backs.empty? %>
       <%= render "buy_backs" %>
     <% end %>
   <% end # if @delivery.delivered? %>
@@ -65,11 +65,12 @@
   </table>
   <% end %>
   
-  
+  <% if @current_user.super? %>
   <p>
     <%= link_to "Edit", edit_delivery_path(@delivery) %> |
     <%= link_to icon("cross-circle-frame"), @delivery, :confirm => 'Are you sure?', :method => :delete %> |
     <%= link_to "View All", deliveries_path %>
   </p>
+  <% end %>
   
 <% end %>

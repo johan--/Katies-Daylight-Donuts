@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  before_filter :set_timezone
+  before_filter [:set_timezone, :find_store]
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
 
@@ -67,6 +67,12 @@ class ApplicationController < ActionController::Base
     unless current_user_session
       flash[:error] = "Please login"
       redirect_to login_url 
+    end
+  end
+  
+  def find_store
+    unless current_user.store.nil?
+      @store = current_user.store
     end
   end
 end

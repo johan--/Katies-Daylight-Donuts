@@ -177,7 +177,9 @@ div#sidebar h2, div#sidebar ul li, div#sidebar ol li{
 } 
 
 div#sidebar h2{
-  border-bottom: 1px solid #999;
+  font-size: 11pt;
+  color: #757575;
+  border-bottom: 1px solid #757575;
 }
 
 #inner{
@@ -367,4 +369,10 @@ li.store_list_item{
 
 div.handle{
   cursor: row-resize;
+}
+
+div.store-balance{
+  color: #36A33D;
+  font-weight: bold;
+  font-size: 14pt;
 }

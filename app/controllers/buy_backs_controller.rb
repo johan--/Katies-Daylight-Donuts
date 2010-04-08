@@ -12,7 +12,14 @@ class BuyBacksController < ApplicationController
   end
   
   def new
-    @buy_back = @delivery.buy_backs.new
+    unless params[:delivery_id]
+      render :update do |page|
+        
+      end
+    else
+      @delivery = Delivery.find(params[:delivery_id])
+      @buy_back = @delivery.buy_backs.new
+    end
   end
   
   def create

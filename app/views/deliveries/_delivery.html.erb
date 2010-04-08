@@ -14,7 +14,7 @@
     <% end %>
     <td><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></td>
     <td align="right">
-      
+    <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: baseline;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@store, delivery, :format => :pdf) %>
     <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
       <%= render :partial => "ticket", :locals => {:delivery => delivery } %>
     </div>
