@@ -32,7 +32,7 @@ data << [
 # Add the notes to the Invoice
 data << [
   {:text => "Notes: ", :align => :left, :colspan => 1},
-  {:text => @delivery.comments.map(&:content).join("\n"), :colspan => 3}
+  {:text => @delivery.comments.map(&:body).join("\n"), :colspan => 3}
 ]
 
 #   
