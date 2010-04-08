@@ -6,7 +6,7 @@ stripes = ["EBEBEB","FFFFFF"]
   # prevent any bad data from generating a form. 
   
   unless delivery.line_items.empty?
-  render :partial => "shared/delivery", :object => delivery
+  render :partial => "shared/delivery_pdf", :object => delivery, :format => :pdf
   pdf.start_new_page unless (index+1) == @deliveries.size
   end
 end

@@ -40,7 +40,7 @@
         <br />
         <%= f.hidden_field :commentable_id, :value => delivery.id %>
         <%= f.hidden_field :commentable_type, :value => "Delivery" %>
-        <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function "Cancel", %($('#{ delivery.object_id}').fade()) %>
+        <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function image_tag("buttons/default/button-cancel.png"), %($('#{ delivery.object_id}').fade()) %>
       <% end %>
     </td>
   </tr>

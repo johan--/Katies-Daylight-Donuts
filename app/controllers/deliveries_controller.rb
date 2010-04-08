@@ -161,7 +161,7 @@ class DeliveriesController < ApplicationController
          @map.overlay_init store_marker
        end
   end
-
+  
   def print_todays
     @deliveries = Delivery.pending.by_date.unprinted
     @deliveries.map do |delivery|

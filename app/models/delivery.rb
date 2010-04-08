@@ -39,7 +39,7 @@ class Delivery < ActiveRecord::Base
   
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :pending, :conditions => "deliveries.state = 'pending' or deliveries.state = 'printed'", :order => "created_at ASC", :include => [:store,:employee]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:employee]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:line_items]
   # This does not work with postgresql db's for some reason
   named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}"}
   named_scope :by_date, lambda { |*args|

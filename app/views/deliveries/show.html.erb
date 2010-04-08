@@ -9,6 +9,7 @@
 
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) %>
+  <%= button "Print Ticket", delivery_path(@delivery, :format => :pdf) %>
   <% if @delivery.delivered? %>
   <%= button "Add Buy Back", new_delivery_buy_back_path(@delivery) %>
   <p>You can manually enter a buy back for this  delivery.
