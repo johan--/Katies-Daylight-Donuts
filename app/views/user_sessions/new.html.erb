@@ -1,7 +1,9 @@
 <% title "Login" %>
 <div>
 <% form_for @user_session, :html => {:id => "login_form"} do |f| %>
-  <%= f.error_messages %>
+  <% content_for :login_errors do %>
+    <%= f.error_messages %>
+  <% end %>
   <p>
     <%= f.label :username %><br />
     <%= f.text_field :username, :class => "large", :style => "width: 250px;" %>
@@ -14,5 +16,8 @@
     <%= image_submit_tag "../images/buttons/default/button-ok.png", :style => "vertical-align: middle" %> 
     <%= link_to "Forgot Password", password_resets_url %>
   </p>
+<% end %>
+<% if @content_for_login_errors %>
+  <center><%= yield :login_errors %></center>
 <% end %>
 </div>

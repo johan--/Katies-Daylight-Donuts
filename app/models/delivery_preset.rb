@@ -41,10 +41,8 @@ class DeliveryPreset < ActiveRecord::Base
   
   def copy(delivery_preset)
     raise ArgumentError, "Expected DeliveryPreset got #{delivery_preset.class}" unless delivery_preset.is_a?(DeliveryPreset)
-    self.line_items.map(&:destroy)
-    delivery_preset.line_items.each do |li|
+    delivery_preset.line_items.collect do |li|
       self.line_items.create(:item => li.item, :quantity => li.quantity, :price => li.item.price)
-    end
-    true
+    end.all?
   end
 end

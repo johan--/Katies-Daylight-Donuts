@@ -8,7 +8,7 @@ class UserSessionsController < ApplicationController
     if @user_session.save
       flash[:notice] = "Successfully logged in."
       if current_user and current_user.has_roles?(:admin, :employee)
-        redirect_to deliveries_url
+        redirect_to pending_deliveries_url
       elsif current_user
         redirect_to edit_user_path(current_user)
       end

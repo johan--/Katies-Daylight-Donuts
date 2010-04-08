@@ -12,5 +12,5 @@
     <%= f.label :email %><br />
     <%= icon "mail" %> <%= f.text_field :email %>
   </p>
-  <p><%= f.submit "Save" %></p>
+  <p><%= image_submit_tag "buttons/button-save.png" %>&nbsp;<%= link_to_function image_tag("buttons/button-cancel.png"), %(javascript:history.back()) %></p>
 <% end %>
