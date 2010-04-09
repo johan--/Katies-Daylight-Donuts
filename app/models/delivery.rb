@@ -37,7 +37,7 @@ class Delivery < ActiveRecord::Base
   
   
   validates_presence_of :store, :message => "Must be assigned a store location."
-  validates_presence_of :employee, :message => "Driver required."
+  validates_presence_of :employee_id, :message => "Driver required."
   
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
   named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
@@ -77,7 +77,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def total
-    line_items.collect{ |i| i.quantity.to_i * i.price }.sum
+    line_items.collect{ |i| i.quantity.to_i * i.price.to_f }.sum || 0
   end
   
   def update_line_items(*args)

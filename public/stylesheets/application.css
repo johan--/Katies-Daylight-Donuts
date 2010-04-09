@@ -343,6 +343,19 @@ form#login_form{
   width: 300px;
 }
 
+form fieldset{
+  padding: 5px;
+  border: 2px solid #D5D5D5;
+  width: 90%;
+  margin: 0 0.5em;
+}
+
+form fieldset p label{
+  font-weight: bold;
+  font-size: 12pt;
+  color: #979797;
+}
+
 input.large{
   font-size: 14pt;
 }

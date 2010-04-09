@@ -63,6 +63,10 @@
 </div>
 
 <% content_for :sidebar do %>
+  <div class="store-balance">
+    Balance: <%= number_to_currency @store.balance %>
+  </div>
+
   <%= button "Order History", delivered_store_deliveries_path(@store) %>
 
   <% if @current_user.super? %>

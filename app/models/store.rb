@@ -38,7 +38,7 @@ class Store < ActiveRecord::Base
 
   # Returns the current balance for a store (includes discounts for buy backs)
   def balance
-     @balance ||= (deliveries.delivered.unpaid.map(&:total).sum - buy_backs.map(&:total).sum)
+     (deliveries.delivered.unpaid.map(&:total).sum - buy_backs.map(&:total).sum)
   end
   
   def has_delivery_for_today?

@@ -1,4 +1,5 @@
 <% form_for @store do |f| %>
+  <fieldset>
   <%= f.error_messages %>
   <p>
     <%= f.label :name %><br />
@@ -45,5 +46,6 @@
     <%= f.label :url %><br />
     <%= f.text_field :url %>
   </p>
-  <p><%= f.submit "Save" %></p>
+  <p><%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function(image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()))%></p>
+  </fieldset>
 <% end %>

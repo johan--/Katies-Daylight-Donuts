@@ -4,6 +4,6 @@ class LineItem < ActiveRecord::Base
   belongs_to :delivery_preset
   
   def total
-    (price * quantity)
+    (quantity.to_i * price.to_f)
   end
 end

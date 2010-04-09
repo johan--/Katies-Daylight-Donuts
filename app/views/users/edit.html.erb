@@ -3,9 +3,11 @@
 <%= render :partial => 'form' %>
 
 <% content_for :sidebar do %>
+  <% unless @current_user.store.nil? %>
   <div class="store-balance">
-    Your Balance: <%= number_to_currency @user.store.balance %>
+    Your Balance: <%= number_to_currency @current_user.store.balance %>
   </div>
+  <% end %>
   <% if !@user.api_key.blank? %>
     <ul>
       <li class="sidebar">
@@ -18,10 +20,13 @@
       </li>
     </ul>
   <% end %>
+  
+  <% unless @current_user.store.nil? %>
   <h2>Recent Deliveries</h2>
   <ul>
     <% @user.store.deliveries.delivered(:limit => 10).reverse.each do |delivery| %>
-      <li><%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: top;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@store, delivery, :format => :pdf) %> <%= link_to delivery.delivered_at.strftime("%m / %d / %Y"), @current_user.super? ? delivery : store_delivery_path(@store, delivery) %> <%= number_to_currency(delivery.total) %></li>
+      <li><%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: top;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %> <%= link_to delivery.delivered_at.strftime("%m / %d / %Y"), @current_user.super? ? delivery : store_delivery_path(@current_user.store, delivery) %> <%= number_to_currency(delivery.total) %></li>
     <% end %>
   </ul>
+  <% end %>
 <% end %>

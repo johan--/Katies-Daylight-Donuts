@@ -1,5 +1,6 @@
 <% form_for @delivery do |f| %>
   <%= f.error_messages %>
+  <fieldset>
   <p>
     <%= f.label :delivery_date %><br />
     <%= f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now), :value => Time.now.strftime("%B %d, %Y %I:%m %p") %>
@@ -14,7 +15,7 @@
     <% end %>
   </p>
   <% else %>
-    <%= f.hidden_field :store_id, :value => @current_user.store.object_id %>
+    <%= f.hidden_field :store_id, :value => @current_user.store.id %>
   <% end %>
   
   <% if @current_user.super? %>
@@ -25,7 +26,7 @@
     </p>
     <% end %>
   <% else %>
-    <%= f.hidden_field :employee_id, :value => Employee.drivers.first unless Employee.drivers.empty? %>
+    <%= f.hidden_field :employee_id, :value => Employee.drivers.first.id unless Employee.drivers.empty? %>
   <% end %>
     <br />
     
@@ -53,6 +54,7 @@
   </table>
   <%= image_submit_tag "buttons/default/button-save.png" %>
   <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()) %>
+  </fieldset>
 <% end %>
 
 <% content_for :sidebar do %>
