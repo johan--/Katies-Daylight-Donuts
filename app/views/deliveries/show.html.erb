@@ -20,7 +20,7 @@
   <% end # if @delivery.delivered? %>
   <p>
     <strong>Created:</strong><br />
-    <%= @delivery.created_at.strftime("%B %d, %Y at %H:%m %p") %>
+    <%= (@delivery.created_at+1.day).strftime("%B %d, %Y at %H:%m %p") %>
   </p>
   
   <p>

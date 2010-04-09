@@ -6,7 +6,7 @@
   <p>A new delivery has been created. See the details below.</p>
 
   <ul>
-    <li>Created: <%= @delivery.created_at %></li>
+    <li>Created: <%= (@delivery.created_at+1.day) %></li>
     <li>Store: <%= @delivery.store.address_option %></li>
     <li>Status: <%= @delivery.state %></li>
     <li>Assigned To: <%= @delivery.employee.fullname %></li>
