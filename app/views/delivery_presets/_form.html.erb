@@ -1,4 +1,5 @@
 <% form_for @delivery_preset do |f| %>
+  <fieldset>
   <%= f.error_messages %>
   <% if @delivery_preset.store %>
   <p>
@@ -26,8 +27,9 @@
 <% content_for :sidebar do %>
 <p>Select a day of the week to copy from.</p>
   <% form_tag :action => "copy", :controller => "delivery_presets" do %>
-    <%= select_tag :id, (["<option value='#{@next_delivery_preset.id}'>#{@next_delivery_preset.day_of_week.titleize}</option>"] | @delivery_preset.store.delivery_presets.collect{|dp| "<option value='#{dp.id}'>#{dp.day_of_week.titleize}</option>" if(dp != @delivery_preset && dp.day_of_week.downcase != @delivery_preset.day_of_week.next_day_of_week) }.compact) if @delivery_preset.store %> 
+    <%= select_tag :id, (["<option value='#{@next_delivery_preset.id}'>#{@next_delivery_preset.day_of_week}</option>"] | @delivery_preset.store.delivery_presets.collect{|dp| "<option value='#{dp.id}'>#{dp.day_of_week}</option>" if(dp != @delivery_preset && dp.day_of_week.downcase != @delivery_preset.day_of_week.next_day_of_week) }.compact) if @delivery_preset.store %> 
     <%= hidden_field_tag :copy_from_id, @delivery_preset.id %>
     <%= image_submit_tag "buttons/default/button-copy.png" %>
   <% end %>
+  </fieldset>
 <% end %>

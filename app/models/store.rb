@@ -49,8 +49,13 @@ class Store < ActiveRecord::Base
     todays_ticket && todays_ticket.closed?
   end
   
+  # Returns todays ticket, which is really tomorrow in this case
   def todays_ticket
-    @todays_ticket ||= delivery_presets.find_by_day_of_week(Time.now.to_s.split(" ").first.downcase)
+    @todays_ticket ||= delivery_presets.find_by_day_of_week(tomorrow)
+  end
+
+  def tomorrow
+    (Time.zone.now+1.day).strftime("%a").downcase
   end
   
   def display_name

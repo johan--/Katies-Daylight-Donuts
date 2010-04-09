@@ -5,6 +5,7 @@ describe DeliveryPresetsController do
   integrate_views
   
   before(:each) do
+    UserSession.any_instance.stubs(:find).returns(mock(:user))
     login
   end
   
@@ -37,6 +38,7 @@ describe DeliveryPresetsController do
   end
   
   it "edit action should render edit template" do
+    DeliveryPreset.stubs(:find_or_create_by_day_of_week).returns(mock(:delivery_preset))
     get :edit, :id => delivery_presets(:mon)
     response.should render_template(:edit)
   end

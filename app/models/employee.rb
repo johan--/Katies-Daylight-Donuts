@@ -18,6 +18,7 @@ class Employee < ActiveRecord::Base
   # validates_uniqueness_of :phone # I don't like this
   validates_presence_of :firstname, :lastname, :born_on, :phone
   validates_presence_of :positions, :if => Proc.new{ |employee| employee.positions.empty? }
+  validates_length_of :phone, :is => 10
   
   has_and_belongs_to_many :positions
   has_many :clockin_times

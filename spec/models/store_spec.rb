@@ -8,6 +8,14 @@ describe Store do
     Store.all_by_position.should == [stores(:two),stores(:one)]
   end
   
+  it "should return the next days preset" do
+    Position.find_or_create_by_name(:name => "Driver")
+    store = Factory(:store)
+    Time.zone = "Central Time (US & Canada)"
+    store.create_todays_delivery!
+    store.todays_ticket.day_of_week.should == store.tomorrow
+  end
+  
   context "with an existing city" do
     it "should create the store with the city" do
       store = stores(:one)
