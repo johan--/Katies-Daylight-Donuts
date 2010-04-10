@@ -104,11 +104,15 @@ class DeliveriesController < ApplicationController
   end
   
   def update_status
-    @deliveries = Delivery.find(params[:delivery_ids])
-    @deliveries.each do |delivery|
-      delivery.send(:"#{params[:message]}!") if delivery.respond_to?(:"#{params[:message]}!")
+    if params[:print]
+      redirect_to :action => "print_todays", :delivery_ids => params[:delivery_ids], :format => :pdf
+    else
+      @deliveries = Delivery.find(params[:delivery_ids])
+      @deliveries.each do |delivery|
+        delivery.send(:"#{params[:message]}!") if delivery.respond_to?(:"#{params[:message]}!")
+      end
+      redirect_to pending_deliveries_path
     end
-    redirect_to pending_deliveries_path
   end
   
   def deliver
@@ -187,7 +191,11 @@ class DeliveriesController < ApplicationController
   end
   
   def print_todays
-    @deliveries = Delivery.pending.by_date.unprinted
+    if params[:delivery_ids]
+      @deliveries = Delivery.find(params[:delivery_ids])
+    else
+      @deliveries = Delivery.pending.by_date.unprinted
+    end
     @deliveries.map do |delivery|
       delivery.print!
     end

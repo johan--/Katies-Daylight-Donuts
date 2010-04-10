@@ -20,7 +20,7 @@ class Delivery < ActiveRecord::Base
   aasm_state :canceled
   
   aasm_event :print do
-    transitions :from => [:pending], :to => :printed
+    transitions :from => [:delivered,:canceled,:printed,:pending], :to => :printed
   end
   
   aasm_event :deliver do

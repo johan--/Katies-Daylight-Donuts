@@ -3,8 +3,19 @@
   <p>Clock in with your Employee ID.</p>
   <% form_remote_tag :url => {:controller => "clockin_times", :action => "create"} do %>
     <%= icon "clock-arrow" %> <%= text_field_tag :employee_id, :clockin_id, :value => "", :class => "large", :size => 5 %> 
+    <%= hidden_field_tag :context, "clockin" %>
     <%= image_submit_tag "buttons/default/button-clockin.png", :style => "vertical-align: middle;" %>
   <% end %>
+  
+  <h2>Clock Out</h2>
+  <p>Clock out with your Employee ID.</p>
+  <% form_remote_tag :url => {:controller => "clockin_times", :action => "create"} do %>
+    <%= icon "clock-arrow" %> <%= text_field_tag :employee_id, :clockin_id, :value => "", :class => "large", :size => 5 %> 
+    <%= hidden_field_tag :context, "clockout" %>
+    <%= image_submit_tag "buttons/default/button-clockout.png", :style => "vertical-align: middle;" %>
+  <% end %>
+  
   <div id="clockin_response" style="display: none;"></div>
   <a id="clockin_notification" href="#clockin_response" rel="ibox&amp;width=300&amp;height=180">&nbsp;</a>
+  
 </div>
