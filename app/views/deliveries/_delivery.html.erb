@@ -14,7 +14,7 @@
         <%= check_box_tag "delivery_ids[]", delivery.id, {}, {:class => "checkbox"} %>
       </td>
     <% end %>
-    <td><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></td>
+    <td><span style="width: 150px;"><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></span></td>
     <td align="right">
     <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: baseline;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %>
     <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
