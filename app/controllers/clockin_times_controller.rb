@@ -1,6 +1,10 @@
 class ClockinTimesController < ApplicationController
   before_filter :login_required
   
+  def new
+    @clockin_time = ClockinTime.new
+  end
+  
   def show
     @clockin_time = ClockinTime.find(params[:id])
   end

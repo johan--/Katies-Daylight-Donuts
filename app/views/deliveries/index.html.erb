@@ -8,6 +8,25 @@
 </div>
 <% end %>
 
+<% form_for "deliveries[]", :id => nil, :url => {:controller => "deliveries", :action => "update_status"} do |f| %>
+
+<div style="border: 2px solid #ebebeb; padding: 0.5em; margin: 0.5em;">
+   <select id="message" name="message">
+     <option value="deliver">Delivered</option>
+     <option value="undeliver">Pending</option>
+     <option value="cancel">Cancel</option>
+   </select>
+   &nbsp;
+   <%= link_to_function "Select All" do |page|
+     page.select('.checkbox').each{|element| element.checked = true }
+   end %>
+   &nbsp;
+   <%= link_to_function "Select None" do |page|
+      page.select('.checkbox').each{|element| element.checked = false }
+    end %>
+    <%= f.submit "Save" %>
+</div>
+
 <% @deliveries.group_by{|d| (d.created_at+1.day).strftime("%m/%d/%Y") }.each do |created,deliveries| %>
   <% deliveries.group_by{|d| d.store }.each do |store, deliveries| %>
     <div class="span-16" style="margin: 1em 0;padding: 1em 0.0em; background: #eee; border: 1px solid #aaa">
@@ -16,8 +35,14 @@
         <%= icon "calendar-day" %> <%= created %>
       </strong>
     </div>    
-    <%= render :partial => deliveries %>
+    <%= render :partial => deliveries, :locals => {:builder => f} %>
   <% end %>
+<% end %>
+
+<div style="border: 2px solid #ebebeb; padding: 0.5em; margin: 0.5em;">
+  <%= f.submit "Save" %>
+</div>
+
 <% end %>
 
 

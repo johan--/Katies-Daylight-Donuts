@@ -8,7 +8,7 @@ class Delivery < ActiveRecord::Base
   has_many :line_items, :dependent => :destroy
   has_many :items, :through => :line_items
   
-  has_many :buy_backs
+  has_many :buy_backs, :dependent => :destroy
   belongs_to :employee
   belongs_to :store
   
@@ -28,11 +28,11 @@ class Delivery < ActiveRecord::Base
   end
   
   aasm_event :undeliver do
-    transitions :from => :delivered, :to => :pending
+    transitions :from => [:delivered,:printed], :to => :pending
   end
   
   aasm_event :cancel do
-    transitions :from => [:pending, :delivered], :to => :canceled
+    transitions :from => [:pending, :delivered, :printed], :to => :canceled
   end
   
   

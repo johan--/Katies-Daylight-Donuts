@@ -16,11 +16,11 @@ class DeliveriesController < ApplicationController
     end
     
     if params[:status] == "pending"
-      @deliveries = @delivery_klass.pending
+      @deliveries = @delivery_klass.pending.paginate(:page => params[:page])
     elsif params[:status] == "delivered"
-      @deliveries = @delivery_klass.delivered
+      @deliveries = @delivery_klass.delivered.paginate(:page => params[:page])
     else
-      @deliveries = @delivery_klass.all
+      @deliveries = @delivery_klass.paginate(:page => params[:page])
     end
     respond_to do |format|
       format.html
@@ -97,6 +97,14 @@ class DeliveriesController < ApplicationController
     else
       render :action => 'edit'
     end
+  end
+  
+  def update_status
+    @deliveries = Delivery.find(params[:delivery_ids])
+    @deliveries.each do |delivery|
+      delivery.send(:"#{params[:message]}!") if delivery.respond_to?(:"#{params[:message]}!")
+    end
+    redirect_to pending_deliveries_path
   end
   
   def deliver

@@ -6,8 +6,8 @@
 
 <p>
   <strong>Address:</strong>
-  <%=h @store.address %><br />
-  <%=h @store.city.name if !@store.city.nil? %>, <%=h @store.state %> <%=h @store.country %><br />
+  <%=h @store.address.upcase %><br />
+  <%=h @store.city.name.upcase if !@store.city.nil? %>, <%=h @store.state %> <%=h @store.country.upcase %><br />
   <%=h @store.zipcode %><br />
 
   <% if @store.phone %>

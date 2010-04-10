@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   require 'digest/md5' unless defined?(Digest::MD5)
 
   attr_accessor :roles_ids
-  
+
   acts_as_authentic
     
   validate_email_field = false
@@ -41,19 +41,19 @@ class User < ActiveRecord::Base
   end
   
   def super?
-    self.username == "admin" || self.admin?
+    @is_super ||= (self.username == "admin" || self.admin?)
   end
   
   def admin?
-    has_role?(:admin)
+    @is_admin ||= has_role?(:admin)
   end
   
   def employee?
-    has_role?(:employee)
+    @is_employee ||= has_role?(:employee)
   end
   
   def customer?
-    has_role?(:customer) || !store.nil?
+    @is_customer ||= has_role?(:customer) || !store.nil?
   end
 
   def to_param
