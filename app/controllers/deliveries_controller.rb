@@ -19,6 +19,10 @@ class DeliveriesController < ApplicationController
       @deliveries = @delivery_klass.pending.paginate(:page => params[:page])
     elsif params[:status] == "delivered"
       @deliveries = @delivery_klass.delivered.paginate(:page => params[:page])
+    elsif params[:status] == "printed"
+      @deliveries = @delivery_klass.printed.paginate(:page => params[:page])
+    elsif params[:status] == "canceled"
+      @deliveries = @delivery_klass.canceled.paginate(:page => params[:page])
     else
       @deliveries = @delivery_klass.paginate(:page => params[:page])
     end
@@ -144,6 +148,12 @@ class DeliveriesController < ApplicationController
   def pending
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.pending
+    render :action => "index"
+  end
+  
+  def canceled
+    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @deliveries = @delivery_klass.canceled
     render :action => "index"
   end
   

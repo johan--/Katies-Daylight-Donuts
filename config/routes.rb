@@ -69,6 +69,7 @@ ActionController::Routing::Routes.draw do |map|
       :add_item => :any,
       :remove_item => :any
      }, :collection => {
+    :canceled => :get,
     :printed => :get,
     :generate_todays => :any,
     :print_todays => :any,

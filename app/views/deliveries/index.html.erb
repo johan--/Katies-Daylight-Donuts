@@ -12,9 +12,18 @@
 
 <div style="border: 2px solid #ebebeb; padding: 0.5em; margin: 0.5em;">
    <select id="message" name="message">
-     <option value="deliver">Delivered</option>
-     <option value="undeliver">Pending</option>
-     <option value="cancel">Cancel</option>
+     <% unless params[:action] == "delivered" %>
+       <option value="deliver">Delivered</option>
+    <% end %>
+    <% unless params[:action] == "pending" %>
+      <option value="undeliver">Pending</option>
+    <% end %>
+    <% unless params[:action] == "canceled" %>
+      <option value="cancel">Cancel</option>
+    <% end %>
+    <% unless params[:action] == "printed" %>
+      <option value="print">Printed</option>
+    <% end %>
    </select>
    &nbsp;
    <%= link_to_function "Select All" do |page|
@@ -60,5 +69,9 @@
   <%= link_to "Delivered Deliveries", @current_user.super? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.delivered.count %>)  <small><em>(History)</em></small><br />
   <% if @current_user.super? %>
     <%= link_to "Printed Deliveries", printed_deliveries_path %> (<%= @delivery_klass.printed.count %>)
+  <% end %>
+  <% if @current_user.super? %>
+  <br />
+    <%= link_to "Canceled Deliveries", canceled_deliveries_path %> (<%= @delivery_klass.canceled.count %>)
   <% end %>
 <% end %>

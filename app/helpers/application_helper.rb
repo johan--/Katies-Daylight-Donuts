@@ -1,5 +1,13 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
+  def pre
+    link_to (image_tag('previous.png',:alt=>'Previous')),:date=>@date.last_month
+  end
+
+  def nex
+    link_to (image_tag('next.png',:alt=>'Next')),:date=>@date.next_month
+  end
+
 
   def link_to_ibox(text, id, options = {}, &block)
     content_tag(:div, :id => id, :style => "display: none;") do

@@ -3,6 +3,7 @@ class EmployeesController < ApplicationController
   
   def index
     # @employees = Employee.paginate_by_creation params.dup
+    @date = params[:date] ? params[:date].to_date : Date.today
     @employees = Employee.all
     respond_to do |format|
       format.html

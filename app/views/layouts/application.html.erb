@@ -56,12 +56,12 @@
           <%- end -%>
         </div>
         
-        <div id="inner" class="<%= @content_for_sidebar.nil? ? "span-24" : "span-16" %>">
+        <div id="inner" class="<%= @content_for_sidebar.nil? ? "span-24" : "span-14" %>">
           <%= yield %>
         </div>
         
         <% if @content_for_sidebar %>
-          <div id="sidebar" class="span-6">
+          <div id="sidebar" class="span-8">
             <!-- Sidebar -->
             <%= render :partial => 'shared/sidebar' if @content_for_sidebar %>
           </div>

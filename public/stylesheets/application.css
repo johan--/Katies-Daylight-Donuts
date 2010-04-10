@@ -390,3 +390,71 @@ div.store-balance{
   font-weight: bold;
   font-size: 14pt;
 }
+
+.calendar {
+  margin: auto; 
+}
+
+.calendar thead tr th{
+  text-align: center;
+}
+  
+.specialDay{
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  background: #192456;
+}
+
+.specialDay a{
+  color: #fff;
+}
+.monthName th {
+  font-weight: normal;
+  text-align: right;
+  padding-top: 1em;
+  padding-bottom: 0.7em; }
+
+.dayName th {
+  text-align: center;
+  font-size: 0.7em;
+  padding-top: 0.6em;
+  padding-bottom: 0.3em;
+  background-color: #303030;
+  color: white; }
+
+.otherMonth {
+  padding: 0.7em 1em;
+  border-right: 1px solid white;
+  color: #eeeeee; }
+
+.day {
+  padding: 0.7em 1em;
+  border-right: 1px solid white; }
+
+.day_with_event {
+  padding: 0.7em 1em;
+  border-right: 1px solid white;
+  text-align: center;
+  border-bottom: 1px dotted #bbbbbb; }
+  .day_with_event a:visited, .day_with_event a:hover {
+    color: black;
+    text-decoration: none;
+    padding: 1em; }
+
+.weekend {
+  background-color: #eeeeee; }
+
+.day {
+  text-align: center;
+  border-bottom: 1px dotted #bbbbbb; }
+
+.day_with_event {
+background-color: #d10a21; }
+.day_with_event a {
+color: black;
+text-decoration: none;
+padding: 1em; }
+.day_with_event a:hover {
+color: white;
+background-color: black; }

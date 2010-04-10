@@ -12,7 +12,6 @@
     <% if @current_user.admin? %>
       <td>
         <%= check_box_tag "delivery_ids[]", delivery.id, {}, {:class => "checkbox"} %>
-        <%= delivery_action_link(delivery) %>
       </td>
     <% end %>
     <td><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></td>

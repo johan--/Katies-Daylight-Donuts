@@ -24,7 +24,7 @@ class Delivery < ActiveRecord::Base
   end
   
   aasm_event :deliver do
-    transitions :from => [:printed,:pending], :to => :delivered, :guard => :record_delivery_time
+    transitions :from => [:printed,:pending,:canceled], :to => :delivered, :guard => :record_delivery_time
   end
   
   aasm_event :undeliver do
