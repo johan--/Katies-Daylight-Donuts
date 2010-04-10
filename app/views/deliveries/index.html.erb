@@ -34,7 +34,7 @@
       page.select('.checkbox').each{|element| element.checked = false }
     end %>
     <%= check_box_tag :print %> Print Selected &nbsp;
-    <%= f.image_submit_tag "buttons/default/button-save.png" %>
+    <%= image_submit_tag "buttons/default/button-save.png" %>
 </div>
 
 <% @deliveries.group_by{|d| (d.created_at+1.day).strftime("%m/%d/%Y") }.each do |created,deliveries| %>
@@ -50,7 +50,7 @@
 <% end %>
 
 <div style="border: 2px solid #ebebeb; padding: 0.5em; margin: 0.5em;">
-  <%= f.image_submit_tag "buttons/default/button-save.png" %>
+  <%= image_submit_tag "buttons/default/button-save.png" %>
 </div>
 
 <% end %>
