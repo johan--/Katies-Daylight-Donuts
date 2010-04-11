@@ -5,8 +5,6 @@
   <%= @map.to_html %>
 <% end %>
 
-<%= @map.div(:width => 600, :height => 500) %>
-
 <% content_for :sidebar do %>
   <%= delivery_action_link(@delivery, true) if @current_user.super? %>
   <%= button "Print Ticket", delivery_path(@delivery, :format => :pdf) %>
@@ -18,17 +16,16 @@
       <%= render "buy_backs" %>
     <% end %>
   <% end # if @delivery.delivered? %>
+  <div style="padding: 1em;"><%= @map.div(:width => 225, :height => 225) %></div>
+<% end %>
+
   <p>
-    <strong>Created:</strong><br />
-    <%= (@delivery.created_at+1.day).strftime("%B %d, %Y at %H:%m %p") %>
-  </p>
-  
-  <p>
-    <strong>Store:</strong><br />
-    <%=h @delivery.store.name %>
+    <strong>Delivery Date:</strong><br />
+    <%= @delivery.delivery_date.strftime("%B %d, %Y at %H:%m %p") %>
   </p>
   <p>
     <strong>Store:</strong><br />
+    <%= h @delivery.store.name %><br />
     <%= @delivery.store.full_address %>
   </p>
   <p>
@@ -52,18 +49,17 @@
     </tr>
   <% for line_item in @delivery.line_items %>
     <tr>
-      <td><%= line_item.item.name %></td>
-      <td><%= line_item.quantity %></td>
-      <td><%= number_to_currency line_item.item.price %></td>
+      <td style="text-align: left;"><%= line_item.item.name %></td>
+      <td style="text-align: left;"><%= line_item.quantity %></td>
+      <td style="text-align: right;"><%= number_to_currency line_item.item.price %></td>
     </tr>
   <% end %>
   <tr>
-    <td colspan="3" style="text-align: right;">
+    <td colspan="3" style="text-align: right; font-size: 14pt; font-weight: bold; color: #36A33D;">
       <strong>Total:</strong> <%= number_to_currency(@delivery.total) %>
     </td>
   </tr>
   </table>
-  <% end %>
   
   <% if @current_user.super? %>
   <p>
