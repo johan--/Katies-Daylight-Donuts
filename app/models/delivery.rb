@@ -56,7 +56,16 @@ class Delivery < ActiveRecord::Base
   named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'"
   named_scope :unpaid, :conditions => {:paid => false}
   named_scope :paid, :conditions => {:paid => true}
-    
+  
+  def self.metric_chart
+    months,counts = [],[]
+    all.group_by{|d| d.delivery_date.strftime("%h") }.map{|month,d| 
+      months << month.titleize
+      counts << d.size
+  }
+  "http://chart.apis.google.com/chart?cht=ls&chd=t:#{counts.join(',')}&chs=250x100&chl=#{months.join('|')}"
+  end
+  
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")
   end

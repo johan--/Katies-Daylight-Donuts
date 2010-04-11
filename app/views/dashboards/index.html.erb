@@ -21,6 +21,11 @@
   </div>
   
   <div class="span-11 metric">
+    <h1><%= icon "box" %> Deliveries</h1>
+    <%= image_tag Delivery.metric_chart %>
+  </div>
+  
+  <div class="span-11 metric">
     <h1><%= icon "flask" %> Items</h1>
     <%= image_tag Item.metric_chart(Store.first).to_url %>
   </div>
