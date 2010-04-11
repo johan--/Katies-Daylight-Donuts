@@ -8,24 +8,26 @@ class DeliveriesController < ApplicationController
   auto_complete_for :item, :item_type
   
   def index
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
+    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries.by_date(@date)
     
     # Order History
     if params[:store_id] && store = Store.find(params[:store_id])
-      @delivery_klass = store.deliveries
+      @delivery_klass = store.deliveries.by_date(@date)
     end
     
     if params[:status] == "pending"
-      @deliveries = @delivery_klass.pending.paginate(:page => params[:page])
+      @deliveries = @delivery_klass.pending.by_date(@date)
     elsif params[:status] == "delivered"
-      @deliveries = @delivery_klass.delivered.paginate(:page => params[:page])
+      @deliveries = @delivery_klass.delivered.by_date(@date)
     elsif params[:status] == "printed"
-      @deliveries = @delivery_klass.printed.paginate(:page => params[:page])
+      @deliveries = @delivery_klass.printed.by_date(@date)
     elsif params[:status] == "canceled"
-      @deliveries = @delivery_klass.canceled.paginate(:page => params[:page])
+      @deliveries = @delivery_klass.canceled.by_date(@date)
     else
-      @deliveries = @delivery_klass.paginate(:page => params[:page])
+      @deliveries = @delivery_klass.by_date(@date)
     end
+
     respond_to do |format|
       format.html
       format.xml{ render :xml => @deliveries.to_xml(:include => [:store]) }
@@ -55,7 +57,7 @@ class DeliveriesController < ApplicationController
   def show
     @delivery = Delivery.find(params[:id])
     @map = GMap.new("map")
-    @map.control_init(:large_map => true,:map_type => true)
+    @map.control_init(:map_type => true)
     @map.center_zoom_init(@delivery.store.geocode_array, 11)
     @map.icon_global_init(GIcon.new(:image => "/images/daylight_donuts_gmarker.png",
         :shadow => "/images/daylight_donuts_gmarker.png",
@@ -138,24 +140,28 @@ class DeliveriesController < ApplicationController
   end
   
   def printed
+    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.printed
     render :action => "index"
   end
   
   def delivered
+    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.delivered
     render :action => "index"
   end
   
   def pending
+    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.pending
+    @deliveries = @delivery_klass.pending.by_date(@date)
     render :action => "index"
   end
   
   def canceled
+    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.canceled
     render :action => "index"
@@ -170,7 +176,7 @@ class DeliveriesController < ApplicationController
     )
     @stores = @deliveries.map(&:store)
        @map = GMap.new("map")
-       @map.control_init(:large_map => true,:map_type => true)
+       @map.control_init(:large_map => false,:map_type => true)
        @map.center_zoom_init(@stores.first.geocode_array, 11)
        @stores.each do |store|
          

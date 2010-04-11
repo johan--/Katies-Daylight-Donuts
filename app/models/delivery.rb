@@ -38,17 +38,18 @@ class Delivery < ActiveRecord::Base
   
   validates_presence_of :store, :message => "Must be assigned a store location."
   validates_presence_of :employee_id, :message => "Driver required."
+  validates_presence_of :delivery_date, :message => "Must have a date to be delivered." 
   
-  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "created_at ASC", :include => [:store,:employee]
-  named_scope :pending, :conditions => {:state => "pending"}, :order => "created_at ASC", :include => [:store,:employee]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "created_at ASC", :include => [:store,:line_items]
+  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee]
+  named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:store,:line_items]
   # This does not work with postgresql db's for some reason
   named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}"}
   named_scope :by_date, lambda { |*args|
     args[0] ||= Time.zone.now
     {
-      :order => "created_at asc",
-      :conditions => ["created_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||Time.zone.now).end_of_day.to_s(:db)]
+      :order => "delivery_date asc",
+      :conditions => ["delivery_date BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||args[0]).end_of_day.to_s(:db)]
     }
   }
   named_scope :printed, :conditions => {:state => "printed"}
@@ -69,7 +70,7 @@ class Delivery < ActiveRecord::Base
   end
 
   def delivery_time
-    @delivery_time ||= created_at.strftime("%m/%d/%Y %H:%M:%S %p")
+    @delivery_time ||= delivery_date.strftime("%m/%d/%Y %H:%M:%S %p")
   end
   
   def customer_name

@@ -11,9 +11,9 @@ stripes = ["EBEBEB","FFFFFF"]
 
     # Add Headers
     pdf.table [
-      [{:text => "Invoice #{(delivery.created_at+1.day).strftime('%m/%d/%Y')}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
+      [{:text => "Invoice #{(delivery.delivery_date+1.day).strftime('%m/%d/%Y')}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
       [{:text => "Katies Daylight Donuts \n1501 18TH ST.\nCentral City, NE\nUSA 68826\n\nPhone: 308-946-5555", :align => :left},
-       {:text => "Invoice #: #{delivery.id}\nDate : #{Time.zone.now.strftime('%m/%d/%Y')}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
+       {:text => "Invoice #: #{delivery.id}\nDate : #{delivery.delivery_date.strftime('%m/%d/%Y')}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
       [{:text => "Customer Sold to: \n#{delivery.address.upcase}"},
        {:text => "Ship to: \n#{delivery.address.upcase}"}]
     ], :width => 500

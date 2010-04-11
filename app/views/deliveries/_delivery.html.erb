@@ -16,11 +16,13 @@
     <% end %>
     <td><span style="width: 150px;"><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></span></td>
     <td align="right">
-    <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: baseline;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %>
+    <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: middle;"), @current_user.super? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %>
+    <% if false %>
     <div id="ticket_for_<%= delivery.object_id %>" style="display: none;">
       <%= render :partial => "ticket", :locals => {:delivery => delivery } %>
     </div>
     <%= link_to icon("ticket"), "#ticket_for_#{delivery.object_id}", {:rel => "ibox&width=600&height=500", :onclick => %($('#ticket_for_#{delivery.object_id}').show())} %> 
+    <% end %>
     
     <%= link_to_function(icon("balloon-left"), "show_comment_fields('#{ delivery.object_id}')") %>
     <%= link_to icon("eye",:alt => "Show", :title => "Show"), delivery %></td>

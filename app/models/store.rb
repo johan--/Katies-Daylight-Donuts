@@ -28,7 +28,8 @@ class Store < ActiveRecord::Base
   def create_todays_delivery!
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({
-      :employee => Employee.default
+      :employee => Employee.default,
+      :delivery_date => Time.zone.today
     })
       todays_ticket.line_items.each do |line_item|
         delivery.add_item(line_item.item, line_item.quantity)
@@ -42,7 +43,7 @@ class Store < ActiveRecord::Base
   end
   
   def has_delivery_for_today?
-    @has_delivery_for_today ||= !deliveries.pending.find(:first, :conditions => ["created_at between ? and ?",Time.zone.now.beginning_of_day.to_s(:db),Time.zone.now.midnight.to_s(:db)]).nil?
+    @has_delivery_for_today ||= !deliveries.pending.find(:first, :conditions => ["delivery_date between ? and ?",Time.zone.now.beginning_of_day.to_s(:db),Time.zone.now.midnight.to_s(:db)]).nil?
   end
   
   def is_closed_today?
