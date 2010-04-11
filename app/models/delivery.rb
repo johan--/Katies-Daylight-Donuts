@@ -61,7 +61,7 @@ class Delivery < ActiveRecord::Base
     months,counts = [],[]
     all.group_by{|d| d.delivery_date.strftime("%h") }.map{|month,d| 
       months << month.titleize
-      counts << d.map(&:total).sum.to_i
+      counts << (d.map(&:total).sum/100).to_i
   }
   "http://chart.apis.google.com/chart?cht=ls&chm=b&chd=x:#{counts.join(',')}&chs=250x100&chl=#{months.join('|')}"
   end
