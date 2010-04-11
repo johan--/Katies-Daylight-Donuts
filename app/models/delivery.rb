@@ -63,7 +63,7 @@ class Delivery < ActiveRecord::Base
       months << month.titleize
       counts << d.map(&:total).sum.to_i
   }
-  "http://chart.apis.google.com/chart?cht=ls&chd=t:#{counts.join(',')}&chs=250x100&chl=#{months.join('|')}"
+  "http://chart.apis.google.com/chart?cht=ls&chm=b&chd=x:#{counts.join(',')}&chs=250x100&chl=#{months.join('|')}"
   end
   
   def description
