@@ -140,28 +140,24 @@ class DeliveriesController < ApplicationController
   end
   
   def printed
-    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.printed
     render :action => "index"
   end
   
   def delivered
-    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.delivered
     render :action => "index"
   end
   
   def pending
-    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.pending.by_date(@date)
+    @deliveries = @delivery_klass.pending
     render :action => "index"
   end
   
   def canceled
-    @date = params[:date] ? params[:date].to_date : Date.today
     @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.canceled
     render :action => "index"

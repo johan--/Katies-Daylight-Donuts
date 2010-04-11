@@ -37,7 +37,7 @@
     <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
 </div>
 
-<% @deliveries.group_by{|d| (d.delivery_date).strftime("%m/%d/%Y") }.each do |created,deliveries| %>
+<% @deliveries.group_by{|d| d.delivery_date.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
   <% deliveries.group_by{|d| d.store }.each do |store, deliveries| %>
     <div class="span-14" style="margin: 1em 0;padding: 1em 0.0em; background: #eee; border: 1px solid #aaa">
       <strong style="padding: 0.6em">
