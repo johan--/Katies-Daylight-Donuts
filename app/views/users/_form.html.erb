@@ -14,11 +14,11 @@
    <%= icon "mail" %> <%= f.text_field :email %>
   </p>
   
-  <% unless @user.new_record? %>
-    <p><label class="with-icon"><%= link_to_function "Change Password", %($('password_fields').show();) %></label></p>
-  <% end %>
+  <p>
+    <%= f.label :show_hints, "Turn on Hints?", {:class => "with-icon"} %><br />
+    <%= icon "information-balloon" %> <%= f.select :show_hints, [["Yes",true],["No",false]] %>
+  </p>
   
-  <fieldset id="password_fields" style="<%= @user.new_record? ? '' : 'display: none;' %>">
   <p>
     <%= f.label :password, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password %>
@@ -27,7 +27,6 @@
     <%= f.label :password_confirmation, nil, {:class => "with-icon"} %><br />
     <%= icon "lock" %> <%= f.password_field :password_confirmation %>
   </p>
-  </fieldset>
   
   <p>
     <%= f.label :time_zone, nil, {:class => "with-icon"} %><br />

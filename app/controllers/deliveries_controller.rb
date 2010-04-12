@@ -79,7 +79,7 @@ class DeliveriesController < ApplicationController
   end
   
   def create
-    line_items = params[:delivery].delete(:line_items)
+    line_items = params[:delivery].delete(:line_items) || []
     @delivery = Delivery.new(params[:delivery])
     line_items.each{ |l| @delivery.line_items.build(l) }
     if @delivery.save
@@ -96,7 +96,7 @@ class DeliveriesController < ApplicationController
   
   def update
     @delivery = Delivery.find(params[:id])
-    line_items = params[:delivery].delete(:line_items)
+    line_items = params[:delivery].delete(:line_items) || []
     if @delivery.update_attributes(params[:delivery]) && @delivery.update_line_items(line_items)
       flash[:notice] = "Successfully updated delivery."
       redirect_to @delivery

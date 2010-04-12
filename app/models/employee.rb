@@ -23,7 +23,7 @@ class Employee < ActiveRecord::Base
   has_and_belongs_to_many :positions
   has_many :clockin_times
   
-  named_scope :drivers, :conditions => {:positions => "in (#{Position.driver.object_id})"}
+  named_scope :drivers, :conditions => {:positions => "in (#{Position.driver.id})"}
   
   # Finds or Creates a new employee with a driving position
   def self.default

@@ -3,10 +3,10 @@
   
   <fieldset>
     <legend>
-      <ul class="span-22 inline debug">
+      <ul class="span-22 inline">
         <li class="span-22" style="display: block;">
           <%= f.label :delivery_id %>
-          <%= f.collection_select :delivery_id, Delivery.delivered, :id, :address %>
+          <%= f.collection_select :delivery_id, Delivery.all, :id, :delivery_option %>
         </li>
         <li class="span-5">
           <%= f.label :donuthole_count %>

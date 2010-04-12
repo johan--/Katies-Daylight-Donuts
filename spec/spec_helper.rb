@@ -53,7 +53,7 @@ end
 
 # returns current fake user 
 def current_user 
-  @current_user ||= users(:two) 
+  @current_user ||= Factory.create(:user)
 end 
 
 # returns current session mock 
@@ -63,6 +63,10 @@ def user_session
   @user_session.stubs(:record).returns(current_user)
   @user_session 
 end 
+
+def with_admin
+  current_user.roles << Factory.create(:role, :name => "admin") unless current_user.admin?
+end
 
 # logges me in 
 def login 

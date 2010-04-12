@@ -1,6 +1,6 @@
 class BuyBacksController < ApplicationController
   before_filter :login_required, :except => [:index, :search]
-  before_filter :find_delivery, :except => [:index]
+  before_filter :find_delivery, :except => [:index,:new]
   before_filter :current_user_session
   
   def index
@@ -12,14 +12,12 @@ class BuyBacksController < ApplicationController
   end
   
   def new
-    unless params[:delivery_id]
-      render :update do |page|
-        
-      end
+    if params[:delivery_id]
+      @delivery = Delivery.find(params[:delivery_id]) 
     else
-      @delivery = Delivery.find(params[:delivery_id])
-      @buy_back = @delivery.buy_backs.new
+      @delivery = Delivery.new
     end
+    @buy_back = @delivery.buy_backs.new
   end
   
   def create

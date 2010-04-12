@@ -68,6 +68,10 @@ class Delivery < ActiveRecord::Base
   "http://chart.apis.google.com/chart?chxt=Sales&cht=lc&chf=c,ls,0,CCCCCC,0.05,FFFFFF,0.05&chco=5D85BF&chd=t:#{counts.join(',')}&chs=430x100&chl=#{months.uniq.join('|')}"
   end
   
+  def delivery_option
+    "#{delivery_time}"
+  end
+  
   def description
     line_items.map{|line_item| "#{line_item.item.name} #{line_item.quantity}"}.join(", ")
   end
@@ -95,7 +99,7 @@ class Delivery < ActiveRecord::Base
   def update_line_items(*args)
     args.first.each do |line_item|
       item = Item.find(line_item[:item_id])
-      if existing_line_item = self.line_items.detect{ |l| l.item_id == item.object_id.to_i }
+      if existing_line_item = self.line_items.detect{ |l| l.item_id == item.id.to_i }
         existing_line_item.quantity = line_item[:quantity]
         existing_line_item.price    = line_item[:price]
         existing_line_item.save!
@@ -128,7 +132,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def remove_item(item)
-    if line_item = link_items.detect{ |li| li.item_id == item.object_id }
+    if line_item = link_items.detect{ |li| li.item_id == item.id }
       line_items -= line_item
     end
   end

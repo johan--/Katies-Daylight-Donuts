@@ -1,5 +1,9 @@
+Factory.sequence(:store_name) do |n|
+  "Store#{n}"
+end
+
 Factory.define(:store) do |f|
-  f.name "My Store"
+  f.name{ Factory.next(:store_name) }
   f.address "110 W. Schuff"
   f.city{ |s| s.association(:city) }
   f.state "NE"
