@@ -24,6 +24,7 @@ class ApplicationController < ActionController::Base
   end
   
   def get_current_weather
+    return if Rails.env == "test"
     @client = YahooWeather::Client.new
     @weather = @client.lookup_by_woeid(12787871) # central city
   end

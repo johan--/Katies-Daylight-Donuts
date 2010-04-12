@@ -47,7 +47,7 @@
       <th>Quantity</th>
       <th>Price</th>
     </tr>
-  <% for line_item in @delivery.line_items %>
+  <% for line_item in @delivery.line_items.select{|li| li if li.quantity > 0 } %>
     <tr>
       <td style="text-align: left;"><%= line_item.item.name %></td>
       <td style="text-align: left;"><%= line_item.quantity %></td>

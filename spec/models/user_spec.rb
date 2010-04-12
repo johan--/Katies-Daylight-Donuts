@@ -25,6 +25,23 @@ describe User do
       user.errors_on(:username).should == ["should use only letters, numbers, spaces, and .-_@ please.", "Username can only be letters and/or numbers"]
     end
   end
+
+  it "should be a super user with admin as a username" do
+    (User.find_by_username("admin") || Factory.create(:user, :username => "admin")).admin?.should == true
+  end
+  
+  it "should be an employee user with an employee role" do
+    user = Factory.create(:user)
+    user.roles << Role.employee
+    user.employee?.should == true
+  end
+  
+  it "should be a customer user with a customer role" do
+    user = Factory.create(:user)
+    user.roles << Role.customer
+    user.employee?.should == true
+  end
+  
   
   context " when valid" do 
     it "should be valid with a valid username" do
@@ -32,7 +49,6 @@ describe User do
     end
   
     it "should be admin with and admin role" do
-      pending "figure out wtf is wrong here"
       user = Factory.create(:user)
       user.roles << Role.find_or_create_by_name("admin")
       user.admin?.should == true

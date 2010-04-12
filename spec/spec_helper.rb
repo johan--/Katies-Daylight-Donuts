@@ -53,7 +53,7 @@ end
 
 # returns current fake user 
 def current_user 
-  @current_user ||= Factory.create(:user)
+  @current_user ||= users(:one)
 end 
 
 # returns current session mock 
