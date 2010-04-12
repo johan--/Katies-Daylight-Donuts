@@ -60,10 +60,12 @@ class Delivery < ActiveRecord::Base
   def self.metric_chart
     months,counts = [],[]
     all.group_by{|d| d.delivery_date.to_date }.map{|month,d| 
-      months << month.strftime("%h %Y").upcase
-      counts << (d.map(&:total).sum/100).to_i
+      if d.first.delivery_date.to_date.year == Time.zone.now.year
+        months << month.strftime("%h %Y").upcase
+        counts << (d.map(&:total).sum/100).to_i
+      end
   }
-  "http://chart.apis.google.com/chart?chxt=Sales&cht=ls&chm=5D85BF&chd=t:#{counts.join(',')}&chs=250x100&chl=#{months.uniq.join('|')}"
+  "http://chart.apis.google.com/chart?chxt=Sales&cht=lc&chf=c,ls,0,CCCCCC,0.05,FFFFFF,0.05&chco=5D85BF&chd=t:#{counts.join(',')}&chs=430x100&chl=#{months.uniq.join('|')}"
   end
   
   def description

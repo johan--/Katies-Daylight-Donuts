@@ -12,7 +12,7 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 body {
-  background-color: #192456;
+  background: url("../images/background-tile.png") repeat-x #BDBDBD top left;
   font-family: helvetica, arial, sans-serif;
   font-size: 80%;
 }

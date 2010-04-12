@@ -38,7 +38,7 @@ describe DeliveryPresetsController do
   end
   
   it "edit action should render edit template" do
-    DeliveryPreset.stubs(:find_or_create_by_day_of_week).returns(mock(:delivery_preset))
+    DeliveryPreset.stubs(:find_or_create_by_day_of_week).returns(mock(:delivery_preset, :day_of_week => "mon"))
     get :edit, :id => delivery_presets(:mon)
     response.should render_template(:edit)
   end
@@ -49,9 +49,12 @@ describe DeliveryPresetsController do
   end
   
   it "update action should redirect when model is valid" do
+    line_item = {:item_id => 1, :quantity => 12, :price => 0.5}
+    next_delivery_preset = mock(:delivery_preset, {:day_of_week => 'tue'})
     DeliveryPreset.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => delivery_presets(:mon), :delivery_preset => {:day_of_the_week => nil }
-    response.should redirect_to(delivery_preset_url(assigns[:delivery_preset]))
+    DeliveryPreset.stubs(:find_by_day_of_week).with('tue').returns(next_delivery_preset)
+    put :update, :id => delivery_presets(:mon), :delivery_preset => {:day_of_week => 'mon', :line_items => [line_item] }
+    response.should redirect_to(edit_delivery_preset_path(next_delivery_preset))
   end
   
   it "destroy action should destroy model and redirect to index action" do

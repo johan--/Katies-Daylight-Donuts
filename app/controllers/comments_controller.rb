@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
   
   def create
     @comment = Comment.new(params[:comment])
-    @commentable = Delivery.find(params[:comment][:commentable_id])
+    @commentable = Delivery.find(params[:comment][:commentable_id]) if params[:comment]
     if @comment.save
       flash[:notice] = "Successfully created comment."
       respond_to do |format|

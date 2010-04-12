@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
     
   validate_email_field = false
   
-  validates_presence_of :username
-  validates_presence_of :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
-  validates_format_of   :username, :with => /^\w+$/i, :message => "Username can only be letters and/or numbers"
+  validates_presence_of   :api_key, :if => Proc.new{ |u| u.api_enabled? } # generate an api key
+  validates_presence_of   :username
+  validates_uniqueness_of :username
+  validates_format_of     :username, :with => /^\w+$/i, :message => "Username can only be letters and/or numbers", :allow_blank => false, :allow_nil => false
   
   before_validation :generate_api_key
   
@@ -45,15 +46,15 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    @is_admin ||= has_role?(:admin)
+    has_role?(:admin)
   end
   
   def employee?
-    @is_employee ||= has_role?(:employee)
+    has_role?(:employee)
   end
   
   def customer?
-    @is_customer ||= has_role?(:customer) || !store.nil?
+    has_role?(:customer) || !store.nil?
   end
 
   def to_param
