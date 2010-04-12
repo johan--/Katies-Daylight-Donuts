@@ -20,7 +20,7 @@ data = @delivery.line_items.map{ |line_item|
     line_item.quantity,
     {:text => number_to_currency(line_item.item.price), :align => :right},
     {:text => number_to_currency(line_item.total), :align => :right}
-  ]
+  ] if line_item.quantity > 0
 }
 
 # Add Invoice Total
