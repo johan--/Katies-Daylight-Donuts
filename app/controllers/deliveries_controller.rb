@@ -9,7 +9,7 @@ class DeliveriesController < ApplicationController
   
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries.by_date(@date)
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries.by_date(@date)
     
     # Order History
     if params[:store_id] && store = Store.find(params[:store_id])
@@ -141,28 +141,28 @@ class DeliveriesController < ApplicationController
   
   def printed
     @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.printed
     render :action => "index"
   end
   
   def delivered
     @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.delivered
     render :action => "index"
   end
   
   def pending
     @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.pending
     render :action => "index"
   end
   
   def canceled
     @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = current_user.admin? ? Delivery : current_user.store.deliveries
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
     @deliveries = @delivery_klass.canceled
     render :action => "index"
   end
