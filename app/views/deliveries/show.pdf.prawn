@@ -14,13 +14,13 @@ pdf.table [
 ], :width => 500
 
 # Add Line Items
-data = @delivery.line_items.map{ |line_item|
+data = @delivery.line_items.select{|li| li if li.quantity.to_i > 0 }.map{ |line_item|
   [
     line_item.item.name,
     line_item.quantity,
     {:text => number_to_currency(line_item.item.price), :align => :right},
     {:text => number_to_currency(line_item.total), :align => :right}
-  ] if line_item.quantity > 0
+  ]
 }
 
 # Add Invoice Total
