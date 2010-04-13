@@ -1,4 +1,4 @@
-<% form_for @user do |f| %>
+<% form_remote_for @user, :success => %(facebox.close()) do |f| %>
   <fieldset>
   <%= f.error_messages %>
   
@@ -57,7 +57,7 @@
   
   <p>
     <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
-    &nbsp;<%= link_to image_tag("buttons/default/button-cancel.png", :style => "vertical-align: middle;"), @current_user.super? ? users_path : "javascript:history.back()" %>
+    &nbsp;<%= image_tag("buttons/default/button-cancel.png", :style => "vertical-align: middle;", :onclick => %(facebox.close())) %>
   </p>
   </fieldset>
 <% end %>

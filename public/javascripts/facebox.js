@@ -97,6 +97,7 @@ var Facebox = Class.create({
 	
 	loading	: function() {
 		if ($$('#facebox .loading').length == 1) return true;
+		this.showOverlay()
 		contentWrapper = $$('#facebox .content').first();
 		contentWrapper.childElements().each(function(elem, i){
 			elem.remove();
@@ -112,6 +113,21 @@ var Facebox = Class.create({
     //Event.observe(document, 'keypress', this.keyPressListener);
     //Event.observe(document, 'click', this.keyPressListener);
 	},
+	
+	showOverlay : function(){
+    var overlay = Element("div", {"class" : "facebox_hide", "id" : "facebox_overlay"});
+    document.body.appendChild(overlay);
+    overlay.addClassName("facebox_overlayBG");
+    overlay.setOpacity(0.5);
+    overlay.show();
+  },
+
+  hideOverlay : function(){
+    if($('facebox_overlay')){
+      $('facebox_overlay').hide();
+      $('facebox_overlay').remove();
+    }
+  },
 	
 	reveal	: function(data, klass){
 		this.loading();
@@ -137,6 +153,7 @@ var Facebox = Class.create({
 	
 	close		: function(){
 		 new Effect.Fade('facebox', {duration: .3});
+		 this.hideOverlay()
 	},
 	
 	click_handler	: function(elem, e){

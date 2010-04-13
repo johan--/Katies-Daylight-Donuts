@@ -9,7 +9,7 @@
   </li>
   <% end %>
   <li class="<%= current "users" %>">
-    <%= link_to "My Account", edit_user_path(current_user.record) %>
+    <%= link_to_facebox "My Account", edit_user_path(current_user.record) %>
   </li>
   <li class="<%= current "user_sessions" %>">
     <%= link_to "Logout", logout_url %>
