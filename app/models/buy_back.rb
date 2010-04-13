@@ -70,7 +70,7 @@ class BuyBack < ActiveRecord::Base
   def self.metric_chart
     months,counts = [],[]
     all.group_by{|bb| bb.created_at.to_date }.map{|month,bbs| 
-    if d.first.created_at.to_date.year == Time.zone.now.year
+    if bbs.first.created_at.to_date.year == Time.zone.now.year
         months << month.strftime("%h %Y").upcase
         counts << (bbs.map(&:total).sum/100).to_i
     end

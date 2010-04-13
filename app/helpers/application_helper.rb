@@ -7,6 +7,10 @@ module ApplicationHelper
   def nex
     link_to (image_tag('buttons/default/next.png',:alt=>'Next')),:date=>@date.next_month
   end
+  
+  def link_to_facebox(text, url)
+    link_to(text, url, :rel => "facebox")
+  end
 
   def link_to_ibox(text, id, options = {}, &block)
     content_tag(:div, :id => id, :style => "display: none;") do
