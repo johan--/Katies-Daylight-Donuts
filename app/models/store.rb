@@ -26,7 +26,7 @@ class Store < ActiveRecord::Base
   named_scope :all_by_position, :order => "position asc", :include => [:deliveries]
   
   def to_param
-    "#{id}-#{name}".gsub(/[^A-Za-z0-9]/,'')
+    "#{id}-#{name}".gsub(/[^A-Za-z0-9]/,'-')
   end
   
   def create_todays_delivery!

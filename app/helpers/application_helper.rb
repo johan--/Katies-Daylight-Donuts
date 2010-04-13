@@ -30,14 +30,19 @@ module ApplicationHelper
     @controller.controller_name == controller ? "current" : ""
   end
   
-  def button(action, route)
+  def button(action, route, options = {})
     content_tag :p, :class => "button" do
-      content_tag(:a, :class => "button", :href => route) do
+      options.merge!(:class => "button", :href => route)
+      content_tag(:a, options) do
         content_tag :span do
           action
         end
       end
     end
+  end
+  
+  def facebox_button(action, route)
+    button(action, route, :rel => "facebox")
   end
   
   def list(collection, selector, &block)

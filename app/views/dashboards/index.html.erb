@@ -11,12 +11,17 @@
   </div>
   
   <div class="span-11 metric">
-    <h1><%= icon "box" %> Deliveries</h1>
+    <h1><%= icon "wooden-box-label" %> Deliveries</h1>
     <%= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
   </div>
   
   <div class="span-11 metric">
     <h1><%= icon "flask" %> Items</h1>
     <%= image_tag Item.metric_chart(Store.first).to_url %>
+  </div>
+  
+  <div class="span-11 metric">
+    <h1><%= icon "wrench" %> Labor</h1>
+    <%= image_tag ClockinTime.metric_chart, :style => "margin: 0.2em 0 0 0" %>
   </div>
 </div>

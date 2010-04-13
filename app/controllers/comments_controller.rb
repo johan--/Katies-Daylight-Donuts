@@ -1,6 +1,15 @@
 class CommentsController < ApplicationController
   before_filter :login_required
   
+  def new
+    @delivery = Delivery.find(params[:delivery_id])
+    @comment = @delivery.comments.new
+    respond_to do |format|
+      format.html
+      format.js{ render :layout => false }
+    end
+  end
+  
   def update
     @comment = Comment.find(params[:id])
     if @comment.update_attributes(params[:comment])
@@ -22,7 +31,6 @@ class CommentsController < ApplicationController
           render :update do |page|
             page.replace_html(:"comments_count_for_#{@commentable.id}", "#{@commentable.comments.size} Comments")
             page.insert_html(:top, :"comments_for_#{@commentable.id}", :partial => "deliveries/comment", :object => @comment)
-            page.visual_effect(:fade, params[:object])
             page.visual_effect(:highlight, "comment_#{@comment.id}")
           end
         }

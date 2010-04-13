@@ -17,6 +17,7 @@ body {
   font-size: 80%;
 }
 
+
 h1,h2{
   font-size: 19px;
   font-weight: bold;
@@ -127,7 +128,6 @@ ul,ol{
 }
 
 ol li{
-  margin-top: 1em;
   margin-left: 1.4em;
 }
 
@@ -402,7 +402,7 @@ div.store-balance{
   text-align: center;
   color: #fff;
   font-weight: bold;
-  background: #192456;
+  background: #7E7E7E;
 }
 
 .specialDay a{
@@ -441,6 +441,11 @@ div.store-balance{
     text-decoration: none;
     padding: 1em; }
 
+.today{
+  background: #008807;
+  color: #fff;
+}
+
 .weekend {
   background-color: #eeeeee; }
 
@@ -470,4 +475,13 @@ background-repeat:repeat;
 position:fixed;
 top: 0px;
 left: 0px;
+}
+
+textarea{
+  padding: 0.2em;
+  font-family: "Helvetica", Verdana, sans-serif;
+}
+
+ol.help{
+  margin: 0 0 0 2em;
 }

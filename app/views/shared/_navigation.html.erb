@@ -8,7 +8,7 @@
       <li class="<%= current "stores" %>"><%= link_to "#{icon("user-business-boss")} Stores ( #{Store.count} )",  stores_path %></li>
       <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("money")} Buy Backs",  buy_backs_path %></li>
     <% end %>
-  <li class="<%= current "deliveries" %>"><%= link_to "#{icon("box")} #{'My ' unless (@current_user.super? || @current_user.employee?)} Deliveries ( #{@current_user.super? ? Delivery.pending.count : (@current_user.store.nil? ? 0 : @current_user.store.deliveries.pending.count)} )", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %></li>
+  <li class="<%= current "deliveries" %>"><%= link_to "#{icon("wooden-box-label")} #{'My ' unless (@current_user.super? || @current_user.employee?)} Deliveries ( #{@current_user.super? ? Delivery.pending.count : (@current_user.store.nil? ? 0 : @current_user.store.deliveries.pending.count)} )", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %></li>
   <li class="<%= current "faqs" %>"><%= link_to "#{icon("users")} FAQ",  faqs_path %></li>
   <% else %>
   <li class="<%= current "user_sessions" %>">

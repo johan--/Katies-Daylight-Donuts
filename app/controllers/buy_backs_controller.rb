@@ -21,13 +21,17 @@ class BuyBacksController < ApplicationController
     respond_to do |format|
       format.html{ @buy_back.copy_delivery_line_items }
       format.js{
-        render :update do |page|
-          page.select("#buy_back_price").each do |field|
-            field.value = @delivery.total
-            page.visual_effect(:highlight, :buy_back_price)
+        if params[:delivery_id]
+          render :update do |page|
+            page.select("#buy_back_price").each do |field|
+              field.value = @delivery.total
+              page.visual_effect(:highlight, :buy_back_price)
+            end
+            page.replace_html(:line_items, :partial => "line_item", :collection => @buy_back.copy_delivery_line_items)
+            page.visual_effect(:highlight, :line_items)
           end
-          page.replace_html(:line_items, :partial => "line_item", :collection => @buy_back.copy_delivery_line_items)
-          page.visual_effect(:highlight, :line_items)
+        else
+          render :layout => false
         end
       }
     end
