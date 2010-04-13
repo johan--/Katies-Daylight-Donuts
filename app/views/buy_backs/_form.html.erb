@@ -3,38 +3,36 @@
   
   <fieldset>
     <legend>
-      <ul class="span-22 inline">
-        <li class="span-22" style="display: block;">
-          <%= f.label :delivery_id %>
-          <%= f.collection_select :delivery_id, Delivery.all, :id, :delivery_option %>
-        </li>
-        <li class="span-5">
-          <%= f.label :donuthole_count %>
-          <%= f.text_field :donuthole_count, :size => 4 %>
-        </li>
-        <li class="span-5">
-          <%= f.label :roll_count %>
-          <%= f.text_field :roll_count, :size => 4 %>
-        </li>
-        <li class="span-5">
-          <%= f.label :raised_donut_count %>
-          <%= f.text_field :raised_donut_count, :size => 4 %>
-        </li>
-        <li class="span-5">
-          <%= f.label :cake_donut_count %>
-          <%= f.text_field :cake_donut_count, :size => 4 %>
-        </li>
-        <li style="display: block;">
-          <%= f.label :tax, "Sales Tax:" %>
-          <%= f.text_field :tax, :size => 4 %>
-        </li>
-        <li style="display: block;">
-          <%= f.label :price, "Total:" %>
-          <%= f.text_field :price, :size => 4 %>
-        </li>
-      </ul>
-      <%= f.submit :save %>
+      <table>
+        <tr>
+          <th>Delivery</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <strong><%= f.label :delivery_id %></strong>
+            <%= f.collection_select :delivery_id, Delivery.all, :id, :delivery_option  %>
+          </td>
+        </tr>
+        <tr>
+          <tbody id="line_items">
+        <%= render :partial => "line_item", :collection => @buy_back.copy_delivery_line_items %>
+          </tbody>
+        </tr>
+        <tr>
+          <td colspan="3" style="text-align: right;"><%= f.label :price, "Total:" %></td>
+          <td style="text-align: right;"><%= f.text_field :price, :size => 10, :class => 'price' %></td>
+        </tr>
+      </table>
+      <%= image_submit_tag "buttons/default/button-save.png" %>
+      <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()) %>
     </legend>
   </fieldset>
 
 <% end %>
+
+<%= observe_field 'buy_back_delivery_id', :url => (@store.nil? ? new_buy_back_path(:format => :js) : new_store_delivery_buy_back_path(@store, @delivery, :format => :js)),
+  :with => "'delivery_id='+escape($('buy_back_delivery_id').value)", :method => :get, :loading => %(loading()), :complete => %(loadingComplete()) %>

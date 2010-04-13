@@ -23,3 +23,31 @@ function setText(selector, text){
 function show_comment_fields(comment_id){
   $(comment_id).show();
 }
+
+function loading(){
+  showOverlay();
+  facebox.reveal($("loader").innerHTML,null)
+  $$('#facebox .footer').each(function(e){
+    e.hide();
+  })
+}
+
+function loadingComplete(){
+  new Effect.Fade(facebox.facebox, {duration: 1});
+  hideOverlay();
+}
+
+function showOverlay(){
+  var overlay = Element("div", {"class" : "facebox_hide", "id" : "facebox_overlay"});
+  document.body.appendChild(overlay);
+  overlay.addClassName("facebox_overlayBG");
+  overlay.setOpacity(0.5);
+  overlay.show();
+}
+
+function hideOverlay(){
+  if($('facebox_overlay')){
+    $('facebox_overlay').hide();
+    $('facebox_overlay').remove();
+  }
+}

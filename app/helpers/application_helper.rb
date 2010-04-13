@@ -13,7 +13,7 @@ module ApplicationHelper
       yield block if block_given?
     end.concat(
       content_tag(:a, :href => "##{id}", :rel => "ibox&amp;" + options.map{ |k,v| 
-        "#{k}=#{v}"}.join("&")){
+        "#{k}=#{v}"}.join("&"), :id => "link_for_#{id}", :style => "#{options[:hide] == true ? 'display: none;' : ''}"){
         text
       })
   end

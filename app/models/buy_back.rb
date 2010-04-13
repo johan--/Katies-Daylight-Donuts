@@ -1,7 +1,8 @@
 class BuyBack < ActiveRecord::Base  
   include AASM
   
-  belongs_to :delivery
+  belongs_to :delivery, :dependent => :destroy
+  has_many :line_items
   
   aasm_initial_state :pending
   
@@ -19,8 +20,37 @@ class BuyBack < ActiveRecord::Base
     transitions :from => :paid, :to => :pending
   end
   
+  def copy_delivery_line_items
+    return if self.delivery.nil? || self.delivery.line_items.empty?
+    delivery.line_items.each do |line_item|
+      if existing_item = self.line_items.detect{ |item| item if item.item_id == line_item.item_id }
+        existing_item.quantity = line_item.quantity
+        existing_item.price = line_item.price
+      else
+        line_items.build(:item_id => line_item.item.id, :quantity => line_item.quantity, :price => line_item.price)
+      end
+    end
+    self.line_items
+  end
+  
+  def copy_delivery_line_items!
+    copy_delivery_line_items
+    save
+  end
+
+  def copy_attributes
+    unless self.delivery.nil?
+      self.donuthole_count = line_items.collect{|line_item| line_item.quantity if line_item.item.name =~ /donuthole/i }.compact.sum
+      self.roll_count = line_items.collect{|line_item| line_item.quantity if line_item.item.name =~ /(roll|^Discount Rolls$)/i }.compact.sum
+      self.raised_donut_count = line_items.collect{|line_item| line_item.quantity if line_item.item.name =~ /(raised|^Discount Donuts$)/i }.compact.sum
+      self.cake_donut_count = line_items.collect{|line_item| line_item.quantity if line_item.item.name =~ /cake/i }.compact.sum
+      self.price = self.delivery.total
+    end
+    self
+  end
+  
   def total
-    (price + tax)
+    (price.to_s.to_f + tax.to_s.to_f)
   end
   
   def customer

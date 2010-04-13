@@ -69,7 +69,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def delivery_option
-    "#{delivery_time}"
+    "#{store.name} - ##{id} - #{delivery_time}"
   end
   
   def description

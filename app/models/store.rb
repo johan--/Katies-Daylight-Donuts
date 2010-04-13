@@ -25,6 +25,10 @@ class Store < ActiveRecord::Base
   
   named_scope :all_by_position, :order => "position asc", :include => [:deliveries]
   
+  def to_param
+    "#{id}-#{name}"
+  end
+  
   def create_todays_delivery!
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({

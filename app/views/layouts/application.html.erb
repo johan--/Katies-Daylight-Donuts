@@ -3,12 +3,13 @@
 <html>
   <head>
     <title><%= h(yield(:title) || "Untitled") %></title>
-    <%= stylesheet_link_tag 'application' %>
+    <%= stylesheet_link_tag 'application','facebox' %>
     <%= yield(:head) %>
-    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <%= javascript_include_tag :defaults %>
+    <%#= javascript_include_tag "jquery" %>
     <%#= javascript_include_tag "livepipe-ui/src/livepipe.js" %>
     <%= iboxify_page %>
+    <%= javascript_include_tag "facebox" %>
     <%= calendar_date_select_includes "silver" %>
     <% if @current_user %>
     <style type="text/css" media="screen">
@@ -20,6 +21,11 @@
       <% end %>
     </style>
     <% end %>
+    <script type="text/javascript" charset="utf-8">
+      document.observe("dom:loaded", function() {
+        facebox.settings.opacity = 0.5;
+      });
+    </script>
   </head>
   <body>
     <div class="container">
@@ -69,6 +75,12 @@
         <% end %>
         
       </div>
+    </div>
+    <div id="loader" rel="facebox" style="display: none;">
+      <center>
+        <%= image_tag "loading.gif" %><br />
+        <strong>Loading...</strong>
+      </center>
     </div>
   </body>
 </html>

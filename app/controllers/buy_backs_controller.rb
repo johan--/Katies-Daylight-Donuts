@@ -15,13 +15,28 @@ class BuyBacksController < ApplicationController
     if params[:delivery_id]
       @delivery = Delivery.find(params[:delivery_id]) 
     else
-      @delivery = Delivery.new
+      @delivery = Delivery.first
     end
-    @buy_back = @delivery.buy_backs.new
+    @buy_back = @delivery.buy_backs.new(:price => @delivery.total)
+    respond_to do |format|
+      format.html{ @buy_back.copy_delivery_line_items }
+      format.js{
+        render :update do |page|
+          page.select("#buy_back_price").each do |field|
+            field.value = @delivery.total
+            page.visual_effect(:highlight, :buy_back_price)
+          end
+          page.replace_html(:line_items, :partial => "line_item", :collection => @buy_back.copy_delivery_line_items)
+          page.visual_effect(:highlight, :line_items)
+        end
+      }
+    end
   end
   
   def create
+    line_items = params[:buy_back].delete(:line_items) || []
     @buy_back = @delivery.buy_backs.new(params[:buy_back])
+    line_items.each{ |l| @buy_back.line_items.build(l) }
     if @buy_back.save
       flash[:notice] = "Successfully created buyback."
       redirect_to @buy_back.delivery
