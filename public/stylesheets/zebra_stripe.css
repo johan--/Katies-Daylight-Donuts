@@ -1,0 +1,7 @@
+table.stripe tbody tr.oddRow{
+  background: #D2D2D2;
+}
+
+table.stripe tbody tr.stripe{
+  background: #C5C5C5;
+}
