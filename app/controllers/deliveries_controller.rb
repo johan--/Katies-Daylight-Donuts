@@ -28,8 +28,6 @@ class DeliveriesController < ApplicationController
       @deliveries = @delivery_klass.by_date(@date)
     end
     
-    @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
-
     respond_to do |format|
       format.html
       format.xml{ render :xml => @deliveries.to_xml(:include => [:store]) }
