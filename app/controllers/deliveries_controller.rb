@@ -27,6 +27,8 @@ class DeliveriesController < ApplicationController
     else
       @deliveries = @delivery_klass.by_date(@date)
     end
+    
+    @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
 
     respond_to do |format|
       format.html
