@@ -20,6 +20,8 @@ class BuyBack < ActiveRecord::Base
     transitions :from => :paid, :to => :pending
   end
   
+  before_create :calculate_total
+  
   def copy_delivery_line_items
     return if self.delivery.nil? || self.delivery.line_items.empty?
     delivery.line_items.each do |line_item|
@@ -88,5 +90,11 @@ class BuyBack < ActiveRecord::Base
       m.merge!({customer.name => buybacks.map(&:price).sum})
     }
     m
+  end
+  
+  private
+  
+  def calculate_total
+    self.price = line_items.map(&:total).sum
   end
 end

@@ -8,7 +8,7 @@ class BuyBacksController < ApplicationController
   end
   
   def show
-    @buy_back = @delivery.buy_backs.find(params[:id])
+    @buy_back = @delivery.nil? ? BuyBack.find(params[:id]) : @delivery.buy_backs.find(params[:id])
   end
   
   def new
@@ -35,11 +35,11 @@ class BuyBacksController < ApplicationController
   
   def create
     line_items = params[:buy_back].delete(:line_items) || []
-    @buy_back = @delivery.buy_backs.new(params[:buy_back])
+    @buy_back = @delivery.nil? ? BuyBack.new(params[:buy_back]) : @delivery.buy_backs.new(params[:buy_back])
     line_items.each{ |l| @buy_back.line_items.build(l) }
     if @buy_back.save
       flash[:notice] = "Successfully created buyback."
-      redirect_to @buy_back.delivery
+      redirect_to @buy_back
     else
       render :action => 'new'
     end
@@ -60,7 +60,7 @@ class BuyBacksController < ApplicationController
   end
   
   def destroy
-    @buy_back = @delivery.buy_backs.find(params[:id])
+    @buy_back = BuyBack.find(params[:id])
     @buy_back.destroy
     flash[:notice] = "Successfully destroyed buyback."
     redirect_to buy_backs_url
@@ -69,6 +69,6 @@ class BuyBacksController < ApplicationController
   protected
   
   def find_delivery
-    @delivery = Delivery.delivered.find(params[:delivery_id])
+    @delivery = Delivery.delivered.find(params[:delivery_id]) if params[:delivery_id]
   end
 end

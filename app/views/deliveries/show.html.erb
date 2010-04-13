@@ -9,7 +9,7 @@
   <%= delivery_action_link(@delivery, true) if @current_user.super? %>
   <%= button "Print Ticket", delivery_path(@delivery, :format => :pdf) %>
   <% if @current_user.super? and @delivery.delivered? %>
-  <%= button "Add Buy Back", new_delivery_buy_back_path(@delivery) %>
+  <%= button "Add Buy Back", new_store_delivery_buy_back_path(@delivery.store, @delivery) %>
   <p>You can manually enter a buy back for this  delivery.
     Generally BuyBacks are created via the API from the iPhone application.</p>
     <% unless !@current_user.super? or @delivery.buy_backs.empty? %>

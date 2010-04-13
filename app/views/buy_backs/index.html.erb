@@ -19,9 +19,9 @@
       <td style="text-align: right;"><%= number_to_currency buy_back.tax %></td>
       <td style="text-align: right;"><%= number_to_currency buy_back.price %></td>
       <td style="text-align: right;"><%= number_to_currency buy_back.total %></td>
-      <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), buy_back %></td>
-      <td><%= link_to icon("pencil-small"), edit_buy_back_path(buy_back) %></td>
-      <td><%= link_to icon("cross-circle-frame"), buy_back, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to icon("eye",:alt => "Show", :title => "Show"), store_delivery_buy_back_path(buy_back.delivery.store, buy_back.delivery, buy_back) %></td>
+      <td><%= link_to icon("pencil-small"), edit_store_delivery_buy_back_path(buy_back.delivery.store, buy_back.delivery, buy_back) %></td>
+      <td><%= link_to icon("cross-circle-frame"), store_delivery_buy_back_path(buy_back.delivery.store, buy_back.delivery, buy_back),:confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
 </table>
