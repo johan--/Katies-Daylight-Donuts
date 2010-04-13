@@ -197,6 +197,7 @@ class DeliveriesController < ApplicationController
   end
   
   def print_todays
+    @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
     if params[:delivery_ids]
       @deliveries = Delivery.find(params[:delivery_ids])
     else
