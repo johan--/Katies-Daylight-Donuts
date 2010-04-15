@@ -197,12 +197,12 @@ class DeliveriesController < ApplicationController
   end
   
   def print_todays
-    @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
     if params[:delivery_ids]
       @deliveries = Delivery.find(params[:delivery_ids])
     else
       @deliveries = Delivery.pending.by_date.unprinted
     end
+    @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
     @deliveries.map do |delivery|
       delivery.print!
     end
