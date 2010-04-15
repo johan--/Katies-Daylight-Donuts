@@ -22,16 +22,7 @@
 <% content_for :sidebar do %>
   <%= button "Add Employee", new_employee_path %>
   <%= render :partial => "clockin_form" %>
-  <div id="schedule">
-    <% clockin_times, texts, descs = ClockinTime.all.collect {|clockin_time| clockin_time } ,ClockinTime.all.collect {|e| content_tag(:br, e.employee.fullname)},ClockinTime.all.collect {|e| "Recorded" }%>
-    <%= calendar(:year => @date.year, :previous_month_text => pre, :month  => @date.month, :next_month_text => nex) do |d| 
-    clockin_times_array = clockin_times.map(&:created_at).map{|c| c.to_date }
-    if clockin_times_array.include?(d) 
-    index=clockin_times_array.index d
-    [link_to(d.mday, clockin_time_path(:id => clockin_times[index].id)), {:class => "specialDay"}]
-    else [d.mday, {:class => "day"}] end
-    end %>
-  </div>
+  <%= render :partial => "shared/schedule" %>
 <% end %>
 
 

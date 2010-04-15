@@ -1,0 +1,6 @@
+<% @date = Time.zone.now unless defined?(@date) %>
+<div id="schedule">
+  <%= calendar(:year => @date.year, :previous_month_text => pre, :month  => @date.month, :next_month_text => nex) do |d| 
+  [link_to_facebox(d.mday, new_schedule_path(:date => d))] if d.mday >= Time.zone.now.day
+  end %>
+</div>

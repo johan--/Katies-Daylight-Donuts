@@ -441,7 +441,7 @@ div.store-balance{
     text-decoration: none;
     padding: 1em; }
 
-.today{
+.today,.today a{
   background: #008807;
   color: #fff;
 }

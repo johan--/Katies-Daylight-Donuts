@@ -2,6 +2,7 @@
   <% if current_user %>
     <% if @current_user.has_role?(:admin) %>
       <li class="<%= current "dashboards" %>"><%= link_to "#{icon("application-monitor")} Dashboard", dashboards_path %></li>
+      <li class="<%= current "schedules" %>"><%= link_to "#{icon("calendar")} Schedule", schedules_path %></li>
       <li class="<%= current "users" %>"><%= link_to "#{icon("users")} Users",  users_path %></li>
       <li class="<%= current "employees" %>"><%= link_to "#{icon("users")} Employees",  employees_path %></li>
       <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
@@ -9,7 +10,6 @@
       <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("money")} Buy Backs",  buy_backs_path %></li>
     <% end %>
   <li class="<%= current "deliveries" %>"><%= link_to "#{icon("wooden-box-label")} #{'My ' unless (@current_user.super? || @current_user.employee?)} Deliveries ( #{@current_user.super? ? Delivery.pending.count : (@current_user.store.nil? ? 0 : @current_user.store.deliveries.pending.count)} )", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %></li>
-  <li class="<%= current "faqs" %>"><%= link_to "#{icon("users")} FAQ",  faqs_path %></li>
   <% else %>
   <li class="<%= current "user_sessions" %>">
     <%= link_to "Login", login_url %>

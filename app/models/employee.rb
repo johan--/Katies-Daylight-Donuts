@@ -22,6 +22,7 @@ class Employee < ActiveRecord::Base
   
   has_and_belongs_to_many :positions
   has_many :clockin_times
+  has_many :schedules
   
   named_scope :drivers, :conditions => {:positions => "in (#{Position.driver.id})"}
   

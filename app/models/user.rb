@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
   require 'digest/md5' unless defined?(Digest::MD5)
 
   attr_accessor :roles_ids
+  
+  cattr_reader :per_page
+  @@per_page = 20
 
   acts_as_authentic
     

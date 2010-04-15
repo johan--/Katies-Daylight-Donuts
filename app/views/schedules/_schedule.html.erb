@@ -1,0 +1,7 @@
+<tr>
+  <td><%= schedule.display_date %></td>
+  <td><%= link_to schedule.employee.fullname, employee_schedule_path(schedule.employee, schedule) %></td>
+  <td><%= schedule.starts %></td>
+  <td><%= schedule.ends %></td>
+  <td><%= pluralize(schedule.total_hours, "Hour") %></td>
+</tr>

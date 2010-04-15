@@ -1,5 +1,21 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :deliveries, :member => { 
+      :deliver => :any,
+      :undeliver => :any,
+      :add_item => :any,
+      :remove_item => :any
+     }, :collection => {
+    :canceled => :get,
+    :printed => :get,
+    :generate_todays => :any,
+    :print_todays => :any,
+    :map => :get,
+    :delivered => :get,
+    :pending => :get
+  }, :has_many => [:buy_backs, :items, :comments]
+  
   map.resources :faqs
+  map.resources :schedules
 
   map.resources :delivery_presets, :member => {
     :remove_item => :any,
@@ -61,22 +77,8 @@ ActionController::Routing::Routes.draw do |map|
     },
     :collection => {
       :validate_clockin_id_available => :any
-    }, :has_many => :clockin_times
+    }, :has_many => [:clockin_times, :schedules]
 
-  map.resources :deliveries, :member => { 
-      :deliver => :any,
-      :undeliver => :any,
-      :add_item => :any,
-      :remove_item => :any
-     }, :collection => {
-    :canceled => :get,
-    :printed => :get,
-    :generate_todays => :any,
-    :print_todays => :any,
-    :map => :get,
-    :delivered => :get,
-    :pending => :get
-  }, :has_many => [:buy_backs, :items, :comments]
   map.resources :comments
 
   map.resources :user_sessions

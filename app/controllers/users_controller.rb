@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_filter :admin_role_required, :except => [:edit, :update, :show, :turn_off_hints]
   
   def index
+    page = params[:page] || 1
+    # @users = User.paginate :page => page
     @users = User.all
   end
   
