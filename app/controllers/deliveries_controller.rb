@@ -208,9 +208,9 @@ class DeliveriesController < ApplicationController
     @donut_count, @roll_count, @donuthole_count = 0
     @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
     @deliveries.map do |delivery|
-      @donut_count = (@donut_count + delivery.dount_count)
+      @donut_count = (@donut_count + delivery.donut_count)
       @roll_count = (@roll_count + delivery.roll_count)
-      @donut_hole_count = (@donut_hole_count + delivery.dount_hole_count)
+      @donut_hole_count = (@donut_hole_count + delivery.donut_hole_count)
       delivery.print!
     end
     render :layout => false
