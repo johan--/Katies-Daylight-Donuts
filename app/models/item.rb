@@ -14,19 +14,7 @@ class Item < ActiveRecord::Base
   def self.types
     @types ||= TYPES.collect{ |t| t.titleize }
   end
-  
-  def donut?
-    item_type.to_s.downcase == "raised"
-  end
-  
-  def donuthole?
-    item_type.to_s.downcase == "donut hole"
-  end
-  
-  def roll?
-    item_type.to_s.downcase == "roll"
-  end
-  
+    
   def self.metric_chart(store = nil)
     chrt = GoogleChart.pie_3d_400x100(metrics(store).freeze)
     chrt.colors = CHART_COLORS[:pie] * (self.count / 2).round
