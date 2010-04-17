@@ -73,7 +73,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def roll_count
-    items.select{|i| i.quantity if i.roll? }.(&:sum)
+    items.select{|i| i.quantity if i.roll? }.map(&:sum)
   end
   
   def donut_hole_count
