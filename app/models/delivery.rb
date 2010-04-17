@@ -69,15 +69,15 @@ class Delivery < ActiveRecord::Base
   end
   
   def donut_count
-    line_items.map{|i| i.quantity if i.item.donut? }.compact.sum
+    self.line_items.map{|i| i.quantity if i.donut? }.compact.sum
   end
   
   def roll_count
-    line_items.map{|i| i.quantity if i.item.roll? }.compact.sum
+    self.line_items.map{|i| i.quantity if i.roll? }.compact.sum
   end
   
   def donut_hole_count
-    line_items.map{|i| i.quantity if i.item.donut_hole? }.compact.sum
+    self.line_items.map{|i| i.quantity if i.donut_hole? }.compact.sum
   end
   
   def delivery_option
