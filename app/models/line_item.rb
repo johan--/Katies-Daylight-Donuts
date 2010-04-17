@@ -15,7 +15,7 @@ class LineItem < ActiveRecord::Base
     item_type.to_s.downcase == "raised"
   end
   
-  def donuthole?
+  def donut_hole?
     item_type.to_s.downcase == "donut hole"
   end
   
