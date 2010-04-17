@@ -2,7 +2,7 @@
   <thead>
     <tr>
       <% %w(mon tue wed thu fri sat sun).each do |day| %>
-        <th><%= day.titleize %></th>
+        <th><%= day == Time.zone.now.strftime("%a").downcase ? "<span class='current_weekday'>#{day.titleize} (Today)</span>" : day.titleize %></th>
       <% end %>
     </tr>
   </thead>
@@ -14,7 +14,6 @@
         <% unless schedules.any? %>
           OFF<br /> <%= link_to_facebox "New", new_employee_schedule_path(@employee) %><br />
         <% else %>
-        <strong>Hours: <%= @total_hours %></strong><br />
           <% schedules.each do |schedule| %>
             <% next if schedule.nil? %>
             <span id="schedule_<%= schedule.id %>">
