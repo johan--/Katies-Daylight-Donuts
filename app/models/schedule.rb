@@ -20,7 +20,7 @@ class Schedule < ActiveRecord::Base
   end
   
   def total_hours
-    (ends_at - starts_at) / 1.hour
+    ('%.02f' % ((ends_at - starts_at) / 1.hour)).to_f
   end
   
   private
