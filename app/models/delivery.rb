@@ -68,6 +68,18 @@ class Delivery < ActiveRecord::Base
   "http://chart.apis.google.com/chart?chxt=Sales&cht=lc&chf=c,ls,0,CCCCCC,0.05,FFFFFF,0.05&chco=5D85BF&chd=t:#{counts.join(',')}&chs=430x100&chl=#{months.uniq.join('|')}"
   end
   
+  def donut_count
+    items.select{|i| i if i.donut? }.map(&:sum)
+  end
+  
+  def roll_count
+    items.select{|i| i if i.roll? }.map(&:sum)
+  end
+  
+  def donut_hole_count
+    items.select{|i| i if i.donut_hole? }.map(&:sum)
+  end
+  
   def delivery_option
     "#{store.name} - ##{id} - #{delivery_time}"
   end

@@ -1,6 +1,11 @@
 # Black and White colors
 stripes = ["EBEBEB","FFFFFF"]
 
+pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
+pdf.text "Roll Count #{@roll_count}"
+pdf.text "Donut Count #{@donut_count}"
+pdf.text "Donut Hole Count #{@donut_hole_count}"
+
 @deliveries.each_with_index do |delivery, index|
   # Only generate an invoice if the delivery has items, this is simply
   # prevent any bad data from generating a form. 

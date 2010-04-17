@@ -1,8 +1,9 @@
 class DeliveriesController < ApplicationController  
-  before_filter :login_required, :except => [:index]
+  before_filter :login_required
   before_filter :current_user_session
   before_filter :find_delivery_with_item, :only => [:add_item, :remove_item]
   before_filter :get_current_weather, :only => [:index,:pending,:delivered]
+  #before_filter :prompt_for_store_if_needed, :only => [:index, :delivered, :pending, :canceled,:printed]
 
   auto_complete_for :item, :name
   auto_complete_for :item, :item_type
@@ -78,10 +79,11 @@ class DeliveriesController < ApplicationController
     @delivery.add_items
   end
   
+  # TODO, clean this up
   def create
-    line_items = params[:delivery].delete(:line_items) || []
+    line_items = params[:delivery].has_key?(:line_items) ? params[:delivery].delete(:line_items) : []
     @delivery = Delivery.new(params[:delivery])
-    line_items.each{ |l| @delivery.line_items.build(l) }
+    line_items.each{ |l| @delivery.line_items.build(l) } unless line_items.empty?
     if @delivery.save
       flash[:notice] = "Successfully created delivery."
       redirect_to @delivery
@@ -200,10 +202,15 @@ class DeliveriesController < ApplicationController
     if params[:delivery_ids]
       @deliveries = Delivery.find(params[:delivery_ids])
     else
-      @deliveries = Delivery.pending.by_date.unprinted
+      @deliveries = Delivery.pending.by_date
     end
+    @items = @deliveries.map(&:items)
+    @donut_count, @roll_count, @donuthole_count = 0
     @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
     @deliveries.map do |delivery|
+      @donut_count = (@donut_count + delivery.dount_count)
+      @roll_count = (@roll_count + delivery.roll_count)
+      @donut_hole_count = (@donut_hole_count + delivery.dount_hole_count)
       delivery.print!
     end
     render :layout => false
@@ -224,10 +231,16 @@ class DeliveriesController < ApplicationController
   end
   
   protected
+
+  def prompt_for_store_if_needed
+    if @current_user && !@current_user.admin? && @current_user.customer? && @current_user.store.nil?
+      flash[:warning] = "Please create your store first"
+      redirect_to new_user_store_path(current_user)
+    end
+  end
   
   def find_delivery_with_item
     @delivery = Delivery.find(params[:id])
     @item = Item.available.find(params[:item_id])
   end
-  
 end
