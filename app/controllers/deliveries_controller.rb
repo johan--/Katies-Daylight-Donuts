@@ -206,9 +206,9 @@ class DeliveriesController < ApplicationController
     end
     @items = @deliveries.map(&:items)
     @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
-    @donut_count = @deliveries.map(&:donut_count)
-    @roll_count = @deliveries.map(&:roll_count)
-    @donut_hole_count = @deliveries.map(&:donut_hole_count)
+    @donut_count = @deliveries.map(&:donut_count).sum
+    @roll_count = @deliveries.map(&:roll_count).sum
+    @donut_hole_count = @deliveries.map(&:donut_hole_count).sum
     @deliveries.map do |delivery|
       delivery.print!
     end
