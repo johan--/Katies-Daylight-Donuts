@@ -37,8 +37,8 @@ test:
     server_alive_interval: 0
 
 production:
-  api_key: 69472c884395377a85a5f536277176a3
-  secret_key: 983d9474831b790faa318c846c7a58fe
+  api_key: 591e0356a14bc8e257798483eff90b70
+  secret_key: 9c76d348a56f787a92def129a7af8388
   canvas_page_name:
   callback_url:
   pretty_errors: true
