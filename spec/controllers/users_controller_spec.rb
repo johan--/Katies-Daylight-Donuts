@@ -8,8 +8,22 @@ describe UsersController do
     login
   end
   
-  it "should render the index action" do
-    get :index
-    response.should render_template(:index)
+  context " when admin" do
+    before(:each) do
+      login_with_admin
+    end
+    
+    it "should render the index action" do
+      get :index
+      response.should render_template(:index)
+    end
+  end
+  
+  context " when a customer" do
+    #pending "should show customer stuff"
+  end
+  
+  context " when an employee" do
+    #pending "should show employee stuff"
   end
 end

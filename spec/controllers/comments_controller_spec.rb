@@ -21,15 +21,17 @@ describe CommentsController do
   end
   
   it "create action should render new template when model is invalid" do
+    delivery = Factory.create(:delivery)
     Comment.any_instance.stubs(:valid?).returns(false)
-    Delivery.any_instance.stubs(:find).returns(mock(:delivery))
+    Delivery.any_instance.stubs(:find).returns(delivery)
     post :create
     response.body.should be_blank
   end
   
   it "create action should redirect when model is valid" do
+    delivery = Factory.create(:delivery)
     Comment.any_instance.stubs(:valid?).returns(true)
-    Delivery.stubs(:find).returns(mock(:delivery))
+    Delivery.stubs(:find).returns(delivery)
     post :create, :commentable_id => nil
     response.should redirect_to(deliveries_url)
   end

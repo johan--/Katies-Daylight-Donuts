@@ -5,8 +5,7 @@ describe DeliveriesController do
   integrate_views
   
   before(:each) do
-    login
-    with_admin
+    login_with_admin
     @delivery = Factory.create(:delivery)
   end
   
@@ -32,8 +31,8 @@ describe DeliveriesController do
   
   context " when valid" do
     it "should redirect on success after create" do
-      post :create, :delivery => Factory.create(:delivery).attributes
-      response.should redirect_to(delivery_path(Delivery.last))
+      post :create, :delivery => Factory.attributes_for(:delivery)
+      response.should redirect_to(delivery_url(Delivery.last))
     end
     
     it "should redirect on success after update" do

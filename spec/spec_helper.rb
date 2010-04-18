@@ -64,13 +64,14 @@ def user_session
   @user_session 
 end 
 
-def with_admin
-  current_user.roles << Factory.create(:role, :name => "admin") unless current_user.admin?
-end
-
 # logges me in 
 def login 
   UserSession.stubs(:find).returns( user_session ) 
+end
+
+def login_with_admin
+  current_user.roles << Role.admin unless current_user.admin?
+  login
 end
  
 # logges me out 

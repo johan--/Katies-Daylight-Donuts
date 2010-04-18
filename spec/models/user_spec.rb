@@ -10,9 +10,33 @@ describe User do
     }
   end
   
+  context " any instance" do
+    it "should be a facebooker user given a facebook_uid valud" do
+      user = User.new(:facebook_uid => 123)
+      user.facebooker?.should == true
+    end
+    
+    it "should be a system user when employee" do
+      user = Factory.create(:user)
+      user.roles << Role.employee
+      user.system_user?.should == true
+    end
+    
+    it "should be a system user when admin" do
+      user = Factory.create(:user)
+      user.roles << Role.admin
+      user.system_user?.should == true
+    end
+    
+    it "should be a system user when username is admin" do
+      user = User.new(:username => "admin")
+      user.system_user?.should == true
+    end
+  end
+  
   context " when invalid" do
     it "should require username" do
-      user = User.new(:username => "")
+      user = User.new(:username => nil)
       user.should_not be_valid
       user.should have(4).error_on(:username)
       user.errors.on(:username).should == ["is too short (minimum is 3 characters)", "should use only letters, numbers, spaces, and .-_@ please.", "can't be blank", "Username can only be letters and/or numbers"]
@@ -39,7 +63,14 @@ describe User do
   it "should be a customer user with a customer role" do
     user = Factory.create(:user)
     user.roles << Role.customer
-    user.employee?.should == true
+    user.customer?.should == true
+  end
+  
+  it "should be a customer user with a store given a customer role and store" do
+    user = Factory.create(:user)
+    user.roles << Role.customer
+    user.store = Factory.create(:store)
+    user.customer_with_store?.should == true
   end
   
   
@@ -50,7 +81,7 @@ describe User do
   
     it "should be admin with and admin role" do
       user = Factory.create(:user)
-      user.roles << Role.find_or_create_by_name("admin")
+      user.roles << Role.admin
       user.admin?.should == true
     end
   
@@ -58,10 +89,6 @@ describe User do
       user = Factory.create(:user, :api_enabled => false)
       user.expects(:crypted_password=).once
       user.reset_password!
-    end
-  
-    it "should be valid with a valid username" do
-      Factory.create(:user, :username => Factory.next(:username)).valid?.should == true
     end
   
     it "should find a user by email" do
