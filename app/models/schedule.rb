@@ -32,7 +32,7 @@ class Schedule < ActiveRecord::Base
   private
 
   def set_work_date
-    self.work_date = Time.zone.now.to_s(:db)
+    self.work_date = starts_at.to_date
   end
   
   def validate_time
