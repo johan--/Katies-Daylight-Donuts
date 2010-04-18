@@ -1,0 +1,6 @@
+<div class="span-14" style="margin: 1em 0;padding: 1em 0.0em; background: #eee; border: 1px solid #aaa">
+  <strong style="padding: 0.6em">
+    <%= store.name.titleize %>
+    <%= icon "calendar-day" %> <%= defined?(created) ? created : Time.zone.now.strftime("%m/%d/%Y") %>
+  </strong>
+</div>

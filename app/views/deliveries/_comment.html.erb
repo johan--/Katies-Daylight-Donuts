@@ -1,3 +1,3 @@
 <li>
-  <span id="comment_<%= comment.id %>"><%= comment.body %></span>
+  <span id="comment_<%= comment.id %>"><%= comment.body %> <span><%= link_to(icon("balloon--minus", :theme => "default/_overlay"), comment_path(comment), :method => :delete)%></span>
 </li>

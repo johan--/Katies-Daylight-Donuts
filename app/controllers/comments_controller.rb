@@ -44,6 +44,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.destroy
     flash[:notice] = "Successfully destroyed comment."
-    redirect_to deliveries_path
+    redirect_back_or_default deliveries_path
   end
 end

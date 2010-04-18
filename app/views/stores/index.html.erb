@@ -1,5 +1,10 @@
 <% title "Stores" %>
 
+<% content_for :hints do %>
+  <h1 class="hint">Stores</h1>
+  <p>You can drag drop stores to adjust the order which they are displayed. NOTE: This will also change the order in which the tickets are printed. <strong>USE CAUTION</strong>.</p>
+<% end %>
+
 <ul id="stores">
   <%= render :partial => @stores %>
 </ul>

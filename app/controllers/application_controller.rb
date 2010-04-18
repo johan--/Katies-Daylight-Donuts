@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
   before_filter :set_facebook_session
+  before_filter :load_settings
   helper_method :facebook_session
   
   before_filter :set_timezone
@@ -76,5 +77,15 @@ class ApplicationController < ActionController::Base
       flash[:error] = "Please login"
       redirect_to login_url 
     end
+  end
+  
+  def load_settings
+    @setting ||= Setting.for_application
+  end
+  
+  def redirect_back_or_default(path)
+    redirect_to :back
+  rescue ActionController::RedirectBackError
+    redirect_to path
   end
 end

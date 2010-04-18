@@ -1,11 +1,8 @@
-<% title(@controller.action_name =~ /index/ ? "#{'My ' unless @current_user.super?} Deliveries" : "#{'My ' unless @current_user.super?}Deliveries / #{@controller.action_name.titleize}") %>
+<% title(@controller.action_name =~ /index/ ? "#{'My ' unless @current_user.system_user?} Deliveries" : "#{'My ' unless @current_user.system_user?}Deliveries / #{@controller.action_name.titleize}") %>
 
-<% if @current_user.show_hints? %>
-<div class="tip" id="help">
-<h2>Welcome <%= @current_user.username %>,</h2>
-<p>You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.</p>
-<div style="text-align: right;"><%= link_to_remote "Turn Off hints?", {:url => turn_off_hints_path, :success => %($('help').hide();)}, {:alt => "Turn off application hints and tips?",:title => "Turn off application hints and tips?"} %></div>
-</div>
+<% content_for :hints do %>
+  <h1 class="hint">Welcome <%= @current_user.username %>,</h1>
+  <p>You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.</p>
 <% end %>
 
 <% form_for "deliveries[]", :id => nil, :url => {:controller => "deliveries", :action => "update_status"} do |f| %>
@@ -37,16 +34,21 @@
     <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
 </div>
 
-<% @deliveries.group_by{|d| d.delivery_date.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
-  <% deliveries.sort_by{|d| d.store.position }.group_by{|d| d.store }.each do |store, deliveries| %>
-  <% next if store.nil? %>
-    <div class="span-14" style="margin: 1em 0;padding: 1em 0.0em; background: #eee; border: 1px solid #aaa">
-      <strong style="padding: 0.6em">
-        <%= store.name.titleize %>
-        <%= icon "calendar-day" %> <%= created %>
-      </strong>
-    </div>    
-    <%= render :partial => deliveries, :locals => {:builder => f} %>
+<% if @deliveries.empty? %>
+  <% Store.all.each do |store| %>
+    <%= render :partial => "store_header", :locals => {:store => store} %>
+    <span id="deliveries_for_store_<%= store.id %>">
+    </span>
+  <% end %>
+<% else %>
+  <% @deliveries.group_by{|d| d.delivery_date.strftime("%m/%d/%Y") }.each do |created,deliveries| %>
+    <% deliveries.sort_by{|d| d.store.position }.group_by{|d| d.store }.each do |store, deliveries| %>
+    <% next if store.nil? %>
+      <%= render :partial => "store_header", :locals => {:store => store, :created => created} %>
+      <span id="deliveries_for_store_<%= store.id %>">
+        <%= render :partial => deliveries, :locals => {:builder => f} %>
+      </span>
+    <% end %>
   <% end %>
 <% end %>
 
@@ -70,9 +72,10 @@
 
 
 <% content_for :sidebar do %>
-  <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.super? %>
-  <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
-  <%= button "Print Tickets #{Delivery.pending.by_date.count}", print_todays_deliveries_path(:format => :pdf) if @current_user.super? %>
+  <%= button_to_remote "Generate Today's Tickets", :url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar()) %>
+  <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.system_user? %>
+  <%= button "Add Delivery", @current_user.system_user? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
+  <%= button "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_deliveries_path(:format => :pdf) if @current_user.system_user? %>
   
   <div id="schedule">
     <% deliveries = Delivery.all %>
@@ -86,12 +89,12 @@
   </div>
   
   <h2>Deliveries</h2>
-  <%= link_to "Pending Deliveries", @current_user.super? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.pending.count %>)<br />
-  <%= link_to "Delivered Deliveries", @current_user.super? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.delivered.count %>)  <small><em>(History)</em></small><br />
-  <% if @current_user.super? %>
+  <%= link_to "Pending Deliveries", @current_user.system_user? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.pending.count %>)<br />
+  <%= link_to "Delivered Deliveries", @current_user.system_user? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.delivered.count %>)  <small><em>(History)</em></small><br />
+  <% if @current_user.system_user? %>
     <%= link_to "Printed Deliveries", printed_deliveries_path %> (<%= @delivery_klass.printed.count %>)
   <% end %>
-  <% if @current_user.super? %>
+  <% if @current_user.system_user? %>
   <br />
     <%= link_to "Canceled Deliveries", canceled_deliveries_path %> (<%= @delivery_klass.canceled.count %>)
   <% end %>

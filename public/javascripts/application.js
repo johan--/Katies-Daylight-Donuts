@@ -45,3 +45,26 @@ function logout(url){
     window.location.href = url;
   });
 }
+
+function showProgressBar(messageTxt){
+  document.body.appendChild(buildProgressBar(messageTxt))
+  facebox.showOverlay();
+}
+
+function hideProgressBar(){
+  document.body.removeChild($('progress_bar'))
+  facebox.hideOverlay()
+}
+
+function buildProgressBar(messageTxt){
+  if(messageTxt == null){
+    var messageTxt = "Loading"
+  }
+  var progressBarContainer = Element('div',{'id':'progress_bar','class':'progressbar opaque'})
+  var progressBar = Element('img',{'src':'/images/progress-bar.gif','class':'opaque'})
+  var message = Element('span')
+  message.innerHTML = messageTxt
+  progressBarContainer.appendChild(progressBar)
+  progressBarContainer.appendChild(message)
+  return progressBarContainer;
+}

@@ -501,3 +501,39 @@ ol.help{
 span.fb_pic img{
   vertical-align: top;
 }
+
+.progressbar{
+  position: fixed; 
+  top: 200px;
+  left: 350px;
+  margin: 0 auto; 
+  width: 220px;  
+  background: white;
+  padding: 1em;
+}
+
+.opaque{
+  opacity: 1; /* Safari, Opera */
+  -moz-opacity: 1; /* FireFox */
+  filter: alpha(opacity=100); /* IE */
+  z-index: 30;
+}
+
+h1.hint{
+  background: url(/images/icons/default/information.png) no-repeat 0% 50%;
+  padding-left: 20px;
+}
+
+input[type=button]{
+  cursor: pointer !important;
+  background: url(/images/buttons/default/button-bg.png) no-repeat top left;
+  border: none;
+  width: 226px;
+  height: 30px;
+  text-indent: 2em;
+  text-align: left;
+  color: #164DB5;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 105%;
+  font-weight: bold;
+}

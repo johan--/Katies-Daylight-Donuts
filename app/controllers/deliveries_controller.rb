@@ -199,10 +199,16 @@ class DeliveriesController < ApplicationController
   end
   
   def print_todays
+    @schedules = Schedule.for_today
     if params[:delivery_ids]
       @deliveries = Delivery.find(params[:delivery_ids])
     else
       @deliveries = Delivery.pending.by_date
+    end
+    if @deliveries.empty?
+      flash[:error] = "No deliveries to print, you could try generating them first."
+      redirect_to deliveries_path
+      return
     end
     @items = @deliveries.map(&:items)
     @deliveries = @deliveries.sort_by{|delivery| delivery.store.position }
@@ -219,7 +225,18 @@ class DeliveriesController < ApplicationController
     Store.all_by_position.each do |store|
       store.create_todays_delivery!
     end
-    redirect_to deliveries_path
+    respond_to do |format|
+      format.html{ redirect_to deliveries_path }
+      format.js do
+        render :update do |page|
+          @deliveries = Delivery.pending.by_date
+          @deliveries.group_by{|d| d.store }.each do |store, deliveries|
+            page.replace_html(:"deliveries_for_store_#{store.id}", :partial => "delivery", :collection => deliveries)
+          end
+          page.replace_html(:ticket_count,@deliveries.size)
+        end
+      end
+    end
   end
   
   def destroy

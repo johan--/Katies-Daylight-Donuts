@@ -10,14 +10,16 @@ pdf.text "Donut Hole Count #{@donut_hole_count}"
 pdf.start_new_page
 
 # Work Schedule
-schedule_data = Schedule.for_today.map do |schedule|
-  [{:text => schedule.employee.fullname},{:text => "#{schedule.starts} - #{schedule.ends} Total: #{pluralize(schedule.total_hours,'Hour')}"}]
-end
+if !@schedules.empty?
+  schedule_data = @schedules.map do |schedule|
+    [{:text => schedule.employee.fullname},{:text => "#{schedule.starts} - #{schedule.ends} Total: #{pluralize(schedule.total_hours,'Hour')}"}]
+  end
 
-pdf.text "Schedule", :size => 18
-pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
-pdf.table schedule_data, :headers => ["Employee","Hours"]
-pdf.start_new_page
+  pdf.text "Schedule", :size => 18
+  pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
+  pdf.table schedule_data, :headers => ["Employee","Hours"]
+  pdf.start_new_page
+end
 
 # Start deliveries
 @deliveries.each_with_index do |delivery, index|
@@ -29,10 +31,11 @@ pdf.start_new_page
     pdf.image("#{RAILS_ROOT}" + "/public/images/logo-small.png")
 
     # Add Headers
+    invoice_date = (delivery.delivery_date+1.day).strftime('%m/%d/%Y')
     pdf.table [
-      [{:text => "Invoice #{(delivery.delivery_date+1.day).strftime('%m/%d/%Y')}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
-      [{:text => "Katies Daylight Donuts \n1501 18TH ST.\nCentral City, NE\nUSA 68826\n\nPhone: 308-946-5555", :align => :left},
-       {:text => "Invoice #: #{delivery.id}\nDate : #{(delivery.delivery_date+1.day).strftime('%m/%d/%Y')}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
+      [{:text => "Invoice #{invoice_date}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
+      [{:text => "#{@setting.name} \n#{@setting.address}\n#{@setting.city}, #{@setting.state}\n#{@setting.country} #{@setting.zipcode}\n\nPhone: #{@setting.phone}", :align => :left},
+       {:text => "Invoice #: #{delivery.id}\nDate : #{invoice_date}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
       [{:text => "Customer Sold to: \n#{delivery.address.upcase}"},
        {:text => "Ship to: \n#{delivery.address.upcase}"}]
     ], :width => 500

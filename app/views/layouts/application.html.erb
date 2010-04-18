@@ -66,6 +66,13 @@
         </div>
         
         <div id="inner" class="<%= @content_for_sidebar.nil? ? "span-24" : "span-14" %>">
+          <% if @content_for_hints && @current_user.show_hints? %>
+            <div class="tip" id="help">
+              <%= yield :hints %>
+            <div style="text-align: right;"><%= link_to_remote "Turn Off hints?", {:url => turn_off_hints_path, :success => %($('help').hide();)}, {:alt => "Turn off application hints and tips?",:title => "Turn off application hints and tips?"} %></div>
+            </div>
+            <br />
+          <% end %>
           <%= yield %>
         </div>
         
