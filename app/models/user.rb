@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base  
+  cattr_reader :per_page
+  @@per_page = 10
+  
   require 'digest/md5' unless defined?(Digest::MD5)
 
   attr_accessor :roles_ids

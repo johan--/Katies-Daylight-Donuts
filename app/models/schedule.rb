@@ -1,4 +1,7 @@
 class Schedule < ActiveRecord::Base
+  cattr_reader :per_page
+  @@per_page = 10
+    
   belongs_to :employee
   
   validates_presence_of :employee, :starts_at, :ends_at

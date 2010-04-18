@@ -5,6 +5,10 @@
     <h1 class="hint">Buy Backs</h1>
     <p>You can create a Buy Back for any delivered delivery. Enter the subtracted quantity's and save the Buy Back when done.</p>
   <% end %>
+
+<%= will_paginate @buy_backs %>
+<br />
+
 <table class="stripe">
   <tr>
     <th>Delivery</th>
@@ -29,6 +33,9 @@
     </tr>
   <% end %>
 </table>
+
+<%= will_paginate @buy_backs %>
+
 </div>
 
 <% content_for :sidebar do %>

@@ -1,5 +1,8 @@
 <% title "Employees" %>
 
+<%= will_paginate @employees %>
+<br />
+
 <div id="list">
 <table class="stripe">
   <thead>
@@ -17,15 +20,10 @@
 </table>
 </div>
 
-<%#= more_paginate @employees %>
+<%= will_paginate @employees %>
 
 <% content_for :sidebar do %>
   <%= button "Add Employee", new_employee_path %>
   <%= render :partial => "clockin_form" %>
   <%= render :partial => "shared/schedule" %>
 <% end %>
-
-
-<script type="text/javascript" charset="utf-8">
-  //paginate("#employees");
-</script>

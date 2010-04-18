@@ -1,6 +1,9 @@
 class BuyBack < ActiveRecord::Base  
   include AASM
   
+  cattr_reader :per_page
+  @@per_page = 10
+    
   belongs_to :delivery, :dependent => :destroy
   has_many :line_items
   

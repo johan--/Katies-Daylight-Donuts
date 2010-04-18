@@ -4,7 +4,7 @@ class SchedulesController < ApplicationController
   
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
-    @schedules = Schedule.all
+    @schedules = Schedule.paginate :page => (params[:page] || 1), :order => "work_date DESC"
   end
   
   def new

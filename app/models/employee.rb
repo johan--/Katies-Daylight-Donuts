@@ -1,6 +1,9 @@
 class Employee < ActiveRecord::Base
   include AASM
   
+  cattr_reader :per_page
+  @@per_page = 10
+  
   aasm_column :state
 
   aasm_initial_state :clocked_out

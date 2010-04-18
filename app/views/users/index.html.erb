@@ -1,5 +1,7 @@
 <% title "Users" %>
 
+<%= will_paginate @users %>
+<br />
 <table class="stripe">
   <tr>
     <th>Username</th>
@@ -17,7 +19,7 @@
   <% end %>
 </table>
 
-<%#= will_paginate @users %>
+<%= will_paginate @users %>
 
 <% content_for :sidebar do %>
   <%= facebox_button "Add User", new_user_path %>

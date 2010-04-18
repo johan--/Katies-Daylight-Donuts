@@ -4,7 +4,7 @@ class EmployeesController < ApplicationController
   def index
     # @employees = Employee.paginate_by_creation params.dup
     @date = params[:date] ? params[:date].to_date : Date.today
-    @employees = Employee.all
+    @employees = Employee.paginate :page => params[:page], :order => "created_at DESC"
     respond_to do |format|
       format.html
       format.js{ render :partial => "employee_list" }

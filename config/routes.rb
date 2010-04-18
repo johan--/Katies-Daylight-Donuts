@@ -83,6 +83,7 @@ ActionController::Routing::Routes.draw do |map|
   map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
   map.turn_off_hints "hints/disabled", :controller => "users", :action => "turn_off_hints"
   map.root :dashboards
+  map.connect ':controller/page/:page'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

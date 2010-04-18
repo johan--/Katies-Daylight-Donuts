@@ -4,7 +4,7 @@ class BuyBacksController < ApplicationController
   before_filter :current_user_session
   
   def index
-    @buy_backs = BuyBack.all
+    @buy_backs = BuyBack.paginate :page => params[:page], :order => "created_at DESC"
   end
   
   def show

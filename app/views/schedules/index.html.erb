@@ -1,4 +1,8 @@
 <% title "Schedules" %>
+
+<%= will_paginate @schedules %>
+<br />
+
 <table class="stripe">
   <thead>
     <tr>
@@ -13,6 +17,8 @@
     <%= render :partial => @schedules %>
   </tbody>
 </table>
+
+<%= will_paginate @schedules %>
 
 <% content_for :sidebar do %>
   <%= render :partial => "shared/schedule" %>

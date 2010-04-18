@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   before_filter :admin_role_required, :except => [:edit, :update, :show, :turn_off_hints]
   
   def index
-    @users = User.all
+    @users = User.paginate :page => params[:page], :order => "created_at DESC"
   end
   
   def new
