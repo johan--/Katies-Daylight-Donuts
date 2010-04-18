@@ -1,2 +1,9 @@
 <% title "New Store" %>
 <%= render :partial => 'form' %>
+
+<% content_for :sidebar do %>
+  <% if @current_user.customer? %>
+    <h1>Add a store</h1>
+    <p>After you add your store you can begin scheduling deliveries to the stores location.</p>
+  <% end %>
+<% end %>

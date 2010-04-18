@@ -72,7 +72,7 @@
 <% content_for :sidebar do %>
   <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.super? %>
   <%= button "Add Delivery", @current_user.super? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
-  <%= button "Print Tickets #{Delivery.unprinted.size}", print_todays_deliveries_path(:format => :pdf) if @current_user.super? %>
+  <%= button "Print Tickets #{Delivery.pending.by_date.count}", print_todays_deliveries_path(:format => :pdf) if @current_user.super? %>
   
   <div id="schedule">
     <% deliveries = Delivery.all %>

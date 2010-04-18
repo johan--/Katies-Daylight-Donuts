@@ -17,6 +17,7 @@ config.action_view.cache_template_loading            = true
 
 # Gems
 config.gem "factory_girl", :lib => false, :source => "http://gemcutter.com"
+config.gem "cucumber", :lib => false, :source => "http://gems.github.com", :version => "0.6.4"
 
 # Disable request forgery protection in test environment
 config.action_controller.allow_forgery_protection    = false

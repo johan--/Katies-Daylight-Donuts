@@ -55,10 +55,6 @@ class BuyBack < ActiveRecord::Base
     (price.to_s.to_f + tax.to_s.to_f)
   end
   
-  def customer
-    delivery.customer
-  end
-  
   def self.period
     (Time.now.utc.day >= 15) ? { :start => (Time.now.utc.beginning_of_month+14.days), :end => Time.now.utc.end_of_month } : { :start => Time.now.utc.beginning_of_month, :end => (Time.now.utc.beginning_of_month+14.days) }
   end
@@ -86,8 +82,8 @@ class BuyBack < ActiveRecord::Base
   
   def self.metrics
     m = {}
-    metric_results.group_by{ |bb| bb.delivery.customer }.each{ |customer, buybacks| 
-      m.merge!({customer.name => buybacks.map(&:price).sum})
+    metric_results.group_by{ |bb| bb.delivery.store }.each{ |store, buybacks| 
+      m.merge!({store.name => buybacks.map(&:price).sum})
     }
     m
   end

@@ -337,10 +337,14 @@ td.line{
 
 form#login_form{
   margin: 0 auto;
-  padding: 3.5em 0 0 1em;
+  padding: 3em 0 0 1em;
   background: url("../images/login-bg.png") no-repeat;
   height: 200px;
   width: 300px;
+}
+
+form#login_form input{
+  font-size: 14px;
 }
 
 form fieldset{
@@ -463,6 +467,10 @@ padding: 1em; }
 color: white;
 background-color: black; }
 
+.current_weekday{
+  color: #068224;
+}
+
 .overlay {
 background-color: rgb(0, 0, 0);
 opacity: 0.7; /* Safari, Opera */
@@ -484,4 +492,12 @@ textarea{
 
 ol.help{
   margin: 0 0 0 2em;
+}
+
+.fb_connect_button img{
+  vertical-align: middle;
+}
+
+span.fb_pic img{
+  vertical-align: top;
 }

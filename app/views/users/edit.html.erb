@@ -3,11 +3,15 @@
 <%= render :partial => 'form' %>
 
 <% content_for :sidebar do %>
-  <% unless @current_user.store.nil? %>
+  <% if @current_user.customer_with_store? %>
   <div class="store-balance">
     Your Balance: <%= number_to_currency @current_user.store.balance %>
   </div>
+  <% elsif @current_user.customer? %>
+    <h1>Getting Started</h1>
+    <p>Start by creating your store location, then you can schdule deliveries. <%= link_to_facebox "Create my store now", new_user_store_path(@current_user) %></p>
   <% end %>
+  
   <% if !@user.api_key.blank? %>
     <ul>
       <li class="sidebar">

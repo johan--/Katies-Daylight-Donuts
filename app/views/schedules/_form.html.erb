@@ -3,18 +3,18 @@
   <div id="schedule_message" style="display: none;"></div>
   <%= f.hidden_field :work_date %>
   <p>
-    <%= f.label :employee_id, "Employee:" %><br />
+    <%= icon "user-business" %> <%= f.label :employee_id, "Employee:" %><br />
     <%= f.collection_select :employee_id, Employee.all, :id, :fullname %>
   </p>
   <p>
-    <%= f.label :starts_at, "Start:" %><br />
+    <%= icon "clock" %> <%= f.label :starts_at, "Start:" %><br />
     <%#= select_time(Time.zone.now,{}, {:id => "schedule_starts_at", :name => "schedule[starts_at][]"}) %>
     <%= f.datetime_select :starts_at %>
   </p>
   <p>
-    <%= f.label :ends_at, "End:" %><br />
+    <%= icon "clock" %> <%= f.label :ends_at, "End:" %><br />
     <%#= select_time(Time.zone.now,{}, {:id => "schedule_ends_at", :name => "schedule[ends_at][]"}) %>
     <%= f.datetime_select :ends_at %>
   </p>
-  <%= image_submit_tag "buttons/default/button-save.png" %>
+  <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function(image_tag("buttons/default/button-cancel.png"),%(facebox.close())) %>
 </fieldset>

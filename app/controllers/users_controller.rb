@@ -1,15 +1,17 @@
 class UsersController < ApplicationController
-  before_filter :login_required, :only => [:new, :edit,:update]
+  before_filter :login_required
   before_filter :admin_role_required, :except => [:edit, :update, :show, :turn_off_hints]
   
   def index
-    page = params[:page] || 1
-    # @users = User.paginate :page => page
     @users = User.all
   end
   
   def new
     @user = User.new
+    respond_to do |format|
+      format.html
+      format.js{ render :layout => false }
+    end
   end
   
   def create

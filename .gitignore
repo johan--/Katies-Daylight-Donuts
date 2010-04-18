@@ -2,3 +2,4 @@ log/
 .DS_Store
 lib/tasks/rcov.rake
 app/views/coverage
+db/test.sqlite3

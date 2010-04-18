@@ -12,6 +12,10 @@ class StoresController < ApplicationController
   
   def new
     @store = Store.new
+    respond_to do |format|
+      format.html
+      format.js{ render :layout => false }
+    end
   end
   
   def create

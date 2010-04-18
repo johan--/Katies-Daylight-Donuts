@@ -33,7 +33,7 @@ class SchedulesController < ApplicationController
   
   def create
     @schedule = Schedule.new(params[:schedule])
-    if @schedule.save!
+    if @schedule.save
       flash[:notice] = "Schedule was saved"
     else
       flash[:warning] = "Schedule could not be saved"

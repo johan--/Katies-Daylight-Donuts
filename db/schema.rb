@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100414005834) do
+ActiveRecord::Schema.define(:version => 20100418041628) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax",                :limit => 10
-    t.integer  "price",              :limit => 10
+    t.integer  "tax",                :limit => 10, :precision => 10, :scale => 0
+    t.integer  "price",              :limit => 10, :precision => 10, :scale => 0
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -129,23 +129,6 @@ ActiveRecord::Schema.define(:version => 20100414005834) do
     t.integer "buy_back_id"
   end
 
-  create_table "locations", :force => true do |t|
-    t.string   "address"
-    t.string   "city"
-    t.string   "state"
-    t.integer  "zipcode"
-    t.string   "country"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "email"
-    t.string   "manager"
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "lat"
-    t.string   "lng"
-  end
-
   create_table "positions", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -156,11 +139,9 @@ ActiveRecord::Schema.define(:version => 20100414005834) do
     t.string "name"
   end
 
-  create_table "roles_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
   end
 
   create_table "schedules", :force => true do |t|
@@ -194,9 +175,9 @@ ActiveRecord::Schema.define(:version => 20100414005834) do
     t.string   "url"
     t.string   "lat"
     t.string   "lng"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "city_id"
     t.integer  "position"
   end
@@ -211,13 +192,15 @@ ActiveRecord::Schema.define(:version => 20100414005834) do
     t.string   "persistence_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "time_zone",         :default => "Central Time (US & Canada)"
+    t.string   "time_zone",                         :default => "Central Time (US & Canada)"
     t.string   "api_key"
-    t.boolean  "api_enabled",       :default => false
-    t.string   "perishable_token",  :default => "",                           :null => false
+    t.boolean  "api_enabled",                       :default => false
+    t.string   "perishable_token",                  :default => "",                           :null => false
     t.string   "user_type"
-    t.boolean  "show_tips",         :default => true
-    t.boolean  "show_hints",        :default => true
+    t.boolean  "show_tips",                         :default => true
+    t.boolean  "show_hints",                        :default => true
+    t.integer  "facebook_uid",         :limit => 8
+    t.string   "facebook_session_key"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
