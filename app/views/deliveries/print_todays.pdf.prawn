@@ -1,12 +1,25 @@
 # Black and White colors
 stripes = ["EBEBEB","FFFFFF"]
 
+# Counts
+pdf.text "Counts", :size => 18
 pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
 pdf.text "Roll Count #{@roll_count}"
 pdf.text "Donut Count #{@donut_count}"
 pdf.text "Donut Hole Count #{@donut_hole_count}"
 pdf.start_new_page
 
+# Work Schedule
+schedule_data = Schedule.for_today.map do |schedule|
+  [{:text => schedule.employee.fullname},{:text => "#{schedule.starts} - #{schedule.ends} Total: #{pluralize(schedule.total_hours,'Hour')}"}]
+end
+
+pdf.text "Schedule", :size => 18
+pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
+pdf.table schedule_data, :headers => ["Employee","Hours"]
+pdf.start_new_page
+
+# Start deliveries
 @deliveries.each_with_index do |delivery, index|
   # Only generate an invoice if the delivery has items, this is simply
   # prevent any bad data from generating a form. 
