@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  store_id: 1
-  day_of_week: MyString
-
-two:
-  store_id: 1
-  day_of_week: MyString
