@@ -36,3 +36,12 @@ function loadingComplete(){
   new Effect.Fade(facebox.facebox, {duration: 1});
   facebox.hideOverlay();
 }
+
+function logout(url){
+  if(url == null){
+    var url = "/logout"
+  }
+  FB.Connect.logout(function(){
+    window.location.href = url;
+  });
+}

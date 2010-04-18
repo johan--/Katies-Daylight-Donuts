@@ -25,6 +25,15 @@ class User < ActiveRecord::Base
   
   after_save :update_roles
   
+  
+  # Facebook Connect Hook
+  def before_connect(facebook_session)
+    self.email = facebook_session.user.email
+    self.username = facebook_session.user.name.gsub(/[^A-Za-z0-9\_]/,'').downcase
+    self.password = self.password_confirmation = "stunod"
+    self.roles << Role.customer
+  end
+  
     
   def self.create_with_store(store)
     user = create(
@@ -44,6 +53,10 @@ class User < ActiveRecord::Base
     self.roles.collect{ |role| args.include?(role.name.to_sym) }.all?
   end
   
+  def system_user?
+    (admin? || super? || employee?)
+  end
+  
   def super?
     @is_super ||= (self.username == "admin" || self.admin?)
   end
@@ -57,7 +70,15 @@ class User < ActiveRecord::Base
   end
   
   def customer?
-    has_role?(:customer) || !store.nil?
+    has_role?(:customer)
+  end
+  
+  def customer_with_store?
+    customer? && !store.nil?
+  end
+  
+  def facebooker?
+    !facebook_uid.blank?
   end
 
   def to_param

@@ -41,6 +41,15 @@ module ApplicationHelper
     end
   end
   
+  # Facebooker
+  def login_or_profile_pic
+    if facebook_session
+      fb_profile_pic facebook_session.user
+    else
+      fb_login_and_redirect(deliveries_path)
+    end
+  end
+  
   def facebox_button(action, route)
     button(action, route, :rel => "facebox")
   end

@@ -1,6 +1,17 @@
 <% form_remote_for @user, :success => %(facebox.close()) do |f| %>
   <fieldset>
+
   <%= f.error_messages %>
+  
+  <% if facebook_session %>
+  <span class="fb_pic" style="float: right">
+    <%= fb_profile_pic(facebook_session.user,:size => :thumb, 'facebook-logo' => true) %>
+  </span>
+  <% else %>
+    <span class="fb_connect_button">
+      <%= fb_login_and_redirect(edit_user_url(@user), :format => :js) %>
+    </span>
+  <% end %>
   
   <% if @user.new_record? %>
   <p>
@@ -61,3 +72,9 @@
   </p>
   </fieldset>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  try {
+  FB.XFBML.Host.parseDomTree();
+  } catch(err) {}
+</script>

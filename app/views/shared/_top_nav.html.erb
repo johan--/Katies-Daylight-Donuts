@@ -1,4 +1,11 @@
 <ul>
+  <li>
+    <% if facebook_session && @current_user %>
+    <span class="fb_pic">
+      <%= fb_profile_pic(facebook_session.user,:size => :thumb, 'facebook-logo' => true) %>
+    </span>
+    <% end %>
+  </li>
   <% if current_user %>
   <li class="username">
     ( <%= @current_user.username %> )
@@ -11,8 +18,8 @@
   <li class="<%= current "users" %>">
     <%= link_to_facebox "My Account", edit_user_path(current_user.record) %>
   </li>
-  <li class="<%= current "user_sessions" %>">
-    <%= link_to "Logout", logout_url %>
+  <li class="<%= current "user_session" %>">
+    <%= link_to_function "Logout", %(logout()) %>
   </li>
   <li>
     <%= link_to "Help",  faqs_path %>

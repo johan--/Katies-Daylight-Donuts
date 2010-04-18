@@ -4,7 +4,10 @@
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
-
+  
+  before_filter :set_facebook_session
+  helper_method :facebook_session
+  
   before_filter :set_timezone
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
@@ -25,26 +28,30 @@ class ApplicationController < ActionController::Base
   
   def get_current_weather
     return if Rails.env == "test"
-    @client = YahooWeather::Client.new
-    @weather = @client.lookup_by_woeid(12787871) # central city
+    begin
+      @client = YahooWeather::Client.new
+      @weather = @client.lookup_by_woeid(12787871) # central city
+    rescue => e
+      logger.error e.message
+    end
   end
 
   def employee_role_required
-    unless @current_user.admin? || @current_user.employee?
+    unless current_user.admin? || @current_user.employee?
       flash[:error] = "Employee role required." 
       redirect_to user_url(@current_user) 
     end
   end
 
   def customer_role_required
-    unless @current_user.admin? || @current_user.customer?
+    unless current_user.admin? || @current_user.customer?
       flash[:error] = "Customer role required." 
       redirect_to user_url(@current_user)
     end
   end
 
   def admin_role_required
-    unless @current_user.admin?
+    unless current_user.admin?
       flash[:error] = "Admin role required." 
       redirect_to user_url(@current_user)
     end
