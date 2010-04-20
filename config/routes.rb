@@ -85,6 +85,14 @@ ActionController::Routing::Routes.draw do |map|
   map.turn_off_hints "hints/disabled", :controller => "users", :action => "turn_off_hints"
   map.root :dashboards
   map.connect ':controller/page/:page'
+  map.connect ':controller/:year/:month/:day',
+    :controller => "schedules",
+    :action => "index",
+    :month => nil,
+    :day => nil,
+    :requirements => {  :year => /\d{4}/,
+                        :day => /\d{1,2}/,
+                        :month => /\d{1,2}/ }
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

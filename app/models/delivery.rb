@@ -59,7 +59,7 @@ class Delivery < ActiveRecord::Base
   
   def self.metric_chart
     months,counts = [],[]
-    all.group_by{|d| d.delivery_date.to_date }.map{|month,d| 
+    find(:all, :include => [:line_items]).group_by{|d| d.delivery_date.to_date }.map{|month,d| 
       if d.first.delivery_date.to_date.year == Time.zone.now.year
         months << month.strftime("%h %Y").upcase
         counts << (d.map(&:total).sum/100).to_i

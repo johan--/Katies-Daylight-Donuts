@@ -23,7 +23,7 @@ class Item < ActiveRecord::Base
   
   def self.metrics(store = nil)
     m = {}
-    collection = store.nil? ? all : store.line_items.map(&:item).flatten
+    collection = store.nil? ? find(:all, :include => [:line_items]) : store.line_items.map(&:item).flatten
     collection.each do |item|
       m["#{item.name}"] = item.line_items.map(&:quantity).to_s.sum
     end

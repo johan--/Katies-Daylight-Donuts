@@ -41,8 +41,12 @@ class DeliveriesController < ApplicationController
       format.html
       format.js{
         render :update do |page|
-          page.replace_html(:deliveries, "")
-          page.insert_html(:top, :deliveries, :partial => @delivery)
+          if !@delivery.nil?
+            page.replace_html(:deliveries, "")
+            page.insert_html(:top, :deliveries, :partial => @delivery)
+          else
+            page.replace_html(:error, "No delivery found with that id.")
+          end
         end
       }
     end
