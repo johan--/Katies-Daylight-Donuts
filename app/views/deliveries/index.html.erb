@@ -71,7 +71,7 @@
 <% content_for :toolbar do %>
   <div class="span-14">
     <% form_remote_for :deliveries,:url => search_deliveries_path,:loading => %(showProgressBar()),:complete => %(hideProgressBar()) do %>
-      <label>Keywords</label><%= text_field_tag :q %> <%= submit_tag :search %>
+      <label>Delivery ID#</label><%= text_field_tag :id %> <%= submit_tag :search %>
     <% end %>
   </div>
 <% end %>
