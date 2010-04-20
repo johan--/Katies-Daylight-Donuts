@@ -23,7 +23,7 @@ class Item < ActiveRecord::Base
   
   def self.metrics(store = nil)
     m = {}
-    collection = store.nil? ? find(:all, :include => [:line_items]) : store.line_items.map(&:item).flatten
+    collection = store.nil? ? find(:all, :include => [:line_items], :conditions => ["item_type != ?",TYPES.last]) : store.line_items.map{|li| li.item unless li.item.item_type == TYPES.last}.flatten
     collection.each do |item|
       m["#{item.name}"] = item.line_items.map(&:quantity).to_s.sum
     end
