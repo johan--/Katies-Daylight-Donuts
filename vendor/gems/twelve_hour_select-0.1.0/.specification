@@ -1,0 +1,68 @@
+--- !ruby/object:Gem::Specification 
+name: twelve_hour_select
+version: !ruby/object:Gem::Version 
+  version: 0.1.0
+platform: ruby
+authors: 
+- Tim Matheson
+autorequire: 
+bindir: bin
+cert_chain: []
+
+date: 2010-04-20 00:00:00 -05:00
+default_executable: 
+dependencies: []
+
+description: Simple Time Select Helper
+email: me@timmatheson.com
+executables: []
+
+extensions: []
+
+extra_rdoc_files: 
+- lib/twelve_hour_select.rb
+- README.rdoc
+files: 
+- init.rb
+- lib/twelve_hour_select.rb
+- Manifest
+- Rakefile
+- README.rdoc
+- spec/lib/twelve_hour_select_spec.rb
+- spec/spec_helper.rb
+- twelve_hour_select.gemspec
+has_rdoc: true
+homepage: ""
+licenses: []
+
+post_install_message: 
+rdoc_options: 
+- --line-numbers
+- --inline-source
+- --title
+- Twelve_hour_select
+- --main
+- README.rdoc
+require_paths: 
+- lib
+required_ruby_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "0"
+  version: 
+required_rubygems_version: !ruby/object:Gem::Requirement 
+  requirements: 
+  - - ">="
+    - !ruby/object:Gem::Version 
+      version: "1.2"
+  version: 
+requirements: []
+
+rubyforge_project: twelve_hour_select
+rubygems_version: 1.3.5
+signing_key: 
+specification_version: 3
+summary: Simple Time Select Helper
+test_files: []
+

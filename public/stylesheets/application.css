@@ -537,3 +537,12 @@ input[type=button]{
   font-size: 105%;
   font-weight: bold;
 }
+
+.current_day{
+  color: #fff;
+  background: #000;
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  text-decoration: none;
+}

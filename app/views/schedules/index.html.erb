@@ -1,8 +1,5 @@
 <% title "Schedules" %>
 
-<%= will_paginate @schedules %>
-<br />
-
 <table class="stripe">
   <thead>
     <tr>
@@ -18,8 +15,7 @@
   </tbody>
 </table>
 
-<%= will_paginate @schedules %>
-
 <% content_for :sidebar do %>
+  <%= facebox_button "Add Schedule", new_schedule_path(:date => @date) %>
   <%= render :partial => "shared/schedule" %>
 <% end %>

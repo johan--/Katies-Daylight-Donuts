@@ -15,6 +15,7 @@ Rails::Initializer.run do |config|
   config.gem "yahoo-weather"
   config.gem "prawn"
   config.gem "facebooker", :lib => false
+  config.gem "twelve_hour_select"
   #config.gem 'mislav-will_paginate', 
   #    :lib => 'will_paginate', 
   #    :source => 'http://gems.github.com'

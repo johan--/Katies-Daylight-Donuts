@@ -4,11 +4,11 @@ class SchedulesController < ApplicationController
   
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
-    @schedules = Schedule.paginate :page => (params[:page] || 1), :order => "work_date DESC"
+    @schedules = Schedule.by_date(@date)
   end
   
   def new
-    params[:date] = Time.zone.parse(params[:date]) if params.has_key?(:date)
+    @date = Date.parse(params[:date])
     @schedule = Schedule.new(:work_date => (params[:date] || Time.zone.now))
     respond_to do |format|
       format.html
