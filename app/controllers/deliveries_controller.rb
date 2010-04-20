@@ -35,6 +35,21 @@ class DeliveriesController < ApplicationController
     end
   end
   
+  def search
+    @deliveries = Delivery.find(:all, :conditions => "id like '#{params[:q]}%'")
+    respond_to do |format|
+      format.html
+      format.js{
+        render :update do |page|
+          page.replace_html(:deliveries, "")
+          @deliveries.each do |delivery|
+            page.insert_html(:top, :deliveries, :partial => delivery)
+          end
+        end
+      }
+    end
+  end
+  
   # TODO: remove these actions
   def add_item
     @line_item = @delivery.add_item(@item, params[:quantity]) if @delivery && @item

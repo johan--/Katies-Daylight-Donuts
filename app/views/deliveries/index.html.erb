@@ -34,6 +34,7 @@
     <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
 </div>
 
+<div id="deliveries">
 <% if @deliveries.empty? %>
   <% Store.all.each do |store| %>
     <%= render :partial => "store_header", :locals => {:store => store} %>
@@ -51,6 +52,7 @@
     <% end %>
   <% end %>
 <% end %>
+</div>
 
 <div style="border: 2px solid #ebebeb; padding: 0.5em; margin: 0.5em;">
   <%= link_to_function "Select All" do |page|
@@ -67,7 +69,11 @@
 
 
 <% content_for :toolbar do %>
-  <span><%= render :partial => "shared/weather" if @weather %></span>
+  <div class="span-14">
+    <% form_remote_for :deliveries,:url => search_deliveries_path,:loading => %(showProgressBar()),:complete => %(hideProgressBar()) do %>
+      <label>Keywords</label><%= text_field_tag :q %> <%= submit_tag :search %>
+    <% end %>
+  </div>
 <% end %>
 
 

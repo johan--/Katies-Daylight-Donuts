@@ -12,6 +12,7 @@
     <% if @current_user.system_user? %>
       <td>
         <%= check_box_tag "delivery_ids[]", delivery.id, {}, {:class => "checkbox"} %>
+        <%= link_to "##{delivery.id}", store_delivery_path(delivery.store,delivery) %>
       </td>
     <% end %>
     <td><span style="width: 150px;"><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></span></td>

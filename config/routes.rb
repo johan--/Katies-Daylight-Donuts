@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
       :add_item => :any,
       :remove_item => :any
      }, :collection => {
+    :search => :get,
     :canceled => :get,
     :printed => :get,
     :generate_todays => :any,
