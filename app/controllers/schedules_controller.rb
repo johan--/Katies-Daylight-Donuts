@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
   before_filter :login_required
   before_filter :admin_role_required, :except => [:show]
+  before_filter :set_date
   
   def index
     @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
@@ -18,6 +19,7 @@ class SchedulesController < ApplicationController
   
   def edit
     @schedule = Schedule.find(params[:id])
+    @date = @schedule.work_date
     respond_to do |format|
       format.html
       format.js{ render :layout => false }
@@ -33,9 +35,11 @@ class SchedulesController < ApplicationController
   
   def create
     @schedule = Schedule.new(params[:schedule])
+    puts @schedule.inspect
     if @schedule.save
       flash[:notice] = "Schedule was saved"
     else
+      puts @schedule.errors.inspect
       flash[:warning] = "Schedule could not be saved"
     end
     respond_to do |format|
@@ -60,7 +64,7 @@ class SchedulesController < ApplicationController
       format.html{ @schedule.valid? ? redirect_to(@schedule) : render(:action => "edit") }
       format.js{
         render :update do |page|
-          page.replace_html(:"schedule_#{@schedule.id}", :partial => "schedule_week", :locals => {:schedule => @schedule})
+          page.replace_html(:schedules, :partial => Schedule.by_date(@schedule.work_date))
           page << "facebox.close()"
         end
       }
@@ -75,5 +79,11 @@ class SchedulesController < ApplicationController
       flash[:warning] = "Failed to remove schedule"
     end
     redirect_to schedules_path
+  end
+  
+  protected
+  
+  def set_date
+    @date ||= Time.zone.today
   end
 end

@@ -6,7 +6,7 @@ class Schedule < ActiveRecord::Base
   
   validates_presence_of :employee, :starts_at, :ends_at
   
-  before_validation :validate_time, :message => "Start / End time must be atleast one second or more."
+  before_save :validate_time
   before_save :set_work_date
   
   named_scope :for_this_week, :conditions => ["date(work_date) between ? and ?", Time.zone.now.at_beginning_of_week, Time.zone.now.at_end_of_week], :order => "work_date DESC"
@@ -48,6 +48,8 @@ class Schedule < ActiveRecord::Base
   end
   
   def validate_time
-    (self.starts_at < self.ends_at)
+    unless (self.starts_at < self.ends_at)
+      errors.add("Start / End time must be atleast one second or more.","invalid")
+    end
   end
 end
