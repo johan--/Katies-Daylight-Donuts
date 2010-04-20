@@ -36,15 +36,13 @@ class DeliveriesController < ApplicationController
   end
   
   def search
-    @deliveries = Delivery.find(:all, :conditions => ["`id` LIKE ?","%" + params[:q] + "%"], :include => [:store, :comments])
+    @delivery = Delivery.find(params[:id])
     respond_to do |format|
       format.html
       format.js{
         render :update do |page|
           page.replace_html(:deliveries, "")
-          @deliveries.each do |delivery|
-            page.insert_html(:top, :deliveries, :partial => delivery)
-          end
+          page.insert_html(:top, :deliveries, :partial => @delivery)
         end
       }
     end
