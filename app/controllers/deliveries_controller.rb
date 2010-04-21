@@ -2,7 +2,7 @@ class DeliveriesController < ApplicationController
   before_filter :login_required
   before_filter :current_user_session
   before_filter :find_delivery_with_item, :only => [:add_item, :remove_item]
-  before_filter :get_current_weather, :only => [:index,:pending,:delivered]
+  before_filter :detect_date_and_delivery_class, :only => Delivery.aasm_states.map(&:name)
   #before_filter :prompt_for_store_if_needed, :only => [:index, :delivered, :pending, :canceled,:printed]
 
   auto_complete_for :item, :name
@@ -158,32 +158,13 @@ class DeliveriesController < ApplicationController
     end
   end
   
-  def printed
-    @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.printed
+  def filtered
+    @deliveries = @delivery_klass.send(:"#{action_name}")
     render :action => "index"
   end
   
-  def delivered
-    @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.delivered
-    render :action => "index"
-  end
-  
-  def pending
-    @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.pending
-    render :action => "index"
-  end
-  
-  def canceled
-    @date = params[:date] ? params[:date].to_date : Date.today
-    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
-    @deliveries = @delivery_klass.canceled
-    render :action => "index"
+  Delivery.aasm_states.map(&:name).each do |state|
+    alias_method state, :filtered
   end
   
   def map
@@ -275,5 +256,10 @@ class DeliveriesController < ApplicationController
   def find_delivery_with_item
     @delivery = Delivery.find(params[:id])
     @item = Item.available.find(params[:item_id])
+  end
+  
+  def detect_date_and_delivery_class
+    @date = params[:date] ? params[:date].to_date : Date.today
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries
   end
 end
