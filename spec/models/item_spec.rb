@@ -4,6 +4,20 @@ describe Item do
   before(:each) do
     @item = Factory.create(:item)
   end
+  
+  context " when consumable" do
+    it "should be found by the consumable scope" do
+      @item.update_attribute(:item_type,Item.types.first)
+      Item.consumable.include?(@item).should == true
+    end
+  end
+  
+  context " when nonconsumable" do
+    it "should not be found by the consumable scope" do
+      @item.update_attribute(:item_type,Item.types.last)
+      Item.consumable.include?(@item).should == false
+    end
+  end
 
   context " when invalid" do
     it "should require a unique name" do
