@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  TYPES = ["roll","raised","cake","donut_hole","Supplies"]
   belongs_to :delivery
   has_many :line_items, :dependent => :destroy
   
@@ -8,8 +9,7 @@ class Item < ActiveRecord::Base
   has_and_belongs_to_many :deliveries
   
   named_scope :available, :conditions => {:available => true}
-  
-  TYPES = ["roll","raised","cake","donut_hole","Supplies"]
+  named_scope :consumable, :conditions => ["item_type != ?",TYPES.last]
   
   def self.types
     @types ||= TYPES.collect{ |t| t.titleize }
