@@ -78,7 +78,7 @@
 
 
 <% content_for :sidebar do %>
-  <%= button_to_remote "Generate Today's Tickets", :url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar()) %>
+  <%= button_to_remote "Generate Today's Tickets", :url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar()) if @current_user.system_user? %>
   <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.system_user? %>
   <%= button "Add Delivery", @current_user.system_user? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
   <%= button "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_deliveries_path(:format => :pdf) if @current_user.system_user? %>
