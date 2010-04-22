@@ -563,3 +563,9 @@ ul#routes li h1{
 .store_hover{
   background: #DDD;
 }
+
+.route_car{
+  border: 2px dashed #aaa;
+  padding: 4px;
+  margin: 4px;
+}
