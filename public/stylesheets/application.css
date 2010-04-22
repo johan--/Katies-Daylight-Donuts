@@ -189,6 +189,7 @@ div#sidebar h2{
 
 .backdrop{
   background: white;
+  margin-bottom: 220px;
 }
 
 .header{
@@ -547,9 +548,19 @@ input[type=button].button{
   text-decoration: none;
 }
 
+ul#routes{
+  border: 1px solid #aaa;
+  position: fixed; 
+  bottom: 0; 
+  left: 0; 
+  width: 100%; 
+  background: #fff;
+}
+
 ul#routes li{
+  float: left;
   text-align: center;
-  width: 90%;
+  width: 150px;
   height: 100px;
   border: 2px dashed #aaa;
   padding: 0.2em;
