@@ -559,3 +559,7 @@ ul#routes li{
 ul#routes li h1{
   margin-top: 0.2em;
 }
+
+.store_hover{
+  background: #DDD;
+}
