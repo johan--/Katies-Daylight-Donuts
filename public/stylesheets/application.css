@@ -59,10 +59,10 @@ p{
   border: 1px solid green;
 }
 
-#flash_error {
-  border: 1px solid red;
-  background: url("../images/icons/default/minus-shield.png") no-repeat  0.5% 50% #FCC;
-  padding: 0.5em 0 0 2em;
+#flash_error, #flash_warning{
+  border: 1px solid #FC4D53;
+  background: url("../images/icons/default/minus-shield.png") no-repeat  0.5% 50% #FFD9D9;
+  padding: 0.5em 0 0.5em 2em;
 }
 
 .top_nav{
@@ -524,7 +524,7 @@ h1.hint{
   padding-left: 20px;
 }
 
-input[type=button]{
+input[type=button].button{
   cursor: pointer !important;
   background: url(/images/buttons/default/button-bg.png) no-repeat top left;
   border: none;
