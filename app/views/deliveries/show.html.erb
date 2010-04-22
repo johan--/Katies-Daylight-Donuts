@@ -19,6 +19,10 @@
   <div style="padding: 1em;"><%= @map.div(:width => 225, :height => 225) %></div>
 <% end %>
 
+<% content_for :toolbar do %>
+  <%= render :partial => "fetch_form" %>
+<% end %>
+
   <p>
     <strong>Delivery Date:</strong><br />
     <%= @delivery.delivery_date.strftime("%B %d, %Y at %H:%m %p") %>
