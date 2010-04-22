@@ -39,7 +39,7 @@
     <tr>
       <th>Name</th>
       <th><%= "Type" if @current_user.super? %></th>
-      <th>Quantity<br />
+      <th>Quantity 
         <small><%= link_to_function "clear all", %($$('input.quantity').each(function(e){ e.value = 0 })) %></small>
       </th>
       <th><%= "Price"  if @current_user.super? %></th>
