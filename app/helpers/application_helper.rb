@@ -43,11 +43,11 @@ module ApplicationHelper
   
   # Facebooker
   def login_or_profile_pic
-    if facebook_session
-      fb_profile_pic facebook_session.user
-    else
-      fb_login_and_redirect(deliveries_path)
-    end
+    #if facebook_session
+    #  fb_profile_pic facebook_session.user
+    #else
+    #  fb_login_and_redirect(deliveries_path)
+    #end
   end
   
   def facebox_button(action, route)
@@ -80,5 +80,13 @@ module ApplicationHelper
         image_tag("icons/#{name}.#{format}", options)
       end
     end
+  end
+  
+  def draggable_routes_js(routes = [])
+    js = ""
+    routes.each do |route|
+      js << draggable_elelment("route_#{route.id}", {:revert => true})
+    end
+    js
   end
 end

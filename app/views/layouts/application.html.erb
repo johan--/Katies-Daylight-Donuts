@@ -6,8 +6,8 @@
     <%= stylesheet_link_tag 'application','facebox','zebra_stripe' %>
     <%= yield(:head) %>
     <%= javascript_include_tag :defaults %>
-    <%= fb_connect_javascript_tag %>
-    <%= init_fb_connect "XFBML", {:app_settings => "{ permsToRequestOnConnect : 'email' }"}%>
+    <%#= fb_connect_javascript_tag %>
+    <%#= init_fb_connect "XFBML", {:app_settings => "{ permsToRequestOnConnect : 'email' }"}%>
     <%#= javascript_include_tag "jquery" %>
     <%#= javascript_include_tag "livepipe-ui/src/livepipe.js" %>
     <%= iboxify_page %>
@@ -58,7 +58,7 @@
           <% end %>
         </div>
         
-        <div class="span-24">
+        <div class="span-24" id="status_messages">
           <!-- Messages -->
           <%- flash.each do |name, msg| -%>
             <%= content_tag :div, msg, :id => "flash_#{name}" %>

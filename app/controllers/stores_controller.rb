@@ -2,6 +2,7 @@ class StoresController < ApplicationController
   before_filter :login_required
   
   def index
+    @routes = Route.all
     @stores = Store.all_by_position
   end
   

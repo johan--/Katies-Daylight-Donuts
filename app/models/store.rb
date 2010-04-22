@@ -1,6 +1,7 @@
 class Store < ActiveRecord::Base
   belongs_to :city
   belongs_to :user, :dependent => :destroy # customer
+  belongs_to :route
   has_many :deliveries, :dependent => :destroy
   has_many :line_items, :through => :deliveries
   has_many :delivery_presets, :dependent => :destroy

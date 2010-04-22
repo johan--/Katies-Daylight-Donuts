@@ -1,0 +1,8 @@
+<% form_remote_for @route, :loading => %(showProgressBar()), :complete => %(hideProgressBar()) do |f| %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  
+  <%= f.submit :save %>
+<% end %>

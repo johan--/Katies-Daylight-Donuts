@@ -9,12 +9,12 @@ class UserSessionsController < ApplicationController
       flash[:notice] = "Successfully logged in."
       if current_user and current_user.has_roles?(:admin, :employee)
         redirect_to pending_deliveries_url
-      elsif current_user
-        if @current_user.facebooker?
-          fb_login_and_redirect(edit_user_path(current_user))
-        else
-          redirect_to edit_user_path(current_user)
-        end
+      #elsif current_user
+        #if @current_user.facebooker?
+        #  fb_login_and_redirect(edit_user_path(current_user))
+        #else
+        #  redirect_to edit_user_path(current_user)
+        #end
       end
     else
       render :action => 'new'
@@ -24,7 +24,7 @@ class UserSessionsController < ApplicationController
   def destroy
     @user_session = UserSession.find
     if @user_session
-      session[:facebook_session] = nil if session[:facebook_session]
+      # session[:facebook_session] = nil if session[:facebook_session]
       @user_session.destroy
     end
     flash[:notice] = "Successfully logged out."

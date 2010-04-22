@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
-  before_filter :set_facebook_session
+  #before_filter :set_facebook_session
   before_filter :load_settings
-  helper_method :facebook_session
+  #helper_method :facebook_session
   
   before_filter :set_timezone
   # Scrub sensitive parameters from your log

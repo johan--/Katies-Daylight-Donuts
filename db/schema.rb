@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100418054453) do
+ActiveRecord::Schema.define(:version => 20100422150415) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax",                :limit => 10
-    t.integer  "price",              :limit => 10
+    t.integer  "tax",                :limit => 10, :precision => 10, :scale => 0
+    t.integer  "price",              :limit => 10, :precision => 10, :scale => 0
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -139,9 +139,13 @@ ActiveRecord::Schema.define(:version => 20100418054453) do
     t.string "name"
   end
 
-  create_table "roles_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
+  create_table "routes", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -186,11 +190,12 @@ ActiveRecord::Schema.define(:version => 20100418054453) do
     t.string   "url"
     t.string   "lat"
     t.string   "lng"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
     t.integer  "city_id"
     t.integer  "position"
+    t.integer  "route_id"
   end
 
   add_index "stores", ["position"], :name => "index_stores_on_position"

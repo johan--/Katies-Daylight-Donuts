@@ -2,6 +2,10 @@
   <fieldset>
   <%= f.error_messages %>
   <p>
+    <%= f.label :route_id %><br />
+    <%= f.collection_select :route_id, Route.all, :id, :name %>
+  </p>
+  <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>

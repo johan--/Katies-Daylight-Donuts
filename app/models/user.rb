@@ -30,12 +30,12 @@ class User < ActiveRecord::Base
   
   
   # Facebook Connect Hook
-  def before_connect(facebook_session)
-    self.email = facebook_session.user.email
-    self.username = facebook_session.user.name.gsub(/[^A-Za-z0-9\_]/,'').downcase
-    self.password = self.password_confirmation = "stunod"
-    self.roles << Role.customer
-  end
+  #def before_connect(facebook_session)
+  #  self.email = facebook_session.user.email
+  #  self.username = facebook_session.user.name.gsub(/[^A-Za-z0-9\_]/,'').downcase
+  #  self.password = self.password_confirmation = "stunod"
+  #  self.roles << Role.customer
+  #end
   
     
   def self.create_with_store(store)

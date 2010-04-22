@@ -546,3 +546,15 @@ input[type=button].button{
   font-weight: bold;
   text-decoration: none;
 }
+
+ul#routes li{
+  text-align: center;
+  width: 90%;
+  height: 100px;
+  border: 2px dashed #aaa;
+  padding: 0.2em;
+  margin: 1em;
+}
+ul#routes li h1{
+  margin-top: 0.2em;
+}
