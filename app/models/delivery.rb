@@ -40,6 +40,8 @@ class Delivery < ActiveRecord::Base
   validates_presence_of :employee_id, :message => "Driver required."
   validates_presence_of :delivery_date, :message => "Must have a date to be delivered." 
   
+  named_scope :next, lambda { |d| {:conditions => ["id > ?", d.id], :limit => 1, :order => "id"} }
+  named_scope :previous, lambda { |d| {:conditions => ["id < ?", d.id], :limit => 1, :order => "id DESC"} }
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee]
   named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee]
   named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:store,:line_items]
@@ -147,6 +149,14 @@ class Delivery < ActiveRecord::Base
     if line_item = link_items.detect{ |li| li.item_id == item.id }
       line_items -= line_item
     end
+  end
+  
+  def next
+    @next_record ||= self.class.next(self)[0]
+  end
+  
+  def previous
+    @previous_record ||= self.class.previous(self)[0]
   end
   
   private

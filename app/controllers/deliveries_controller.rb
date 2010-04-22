@@ -110,7 +110,17 @@ class DeliveriesController < ApplicationController
   end
   
   def edit
-    @delivery = Delivery.find(params[:id], :include => :store)
+    begin
+      @delivery = Delivery.find(params[:id], :include => :store)
+    rescue ActiveRecord::RecordNotFound
+      flash[:error] = "No delivery was found with the id #{params[:id]}"
+      redirect_to :back
+    end
+  end
+  
+  def fetch
+    @delivery = Delivery.find(params[:delivery_id], :include => :store)
+    render :action => "edit"
   end
   
   def update
