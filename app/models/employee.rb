@@ -76,7 +76,7 @@ class Employee < ActiveRecord::Base
   end
   
   def fullname
-    "#{firstname} #{lastname}"
+    "#{firstname} #{lastname}".titleize
   end
   
   def has_position?(position)
