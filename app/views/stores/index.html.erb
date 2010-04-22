@@ -5,9 +5,11 @@
   <p>You can drag drop stores to adjust the order which they are displayed. NOTE: This will also change the order in which the tickets are printed. <strong>USE CAUTION</strong>.</p>
 <% end %>
 
+<div style="height: 100%; overflow: scroll;">
 <ul id="stores">
   <%= render :partial => @stores %>
 </ul>
+</div>
 
 <% content_for :sidebar do %>
   <% form_remote_tag :url => search_stores_path do %>
