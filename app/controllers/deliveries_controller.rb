@@ -224,7 +224,9 @@ class DeliveriesController < ApplicationController
     @roll_count = @deliveries.map(&:roll_count).sum
     @donut_hole_count = @deliveries.map(&:donut_hole_count).sum
     @deliveries.map do |delivery|
-      delivery.print!
+      unless delivery.printed?
+        delivery.print!
+      end
     end
     render :layout => false
   end
