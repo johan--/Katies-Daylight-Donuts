@@ -86,7 +86,6 @@ ActionController::Routing::Routes.draw do |map|
   map.root :dashboards
   map.connect ':controller/page/:page'
   map.connect ':controller/:year/:month/:day',
-    :controller => "schedules",
     :action => "index",
     :month => nil,
     :day => nil,
