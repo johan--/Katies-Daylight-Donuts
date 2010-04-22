@@ -46,9 +46,9 @@
     <% deliveries.sort_by{|d| d.store.position }.group_by{|d| d.store }.each do |store, deliveries| %>
     <% next if store.nil? %>
       <%= render :partial => "store_header", :locals => {:store => store, :created => created} %>
-      <span id="deliveries_for_store_<%= store.id %>">
+      <div id="deliveries_for_store_<%= store.id %>" class="span-14">
         <%= render :partial => deliveries, :locals => {:builder => f} %>
-      </span>
+      </div>
     <% end %>
   <% end %>
 <% end %>
@@ -78,7 +78,7 @@
 
 
 <% content_for :sidebar do %>
-  <%= button_to_remote "Generate Today's Tickets", :url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar()) if @current_user.system_user? %>
+  <%= button_to_remote "Generate Today's Tickets", {:url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar())}, {:class => "button"} if @current_user.system_user? %>
   <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.system_user? %>
   <%= button "Add Delivery", @current_user.system_user? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
   <%= button "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_deliveries_path(:format => :pdf) if @current_user.system_user? %>
