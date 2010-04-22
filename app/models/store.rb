@@ -9,11 +9,12 @@ class Store < ActiveRecord::Base
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
+  before_create :set_position
   before_validation :find_or_create_city
   
   validates_uniqueness_of :name # important!
   
-  validates_presence_of :name, :address, :city, :state, :country, :zipcode # important!
+  validates_presence_of :name, :address, :city, :state, :country, :zipcode, :position # important!
     
   validates_numericality_of :zipcode
   
@@ -106,5 +107,10 @@ class Store < ActiveRecord::Base
     gc = Geokit::Geocoders::YahooGeocoder.geocode "#{address}, #{city}, #{state}"
     self.lat = gc.lat
     self.lng = gc.lng
+  end
+  
+  def set_position
+    return true unless self.position.nil?
+    self.position = 0
   end
 end

@@ -4,6 +4,18 @@ describe Store do
   fixtures :stores, :cities
   
   
+  context " on create" do
+    it "should set the position to 0" do
+      store = Factory.create(:store)
+      store.position.should == 0
+    end
+    
+    it "should not set the position given a position value" do
+      store = Factory.create(:store, :position => 2)
+      store.position.should == 2
+    end
+  end
+  
   it "should order stores by position" do
     Store.all_by_position.should == [stores(:two),stores(:one)]
   end
