@@ -30,8 +30,8 @@
    <%= link_to_function "Select None" do |page|
       page.select('.checkbox').each{|element| element.checked = false }
     end %>
-    <%= check_box_tag :print %> Print Selected &nbsp;
-    <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
+    <%= hidden_field_tag :print %>
+    <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;", :class => "deliveries_form_button" %>
 </div>
 
 <div id="deliveries">
@@ -62,7 +62,7 @@
    <%= link_to_function "Select None" do |page|
       page.select('.checkbox').each{|element| element.checked = false }
     end %>
-  <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;" %>
+  <%= image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;", :class => "deliveries_form_button" %>
 </div>
 
 <% end %>
@@ -82,7 +82,7 @@
   <%#= button "Generate Today's Tickets", generate_todays_deliveries_path if @current_user.system_user? %>
   <%= button "Add Delivery", @current_user.system_user? ? new_delivery_path : new_store_delivery_path(@current_user.store) %>
   <%= button "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_deliveries_path(:format => :pdf) if @current_user.system_user? %>
-  
+  <%= button_to_function "Print Selected", %($('print').value = true;$$('.deliveries_form_button').each(function(e){e.click()})), :class => "button" %>
   <div id="schedule">
     <% deliveries = Delivery.all %>
     <%= calendar(:year => @date.year, :previous_month_text => pre, :month  => @date.month, :next_month_text => nex) do |d| 
