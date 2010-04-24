@@ -24,17 +24,30 @@ class DeliveryPresetsController < ApplicationController
   end
   
   def edit
-    @delivery_preset = DeliveryPreset.find(params[:id])
+    @delivery_preset = DeliveryPreset.find(params[:id], :include => [:line_items])
     day = @delivery_preset.day_of_week == "sun" ? "mon" : @delivery_preset.day_of_week.next_day_of_week
     @next_delivery_preset = @delivery_preset.store.delivery_presets.find_or_create_by_day_of_week(day)
   end
   
   def copy
-    @copy_from_delivery_preset = DeliveryPreset.find(params[:id], :include => [:line_items])
-    @delivery_preset = DeliveryPreset.find(params[:copy_from_id])
-    if !@copy_from_delivery_preset.nil? && @delivery_preset.copy(@copy_from_delivery_preset)
+    DeliveryPreset.copy_attributes(params[:copy_from_id], params[:id])
+    @delivery_preset = DeliveryPreset.find(params[:copy_from_id], :include => [:line_items])
+    @copy_to_delivery_preset = DeliveryPreset.find(params[:id], :include => [:line_items])
+    ActiveRecord::Base.copy_attributes_between_models(@delivery_preset, @copy_to_delivery_preset, {:except_list => [:day_of_week, :created_at, :updated_at]})
+    @copy_to_delivery_preset.line_items.each do |li|
+      to_line_item = @delivery_preset.line_items.find(:first, :conditions => {:item_id => li.item.id})
+      from_line_item = li
+      puts "Nil? #{from_line_item.nil?}"
+      puts "Nil? #{to_line_item.nil?}"
+      puts "Copying from #{from_line_item.delivery_preset.day_of_week} to #{to_line_item.delivery_preset.day_of_week}"
+      
+      ActiveRecord::Base.copy_attributes_between_models(from_line_item, to_line_item)
+    end
+    
+    if !@copy_to_delivery_preset.nil?
       flash[:notice] = "Copy complete"
-      redirect_to edit_store_delivery_preset_path(@delivery_preset.store, @delivery_preset)
+      next_day_of_week = @delivery_preset.day_of_week.next_day_of_week
+      redirect_to edit_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
     else
       flash[:warning] = "Copy failed"
       render :action => "edit"

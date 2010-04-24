@@ -25,22 +25,26 @@ class Store < ActiveRecord::Base
   
   attr_accessor :manual_city
   
-  named_scope :all_by_position, :order => "position asc"
+  named_scope :all_by_position, :order => "position asc", :include => [:route]
   
   def to_param
     "#{id}-#{name}".gsub(/[^A-Za-z0-9]/,'-')
   end
   
   def create_todays_delivery!
+  #begin
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({
       :employee => Employee.default,
       :delivery_date => Time.zone.today
     })
       todays_ticket.line_items.each do |line_item|
-        delivery.add_item(line_item.item, line_item.quantity)
+        delivery.add_item(line_item.item, line_item.quantity) unless line_item.quantity.to_i < 1
       end
     end
+  #rescue Exception
+    
+  #end
   end
 
   # Returns the current balance for a store (includes discounts for buy backs)

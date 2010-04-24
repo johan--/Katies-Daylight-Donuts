@@ -4,6 +4,10 @@ class StoresController < ApplicationController
   def index
     @routes = Route.all
     @stores = Store.all_by_position
+    respond_to do |format|
+      format.html
+      format.pdf{ render :layout => false }
+    end
   end
   
   def show
@@ -23,7 +27,8 @@ class StoresController < ApplicationController
     @store = Store.new(params[:store])
     if @store.save
       flash[:notice] = "Successfully created store."
-      redirect_to @store
+      #redirect_to @store
+      redirect_to new_store_path
     else
       render :action => 'new'
     end

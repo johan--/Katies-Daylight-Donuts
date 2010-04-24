@@ -95,7 +95,7 @@ class Delivery < ActiveRecord::Base
   end
 
   def address
-    "#{store.name} ##{id} - #{store.to_google}"
+    "#{store.display_name} - #{store.to_google}"
   end
 
   def delivery_time

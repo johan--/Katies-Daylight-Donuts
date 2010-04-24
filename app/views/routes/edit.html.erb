@@ -1,8 +1,21 @@
+<% title @route.name %>
+
 <% form_for @route do |f| %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name %>
   </p>
   
-  <%= f.submit :save %>
+  <%= image_submit_tag "buttons/default/button-save.png" %>
+  <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.go(-1)) %>
+<% end %>
+
+<% content_for :sidebar do %>
+  <h1>Stores</h1>
+  <p>Here is a list of the stores on this route. They have been ordered by their position on the <%= link_to "Stores", stores_path %> tab.</p>
+  <ol>
+  <% @route.stores.sort_by(&:position).each do |store| %>
+    <li><%= link_to store.display_name, store %></li>
+  <% end %>
+  </ol>
 <% end %>
