@@ -25,10 +25,14 @@ class Store < ActiveRecord::Base
   
   attr_accessor :manual_city
   
-  named_scope :all_by_position, :order => "position asc", :include => [:route]
+  named_scope :all_by_position, :order => "position asc", :include => [:route, :city]
   
   def to_param
     "#{id}-#{name}".gsub(/[^A-Za-z0-9]/,'-')
+  end
+  
+  def city_name
+    @city_name ||= city.name.titleize
   end
   
   def create_todays_delivery!

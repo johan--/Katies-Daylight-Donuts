@@ -42,18 +42,17 @@ class SchedulesController < ApplicationController
   
   def create
     @schedule = Schedule.new(params[:schedule])
-    puts @schedule.inspect
     if @schedule.save
       flash[:notice] = "Schedule was saved"
     else
-      puts @schedule.errors.inspect
       flash[:warning] = "Schedule could not be saved"
     end
     respond_to do |format|
       format.html{ @schedule.valid? ? redirect_to(@schedule) : render(:action => "new") }
       format.js{
         render :update do |page|
-          page.insert_html(:top, :schedules, :partial => @schedule)
+          page.insert_html(:top, :schedules, :partial => @schedule, :locals => {:row_class => cycle("oddRow","stripe")})
+          page << "stripe()" 
         end
       }
     end

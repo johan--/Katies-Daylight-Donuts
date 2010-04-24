@@ -7,6 +7,10 @@ class StoresController < ApplicationController
     respond_to do |format|
       format.html
       format.pdf{ render :layout => false }
+      # API XML Calls
+      format.xml{ render :xml => @stores.to_xml(:only => [:name, :address, :state, :zipcode, :country], :methods => [:city_name])}
+      # API Json Calls
+      format.json{ render :xml => @stores.to_json(:only => [:name, :address, :state, :zipcode, :country], :methods => [:city_name])}      
     end
   end
   
