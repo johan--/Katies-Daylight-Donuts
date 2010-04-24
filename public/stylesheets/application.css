@@ -569,3 +569,10 @@ ul#routes li h1{
   padding: 4px;
   margin: 4px;
 }
+
+div.pagination{
+  font-weight: bold;
+  text-align: right;
+  background: #eee;
+  padding: 1em;
+}

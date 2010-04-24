@@ -37,6 +37,12 @@ class User < ActiveRecord::Base
   #  self.roles << Role.customer
   #end
   
+  def self.paginate_search(options = {})
+    query = "%"+options[:q]+"%"
+    paginate :page => (options[:page] || 1), 
+      :order => "created_at DESC", 
+      :conditions => ["username like ? or email like ?", query, query]
+  end
     
   def self.create_with_store(store)
     user = create(

@@ -6,6 +6,17 @@ class UsersController < ApplicationController
     @users = User.paginate :page => params[:page], :order => "created_at DESC"
   end
   
+  def search
+    @users = User.paginate_search(params)
+    render :update do |page|
+      page.replace_html(:users, "")
+      @users.each do |user|
+        page.insert_html(:top, :users, :partial => user, :locals => {:row_class => cycle("oddRow","stripe")})
+      end
+      page << "stripe()"
+    end
+  end
+  
   def new
     @user = User.new
     respond_to do |format|

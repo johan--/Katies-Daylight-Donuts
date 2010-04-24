@@ -27,10 +27,6 @@
     <%= render :partial => @routes %>
   </ul>
   
-  <% @stores.each do |store| %>
-    <%= draggable_element("#{store.id}_store_route_droppable", {:revert => true})%>
-  <% end %>
-  
   <% @routes.each do |route| %>
     <%= drop_receiving_element("route_#{route.id}", :url => {:controller => "routes", :action => "add_store", :id => route.id}, :method => :put, :with => "'store_id='+ escape(element.id) +''")%>
   <% end %>

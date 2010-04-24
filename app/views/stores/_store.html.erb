@@ -17,4 +17,5 @@
     <%= icon("car") %> <span id="route_name_for_store<%= store.id %>"><%= store.route.name unless store.route.nil? %></span>
   </div>
 </div>
+<%= draggable_element("#{store.id}_store_route_droppable", {:revert => true})%>
 <% end %>

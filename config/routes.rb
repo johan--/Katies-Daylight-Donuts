@@ -76,7 +76,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :comments
 
   map.resources :user_sessions
-  map.resources :users, :has_one => :store
+  map.resources :users, :collection => { :search => :any }, :has_one => :store
   
   map.timeclock "/timeclock", :controller => "clockin_times", :action => "new"
   map.customer_signup "/customers/signup", :controller => "customers", :action => "new"
@@ -85,6 +85,7 @@ ActionController::Routing::Routes.draw do |map|
   map.screen_calculation "screen_calculation", :controller => "items", :action => "screen_calculation"
   map.turn_off_hints "hints/disabled", :controller => "users", :action => "turn_off_hints"
   map.root :dashboards
+  map.connect ':controller/search/:q'
   map.connect ':controller/page/:page'
   map.connect ':controller/:year/:month/:day',
     :action => "index",

@@ -3,25 +3,28 @@
 <%= will_paginate @users %>
 <br />
 <table class="stripe">
+  <thead>
   <tr>
     <th>Username</th>
     <th>Email</th>
     <th>Roles</th>
     <th style="width: 100px;">&nbsp;</th>
   </tr>
-  <% for user in @users %>
-  <tr onMouseOver="$('actions_for_<%= user.object_id %>').show();" onMouseOut="$('actions_for_<%= user.object_id %>').hide();">
-    <td><%= link_to h(user.username), user %></td>
-    <td><%= mail_to h(user.email), h(user.email) %></td>
-    <td><%= user.roles.map(&:name).map(&:titleize).join(", ") %></td>
-    <td><span style="display: none;" id="actions_for_<%= user.object_id %>"><%= link_to icon("pencil-small"), edit_user_path(user) %> <%= link_to icon("cross-circle-frame"), user, :method => :delete, :confirm => "Are you sure you want to delete this user?" unless user.admin? %></span></td>
-  </tr>
-  <% end %>
+  </thead>
+  <tbody id="users">
+    <%= render :partial => @users %>
+  </tbody>
 </table>
 
 <%= will_paginate @users %>
 
 <% content_for :sidebar do %>
+<% form_remote_for :users, :url => search_users_path do %>
+  <fieldset>
+    <legend>Search by username or email</legend>
+  <%= text_field_tag :q %> <%= image_submit_tag "../images/buttons/default/button-search.png", :style => "vertical-align: bottom" %>
+  </fieldset>
+<% end %>
   <%= facebox_button "Add User", new_user_path %>
   <h2>User Accounts</h2>
   <p>User accounts give your staff access to the app.
