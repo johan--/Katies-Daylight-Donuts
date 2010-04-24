@@ -228,11 +228,11 @@ class DeliveriesController < ApplicationController
         delivery.print!
       end
     end
+    prawnto :inline => false, :filename => "tickets-for-#{Time.zone.now.strftime('%m-%d-%Y')}.pdf"
     render :layout => false
   end
   
   def generate_todays
-    @prawn_document_options = { :filename => "tickets-for-#{Time.zone.now.strftime('%m/%d/%Y %H:%M %p')}.pdf"}
     Store.all_by_position.each do |store|
       store.create_todays_delivery!
     end

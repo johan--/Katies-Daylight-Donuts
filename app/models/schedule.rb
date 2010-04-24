@@ -24,6 +24,27 @@ class Schedule < ActiveRecord::Base
     }
   }
   
+  def position
+    case work_date.strftime("%a").downcase
+    when "sun"
+      0
+    when "mon"
+      1
+    when "tue"
+      2
+    when "wed"
+      3
+    when "thu"
+      4
+    when "fri"
+      5
+    when "sat"
+      6
+    else
+      0
+    end
+  end
+  
   def display_date
     self.work_date.strftime("%m/%d/%Y")
   end

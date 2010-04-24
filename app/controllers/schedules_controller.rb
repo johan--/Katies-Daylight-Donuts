@@ -31,6 +31,13 @@ class SchedulesController < ApplicationController
     @employee = @schedule.employee
     @this_weeks_schedules = @employee.schedules.for_this_week
     @total_hours = @this_weeks_schedules.compact.map(&:total_hours).sum
+    respond_to do |format|
+      format.html
+      format.pdf{ 
+        prawnto :inline => false, :filename => "#{@employee.fullname}'s-schedule.pdf"
+        render :layout => false
+      }
+    end
   end
   
   def create

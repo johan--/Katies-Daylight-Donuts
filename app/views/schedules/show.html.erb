@@ -34,4 +34,5 @@
     Total: <%= pluralize(@total_hours,"Hour") %>
   </div>
   <small>Schedule for: <%= Time.zone.now.at_beginning_of_week.strftime("%m/%d/%Y") %> - <%= Time.zone.now.at_end_of_week.strftime("%m/%d/%Y") %></small>
+  <%= button "Print Schedule", employee_schedule_path(@schedule.employee,@schedule, :format => :pdf) %>
 <% end %>
