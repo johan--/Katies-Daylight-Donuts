@@ -7,13 +7,14 @@
       <li class="<%= current "employees" %>"><%= link_to "#{icon("user-business")} Employees",  employees_path %></li>
       <li class="<%= current "items" %>"><%= link_to "#{icon("flask")} Items", items_path %></li>
       <li class="<%= current "stores" %>"><%= link_to "#{icon("store")} Stores ( #{Store.count} )",  stores_path %></li>
-      <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("money")} Buy Backs",  buy_backs_path %></li>
     <% end %>
   <% if !@current_user.admin? && @current_user.customer? %>
   <li class="<%= current "stores" %>"><%= link_to "#{icon("store")} #{@current_user.store.nil? ? 'Add' : 'My'}  Store",  @current_user.customer_with_store? ? user_store_path(@current_user,@current_user.store) : new_user_store_path(@current_user) %></li>
   <% end %>
   
     <% if @current_user.system_user? %>
+    <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("money")} Buy Backs",  buy_backs_path %></li>
+    
       <li class="<%= current "deliveries" %>">
         <%= link_to "#{icon("wooden-box-label")} Deliveries (#{Delivery.pending.count})", pending_deliveries_path %>
       </li>

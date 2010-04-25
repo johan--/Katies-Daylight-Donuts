@@ -73,7 +73,7 @@ class DeliveriesController < ApplicationController
   end
   
   def show
-    @delivery = Delivery.find(params[:id])
+    @delivery = Delivery.find(params[:id], :include => [{:line_items, :item}])
     @map = GMap.new("map")
     @map.control_init(:map_type => true)
     @map.center_zoom_init(@delivery.store.geocode_array, 11)

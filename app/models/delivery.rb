@@ -42,22 +42,28 @@ class Delivery < ActiveRecord::Base
   
   named_scope :next, lambda { |d| {:conditions => ["id > ?", d.id], :limit => 1, :order => "id"} }
   named_scope :previous, lambda { |d| {:conditions => ["id < ?", d.id], :limit => 1, :order => "id DESC"} }
-  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee]
-  named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:store,:line_items]
+  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
+  named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:store,:line_items, {:line_items, :item}]
   # This does not work with postgresql db's for some reason
-  named_scope :delivered_this_week, :conditions => {:state => "delivered", :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}"}
+  named_scope :delivered_this_week, :conditions => {
+    :state => "delivered", 
+    :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}", 
+    :include => [{:line_items, :item}]
+  }
   named_scope :by_date, lambda { |*args|
     args[0] ||= Time.zone.now
     {
       :order => "delivery_date asc",
-      :conditions => ["delivery_date BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||args[0]).end_of_day.to_s(:db)]
+      :conditions => ["delivery_date BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||args[0]).end_of_day.to_s(:db)],
+      :include => [{:line_items, :item}]
     }
   }
-  named_scope :printed, :conditions => {:state => "printed"}
-  named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'"
-  named_scope :unpaid, :conditions => {:paid => false}
-  named_scope :paid, :conditions => {:paid => true}
+  named_scope :printed, :conditions => {:state => "printed"}, :include => [{:line_items, :item}]
+  named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'",
+    :include => [{:line_items, :item}]
+  named_scope :unpaid, :conditions => {:paid => false}, :include => [{:line_items, :item}]
+  named_scope :paid, :conditions => {:paid => true}, :include => [{:line_items, :item}]
   
   def self.metric_chart
     months,counts = [],[]
