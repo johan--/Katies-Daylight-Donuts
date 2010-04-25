@@ -18,6 +18,15 @@ describe DeliveryPreset do
     end
   end
   
+  context " when in order" do
+    %w(Sun Mon Tue Wed Thu Fri Sat).each_with_index do |day, index|
+      it "should have a position of #{index} when weekday is #{day}" do
+        @delivery_preset.day_of_week = day
+        @delivery_preset.position.should == index
+      end
+    end
+  end
+  
   context " when copied" do
     it "should not copy the day of week attribute" do
       copy_from = Factory(:delivery_preset)
