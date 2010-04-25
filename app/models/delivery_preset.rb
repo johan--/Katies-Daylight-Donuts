@@ -60,16 +60,19 @@ class DeliveryPreset < ActiveRecord::Base
     end
   end
   
-  def copy_attributes(from, to)
-    from_model = find(params[:copy_from_id], :include => [:line_items])
-    to_model = find(params[:id], :include => [:line_items])
-    self.class.copy_attributes_between_models(from_model, to_model, {:except_list => [:day_of_week, :created_at, :updated_at]})
-    to_model.line_items.each do |line|
-      from_line_item = from_model.line_items.find(:first, :conditions => {:item_id => line.item.id})
-      to_line_item = line
-      self.class.copy_attributes_between_models(from_line_item, to_line_item)
+  def self.copy_attributes(from_model, to_model)
+    [from_model, to_model].each do |object|
+      raise ArgumentError, "Expected #{DeliveryPreset} got #{object.class}" unless object.is_a?(DeliveryPreset)
     end
-    to_model
+    to_model.line_items.each_with_index do |line,index|
+      from_line_item = from_model.line_items[index]
+      if from_line_item.item_id == line.item_id
+        line.quantity,line.price = from_line_item.quantity,from_line_item.price        
+        line.save!
+      end
+    end
+    to_model.closed = from_model.closed 
+    to_model.save!
   end
   
   def copy(delivery_preset)

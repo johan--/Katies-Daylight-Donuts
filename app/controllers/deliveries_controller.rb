@@ -88,7 +88,16 @@ class DeliveriesController < ApplicationController
       :info_window => "#{@delivery.store.display_name} <br />#{@delivery.store.full_address} <br />#{@delivery.store.phone}",
       :icon => icon)
      @map.overlay_init store_marker
-     
+     respond_to do |format|
+       format.html
+       format.pdf{
+         @deliveries = Delivery.pending.by_date
+         @donut_count = @deliveries.map(&:donut_count).sum
+         @roll_count = @deliveries.map(&:roll_count).sum
+         @donut_hole_count = @deliveries.map(&:donut_hole_count).sum
+         render :layout => false
+       }
+     end
   end
   
   def new
@@ -103,7 +112,11 @@ class DeliveriesController < ApplicationController
     line_items.each{ |l| @delivery.line_items.build(l) } unless line_items.empty?
     if @delivery.save
       flash[:notice] = "Successfully created delivery."
-      redirect_to @delivery
+      if @delivery.print_after_save
+        redirect_to delivery_path(@delivery, :format => :pdf)
+      else
+        redirect_to @delivery
+      end
     else
       render :action => 'new'
     end
@@ -114,7 +127,7 @@ class DeliveriesController < ApplicationController
       @delivery = Delivery.find(params[:id], :include => :store)
     rescue ActiveRecord::RecordNotFound
       flash[:error] = "No delivery was found with the id #{params[:id]}"
-      redirect_to :back
+      redirect_back_or_default(deliveries_path)
     end
   end
   
@@ -128,7 +141,11 @@ class DeliveriesController < ApplicationController
     line_items = params[:delivery].delete(:line_items) || []
     if @delivery.update_attributes(params[:delivery]) && @delivery.update_line_items(line_items)
       flash[:notice] = "Successfully updated delivery."
-      redirect_to @delivery
+      if @delivery.print_after_save
+        redirect_to delivery_path(@delivery, :format => :pdf)
+      else
+        redirect_to @delivery
+      end
     else
       render :action => 'edit'
     end

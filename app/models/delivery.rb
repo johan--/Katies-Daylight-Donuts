@@ -1,7 +1,7 @@
 class Delivery < ActiveRecord::Base
   include AASM
   
-  attr_accessor :store_name
+  attr_accessor :store_name, :print_after_save
   
   has_many :comments, :as => :commentable
   

@@ -29,9 +29,21 @@ describe DeliveryPreset do
   
   context " when copied" do
     it "should not copy the day of week attribute" do
-      copy_from = Factory(:delivery_preset)
-      @delivery_preset.copy(copy_from)
-      @delivery_preset.items.map(&:id).should == copy_from.items.map(&:id)
+      copy_from = Factory(:delivery_preset, :day_of_week => "Sat")
+      copy_to   = Factory(:delivery_preset, :day_of_week => "Tue")
+      @delivery_preset.copy_attributes(copy_from,copy_to)
+    end
+    
+    it "should copy the line items of the from model" do
+      copy_from = Factory(:delivery_preset, :day_of_week => "Sat")
+      copy_to   = Factory(:delivery_preset, :day_of_week => "Tue")
+      DeliveryPreset.copy_attributes(copy_from,copy_to)
+      copy_to.line_items.map(&:quantity).should == copy_from.line_items.map(&:quantity)
+      copy_to.line_items.map(&:price).should == copy_from.line_items.map(&:price)
+    end
+    
+    it "should raise an exception given a non delivery preset object" do
+      lambda { @delivery_preset.copy_attributes("",nil) }.should raise_error(ArgumentError)
     end
   end
 end

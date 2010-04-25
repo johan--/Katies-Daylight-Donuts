@@ -1,6 +1,14 @@
 # Black and White colors
 stripes = ["EBEBEB","FFFFFF"]
 
+# Counts
+pdf.text "Counts", :size => 18
+pdf.text "Date: #{Time.zone.now.strftime('%b %d, %Y')}"
+pdf.text "Roll Count #{@roll_count}"
+pdf.text "Donut Count #{@donut_count}"
+pdf.text "Donut Hole Count #{@donut_hole_count}"
+pdf.start_new_page
+
 # Add Logo
 pdf.image("#{RAILS_ROOT}" + "/public/images/logo-small.png")
 

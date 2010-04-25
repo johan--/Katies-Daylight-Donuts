@@ -54,6 +54,8 @@
       <% end %>
     <% end %>
   </table>
+  <p><%= f.check_box :print_after_save, :checked => true %> <%= f.label :print_after_save %></p>
+  
   <%= image_submit_tag "buttons/default/button-save.png" %>
   <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()) %>
   </fieldset>
