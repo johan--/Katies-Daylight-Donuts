@@ -79,12 +79,13 @@ class SchedulesController < ApplicationController
   
   def destroy
     @schedule = Schedule.find(params[:id])
+    current_date = @schedule.work_date.strftime("%Y-%m-%d")
     if @schedule.destroy
       flash[:notice] = "Successfully removed schedule"
     else
       flash[:warning] = "Failed to remove schedule"
     end
-    redirect_to schedules_path
+    redirect_to schedules_path(:date => current_date)
   end
   
   protected

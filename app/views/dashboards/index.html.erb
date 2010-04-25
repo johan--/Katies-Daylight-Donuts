@@ -1,23 +1,34 @@
 <% title "Dashboard" %>
 
-<div class="span-24">  
-  <div class="span-11 metric">
-    <h1><%= icon "money" %> Buybacks</h1>
-    <%= image_tag BuyBack.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+<% content_for :subnav do %>
+<ul id="tabs_example_two" class="subsection_tabs">  
+    <li class="tab"><a href="#charts">Charts</a></li>  
+    <li class="tab"><a href="#reports">Reports</a></li>  
+</ul>  
+<% end %>
+
+
+<div id="charts">
+  <div class="span-24">  
+    <div class="span-11 metric">
+      <h1><%= icon "money" %> Buybacks</h1>
+      <%= image_tag BuyBack.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+    </div>
+
+    <div class="span-11 metric">
+      <h1><%= icon "wooden-box-label" %> Deliveries</h1>
+      <%= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+    </div>
+
+    <div class="span-11 metric">
+      <h1><%= icon "flask" %> Items</h1>
+      <%= image_tag Item.metric_chart.to_url %>
+    </div>
+
+    <div class="span-11 metric">
+      <h1><%= icon "wrench" %> Labor</h1>
+      <%= image_tag ClockinTime.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+    </div>
   </div>
-  
-  <div class="span-11 metric">
-    <h1><%= icon "wooden-box-label" %> Deliveries</h1>
-    <%= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
-  </div>
-  
-  <div class="span-11 metric">
-    <h1><%= icon "flask" %> Items</h1>
-    <%= image_tag Item.metric_chart.to_url %>
-  </div>
-  
-  <div class="span-11 metric">
-    <h1><%= icon "wrench" %> Labor</h1>
-    <%= image_tag ClockinTime.metric_chart, :style => "margin: 0.2em 0 0 0" %>
-  </div>
-</div>
+</div>  
+<div id="reports">Your Reports Here</div>  

@@ -76,6 +76,28 @@
   </div>
 <% end %>
 
+<% content_for :subnav do %>
+  <% content_for :subnav do %>
+  <ul id="tabs_example_two" class="subsection_tabs">  
+    <li class="tab">
+      <%= link_to "Pending (#{@delivery_klass.pending.count})", @current_user.system_user? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %></li>  
+      
+    <li class="tab"><%= link_to "Delivered (#{@delivery_klass.delivered.count}) <small><em>(History)</em></small>", @current_user.system_user? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store), :class => current_action == "delivered" ? "active" : "" %></li>
+    
+    <% if @current_user.system_user? %>
+      <li class="tab"><%= link_to "Printed (#{@delivery_klass.printed.count})", printed_deliveries_path, :class => current_action == "printed" ? "active" : "" %></li>
+    <% end %>
+    
+    <% if @current_user.system_user? %>
+    <li class="tab">
+      <%= link_to "Canceled (#{@delivery_klass.canceled.count})", canceled_deliveries_path, :class => current_action == "canceled" ? "active" : "" %>
+    </li>
+    <% end %>
+  </ul>  
+  
+  <% end %>
+<% end %>
+
 
 <% content_for :sidebar do %>
   <%= button_to_remote "Generate Today's Tickets", {:url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar())}, {:class => "button"} if @current_user.system_user? %>
@@ -93,15 +115,4 @@
     else [d.mday, {:class => "day"}] end
     end %>
   </div>
-  
-  <h2>Deliveries</h2>
-  <%= link_to "Pending Deliveries", @current_user.system_user? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.pending.count %>)<br />
-  <%= link_to "Delivered Deliveries", @current_user.system_user? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store) %> (<%= @delivery_klass.delivered.count %>)  <small><em>(History)</em></small><br />
-  <% if @current_user.system_user? %>
-    <%= link_to "Printed Deliveries", printed_deliveries_path %> (<%= @delivery_klass.printed.count %>)
-  <% end %>
-  <% if @current_user.system_user? %>
-  <br />
-    <%= link_to "Canceled Deliveries", canceled_deliveries_path %> (<%= @delivery_klass.canceled.count %>)
-  <% end %>
 <% end %>

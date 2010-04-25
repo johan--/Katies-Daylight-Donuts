@@ -89,4 +89,12 @@ module ApplicationHelper
     end
     js
   end
+  
+  def current_action
+    @controller.action_name if defined?(@controller)
+  end
+  
+  def current_controller
+    @controller.controller_name if defined?(@controller)
+  end
 end

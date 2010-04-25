@@ -26,10 +26,12 @@ class Item < ActiveRecord::Base
   end
   
   def self.metrics(store = nil)
+    extend ActionView::Helpers::TextHelper
     m = {}
-    collection = store.nil? ? find(:all, :include => [:line_items], :conditions => ["item_type != ?",TYPES.last]) : store.line_items.map{|li| li.item unless li.item.item_type == TYPES.last}.flatten
-    collection.each do |item|
-      m["#{item.name}"] = item.line_items.map(&:quantity).to_s.sum
+    collection = store.nil? ? find(:all, :include => [:line_items], :conditions => ["item_type != ?",TYPES.last]) : store.line_items.map{|li| li.item if li.item.consumable? }.flatten
+    collection.group_by{|i| i.item_type }.each do |item_type_name, items|
+      value = items.map(&:line_items).flatten.map(&:quantity).to_s.sum
+      m["#{pluralize(value,item_type_name.singularize)}"] = value
     end
     m
   end
