@@ -2,7 +2,7 @@
   <fieldset>
 
   <%= f.error_messages %>
-  
+  <% if 1==2%>
   <% if false #facebook_session %>
   <span class="fb_pic" style="float: right">
     <%= fb_profile_pic(facebook_session.user,:size => :thumb, 'facebook-logo' => true) %>
@@ -11,6 +11,7 @@
     <span class="fb_connect_button">
       <%= fb_login_and_redirect(edit_user_url(@user), :format => :js) %>
     </span>
+  <% end %>
   <% end %>
   
   <% if @user.new_record? %>
