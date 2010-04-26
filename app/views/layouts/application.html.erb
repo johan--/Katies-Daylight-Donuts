@@ -10,7 +10,7 @@
     <%#= init_fb_connect "XFBML", {:app_settings => "{ permsToRequestOnConnect : 'email' }"}%>
     <%#= javascript_include_tag "jquery" %>
     <%= iboxify_page %>
-    <%= javascript_include_tag "facebox", "zebra_stripe","tabs", "katies","livepipe-ui/src/livepipe.js" %>
+    <%= javascript_include_tag "facebox", "zebra_stripe","livepipe-ui/src/livepipe.js","tabs", "katies" %>
     <%= calendar_date_select_includes "silver" %>
     <% if @current_user %>
     <style type="text/css" media="screen">
