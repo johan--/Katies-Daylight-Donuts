@@ -12,6 +12,12 @@ class ApplicationController < ActionController::Base
   before_filter :set_timezone
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
+  
+  
+  begin
+  rescue ActionController::UnknownAction
+    render_optional_error_file(404)
+  end
 
   protected
   

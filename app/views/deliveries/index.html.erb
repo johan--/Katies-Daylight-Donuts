@@ -80,7 +80,7 @@
   <% content_for :subnav do %>
   <ul id="tabs_example_two" class="subsection_tabs">  
     <li class="tab">
-      <%= link_to "Pending (#{@delivery_klass.pending.count})", @current_user.system_user? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store) %></li>  
+      <%= link_to "Pending (#{@delivery_klass.pending.count})", @current_user.system_user? ? pending_deliveries_path : pending_store_deliveries_path(@current_user.store), :class => current_action == "pending" ? "active" : "" %></li>  
       
     <li class="tab"><%= link_to "Delivered (#{@delivery_klass.delivered.count}) <small><em>(History)</em></small>", @current_user.system_user? ? delivered_deliveries_path : delivered_store_deliveries_path(@current_user.store), :class => current_action == "delivered" ? "active" : "" %></li>
     

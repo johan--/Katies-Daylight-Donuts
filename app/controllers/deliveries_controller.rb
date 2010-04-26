@@ -111,7 +111,7 @@ class DeliveriesController < ApplicationController
     line_items = params[:delivery].has_key?(:line_items) ? params[:delivery].delete(:line_items) : []
     @delivery = Delivery.new(params[:delivery])
     line_items.each{ |l| @delivery.line_items.build(l) } unless line_items.empty?
-    if @delivery.save
+    if @delivery.save!
       flash[:notice] = "Successfully created delivery."
       if @delivery.print_after_save
         redirect_to delivery_path(@delivery, :format => :pdf)
