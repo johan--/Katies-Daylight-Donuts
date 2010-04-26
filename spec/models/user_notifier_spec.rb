@@ -1,20 +1,23 @@
-require File.dirname(__FILE__) + "/../spec_helper"
+require 'spec_helper'
+require 'mailer_spec_helper'
 
 describe UserNotifier do
+  include MailerSpecHelper
+  include ActionMailer::Quoting
+  
   before(:each) do
-    @valid_attributes = { 
-      :username => "tester",
-      :email => "me@timmatheson.com",
-      :password => "password",
-      :password_confirmation => "password",
-    }
+    @expected = TMail::Mail.new
+    @expected.set_content_type 'text', 'plain', { 'charset' => 'UTF-8' }
+    @expected.mime_version = '1.0'
+    @user = Factory.create(:user)
   end
   
-  context " when a user signs up" do
-    it "should send the signup notification email" do
-      User.any_instance.stubs(:valid?).returns(true)
-      UserNotifier.expects(:deliver_signup_notification)
-      User.create!( @valid_attributes )
-    end
+  it 'should send new delivery notification' do
+    @expected.subject = 'New Delivery'
+    @expected.body = read_fixture("user_notifiers", "new_delivery_notification")
+    @expected.from = "noreply@katiesdaylightdonuts.com"
+    @expected.to = @user.email
+    @delivery = Factory.create(:delivery)
+    UserNotifier.deliver_new_delivery_notification(@user, @delivery).encoded.should == @expected.encoded
   end
 end

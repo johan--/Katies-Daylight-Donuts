@@ -32,7 +32,7 @@ describe StoresController do
   it "create action should redirect when model is valid" do
     Store.any_instance.stubs(:valid?).returns(true)
     post :create
-    response.should redirect_to(store_url(assigns[:store]))
+    response.should redirect_to(new_store_url)
   end
   
   it "edit action should render edit template" do

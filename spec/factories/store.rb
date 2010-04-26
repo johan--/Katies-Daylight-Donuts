@@ -1,3 +1,7 @@
+Factory.sequence(:position) do |n|
+  "#{n}"
+end
+
 Factory.sequence(:store_name) do |n|
   "Store#{n}"
 end
@@ -9,4 +13,5 @@ Factory.define(:store) do |f|
   f.state "NE"
   f.country "USA"
   f.zipcode "68826"
+  f.position{ Factory.next(:position) }
 end

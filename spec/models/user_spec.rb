@@ -10,6 +10,14 @@ describe User do
     }
   end
   
+  context " when a user signs up" do
+    it "should send the signup notification email" do
+      User.any_instance.stubs(:valid?).returns(true)
+      UserNotifier.expects(:deliver_signup_notification)
+      User.create!( @valid_attributes )
+    end
+  end
+  
   context " any instance" do
     it "should be a facebooker user given a facebook_uid valud" do
       user = User.new(:facebook_uid => 123)
