@@ -9,7 +9,7 @@
     <%#= fb_connect_javascript_tag %>
     <%#= init_fb_connect "XFBML", {:app_settings => "{ permsToRequestOnConnect : 'email' }"}%>
     <%= iboxify_page %>
-    <%= javascript_include_tag "facebox", "zebra_stripe","livepipe-ui/src/livepipe.js","tabs", "katies" %>
+    <%= javascript_include_tag "facebox", "zebra_stripe","livepipe-ui/src/livepipe.js", "katies" %>
     <%= calendar_date_select_includes "silver" %>
     <%= include_visualization_api %>
     <%= render_visualizations %>
