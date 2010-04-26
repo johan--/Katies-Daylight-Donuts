@@ -3,6 +3,14 @@ class ClockinTime < ActiveRecord::Base
   
   named_scope :clocked_in, :conditions => {:ends_at => nil}, :limit => 1
   named_scope :clocked_out, :conditions => "starts_at is not NULL and ends_at is not NULL"
+  named_scope :by_date, lambda { |*args|
+    args[0] ||= Time.zone.now
+    {
+      :order => "starts_at asc",
+      :conditions => ["starts_at BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||args[0]).end_of_day.to_s(:db)],
+      :include => [:employee]
+    }
+  }
   
   attr_accessor :clockin_id
   
@@ -19,14 +27,12 @@ class ClockinTime < ActiveRecord::Base
   end
   
   def self.metric_chart
-    months,counts = [],[]
-    all.group_by{|ct| ct.created_at.to_date }.map{|month,cts| 
-    if cts.first.created_at.to_date.year == Time.zone.now.year
-        months << month.strftime("%h %Y").upcase
-        counts << cts.map(&:total_hours_integer).sum.to_i
-    end
-  }
-  "http://chart.apis.google.com/chart?chxt=Sales&cht=lc&chf=c,ls,0,CCCCCC,0.05,FFFFFF,0.05&chco=5D85BF&chd=t3:#{counts.join(',')}&chs=430x100&chl=#{months.uniq.join('|')}"
+    return @metric_payload if defined?(@metric_payload)
+    @metric_payload = []
+    by_date(Time.zone.now.at_beginning_of_year,Time.zone.now).group_by(&:employee).map{ |employee, cts|
+      @metric_payload.push( [employee.fullname,cts.map(&:total_hours_integer).sum] )
+    }
+    @metric_payload
   end
   
 end

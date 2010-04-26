@@ -11,24 +11,45 @@
 <div id="charts">
   <div class="span-24">  
     <div class="span-11 metric">
-      <h1><%= icon "money" %> Buybacks</h1>
-      <%= image_tag BuyBack.metric_chart, :style => "margin: 0.2em 0 0 0" %>
-    </div>
-
-    <div class="span-11 metric">
-      <h1><%= icon "wooden-box-label" %> Deliveries</h1>
-      <%= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
-    </div>
-
-    <div class="span-11 metric">
       <h1><%= icon "flask" %> Items</h1>
-      <%= image_tag Item.metric_chart.to_url %>
+      <% visualization "items_chart", "ColumnChart", :width => 400, :height => 200, :is3d => true,  :html => {:class => "graph_chart"} do |chart| 
+      %>
+        <% chart.string "Item" %>
+        <% chart.number "# Sold" %>
+        <% chart.number "Revenue" %>
+
+        <%# Add the data %>
+        <% chart.add_rows(Item.metrics) %>
+      <% end %>
     </div>
 
     <div class="span-11 metric">
       <h1><%= icon "wrench" %> Labor</h1>
-      <%= image_tag ClockinTime.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+      <% visualization "labor_chart", "ColumnChart", :width => 400, :height => 200, :html => {:class => "graph_chart"} do |chart| 
+      %>
+        <% chart.string "Employee" %>
+        <% chart.number "Total Hours" %>
+
+        <%# Add the data %>
+        <% chart.add_rows(ClockinTime.metric_chart) %>
+      <% end %>
     </div>
   </div>
 </div>  
-<div id="reports">Your Reports Here</div>  
+<div id="reports">
+  <div class="span-22 metric">
+    <h1><%= icon "wooden-box-label" %> Deliveries</h1>
+    <%#= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+    <% visualization "deliveries_chart", "MotionChart", :width => 800, :height => 600, :html => {:class => "graph_chart"} do |chart| 
+    %>
+      <% chart.string "Sales" %>
+      <% chart.date   "Date" %>
+      <% chart.number "Revenue" %>
+      <% chart.number "Refunds" %>
+
+      <%# Add the data %>
+      <% chart.add_rows(Delivery.metrics) %>
+    <% end %>
+  </div>
+  
+</div>  

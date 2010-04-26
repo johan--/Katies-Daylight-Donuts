@@ -44,7 +44,7 @@ class Delivery < ActiveRecord::Base
   named_scope :previous, lambda { |d| {:conditions => ["id < ?", d.id], :limit => 1, :order => "id DESC"} }
   named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
   named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:store,:line_items, {:line_items, :item}]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:buy_backs,:store,:line_items, {:line_items, :item}]
   # This does not work with postgresql db's for some reason
   named_scope :delivered_this_week, :conditions => {
     :state => "delivered", 
@@ -59,21 +59,24 @@ class Delivery < ActiveRecord::Base
       :include => [{:line_items, :item}]
     }
   }
-  named_scope :printed, :conditions => {:state => "printed"}, :include => [{:line_items, :item}]
+  named_scope :printed, :conditions => {:state => "printed"}, :include => [:buy_backs,{:line_items, :item}]
   named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'",
     :include => [{:line_items, :item}]
   named_scope :unpaid, :conditions => {:paid => false}, :include => [{:line_items, :item}]
   named_scope :paid, :conditions => {:paid => true}, :include => [{:line_items, :item}]
   
-  def self.metric_chart
-    months,counts = [],[]
-    find(:all, :include => [:line_items]).group_by{|d| d.delivery_date.to_date }.map{|month,d| 
-      if d.first.delivery_date.to_date.year == Time.zone.now.year
-        months << month.strftime("%h %Y").upcase
-        counts << (d.map(&:total).sum/100).to_i
-      end
-  }
-  "http://chart.apis.google.com/chart?chxt=Sales&cht=lc&chf=c,ls,0,CCCCCC,0.05,FFFFFF,0.05&chco=5D85BF&chd=t:#{counts.join(',')}&chs=430x100&chl=#{months.uniq.join('|')}"
+  def self.metrics
+    return @metric_payload if defined?(@metric_payload)
+    @metric_payload = []
+    deliveries = printed.by_date(Time.zone.now.at_beginning_of_year, Time.zone.now)
+    deliveries.group_by(&:store).map{ |store, deliveries|
+      deliveries.group_by(&:delivery_date).map{ |date, deliveries|
+        revenue = deliveries.map(&:total).sum
+        refunds = deliveries.map(&:buy_backs).flatten.map(&:total).sum
+        @metric_payload.push([store.name,date.to_date,revenue,refunds])
+      }
+    }
+    @metric_payload
   end
   
   def donut_count
