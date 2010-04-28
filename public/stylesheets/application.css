@@ -36,6 +36,11 @@ p{
   margin: 0.2em 0;
 }
 
+optgroup{
+  font-weight: bold;
+  text-align: left;
+}
+
 .clear {
   clear: both;
   height: 0;

@@ -79,6 +79,14 @@ class Delivery < ActiveRecord::Base
     @metric_payload
   end
   
+  def route_name
+    @route_name ||= store.route.name
+  end
+  
+  def route
+    @route ||= store.route
+  end
+  
   def donut_count
     self.line_items.map{|i| i.quantity if i.donut? }.compact.sum
   end

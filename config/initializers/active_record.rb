@@ -12,4 +12,8 @@ class ActiveRecord::Base
   	to_model.save
   	to_model
   end
+  
+  def self.excluded_on_export(*args)
+    @@exportable = (self.attributes.keys - args.map(&:to_sym))
+  end
 end

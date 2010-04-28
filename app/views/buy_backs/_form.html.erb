@@ -13,7 +13,9 @@
         <tr>
           <td colspan="2">
             <strong><%= f.label :delivery_id %></strong>
-            <%= f.collection_select :delivery_id, Delivery.all, :id, :delivery_option  %>
+            <select id="buy_back_delivery_id" name="buy_back[delivery_id]">
+              <%= option_groups_from_collection_for_select(Route.with_deliveries, :deliveries, :option_name, :id, :delivery_option, :id)  %>
+            </select>
           </td>
         </tr>
         <tr>

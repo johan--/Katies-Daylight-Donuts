@@ -4,6 +4,7 @@
 <ul id="tabs_example_two" class="subsection_tabs">  
     <li class="tab"><a href="#charts">Charts</a></li>  
     <li class="tab"><a href="#reports">Reports</a></li>  
+    <li class="tab"><%= link_to "Exports", exports_dashboards_url %></li>
 </ul>  
 <% end %>
 
@@ -36,6 +37,7 @@
     </div>
   </div>
 </div>  
+
 <div id="reports">
   <div class="span-22 metric">
     <h1><%= icon "wooden-box-label" %> Deliveries</h1>
@@ -51,5 +53,7 @@
       <% chart.add_rows(Delivery.metrics) %>
     <% end %>
   </div>
+  
+  <div id="export"></div>
   
 </div>  

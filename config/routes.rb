@@ -45,7 +45,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :comments
 
-  map.resources :dashboards
+  map.resources :dashboards, :collection => { :exports => :get, :export => :post }
 
   map.resources :home
   map.resources :password_resets
