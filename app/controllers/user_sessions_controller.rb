@@ -15,6 +15,8 @@ class UserSessionsController < ApplicationController
         #else
         #  redirect_to edit_user_path(current_user)
         #end
+      elsif current_user
+        redirect_to edit_user_path(current_user)
       end
     else
       render :action => 'new'
