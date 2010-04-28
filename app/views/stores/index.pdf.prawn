@@ -3,11 +3,9 @@ stripes = ["EBEBEB","FFFFFF"]
 
 data = []
 
-@stores.group_by{|s| s.route }.map do |route, stores|
+Route.find(:all, :include => [:stores]).map do |route|
   pdf.text route.name, :size => 20
-  
-  data << [{:text => route.name, :colspan => 2}]
-  stores.sort_by{|s| s.position }.map do |store|
+  route.stores.sort_by{|s| s.position }.map do |store|
     data << [store.id,store.name]
   end
   pdf.table data, :width => 500, :border_style => :grid, :row_colors => stripes, :headers => ["Store ID", "Store Name"]
