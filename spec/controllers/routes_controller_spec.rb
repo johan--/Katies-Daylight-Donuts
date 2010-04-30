@@ -1,45 +1,44 @@
 require 'spec_helper'
 
 describe RoutesController do
-
-  #Delete these examples and add some real ones
-  it "should use RoutesController" do
-    controller.should be_an_instance_of(RoutesController)
+  before(:each) do
+    @route = Factory.create(:route)
+    login_with_admin
   end
-
 
   describe "GET 'new'" do
     it "should be successful" do
       get 'new'
-      response.should be_success
+      response.should render_template(:new)
     end
   end
 
   describe "GET 'edit'" do
     it "should be successful" do
-      get 'edit'
-      response.should be_success
+      get 'edit', :id => @route.id
+      response.should render_template(:edit)
     end
   end
 
   describe "GET 'destroy'" do
     it "should be successful" do
-      get 'destroy'
-      response.should be_success
+      delete 'destroy', :id => @route.id
+      response.should redirect_to(stores_path)
+      Route.all.include?(@route).should == false
     end
   end
 
-  describe "GET 'update'" do
+  describe "PUT 'update'" do
     it "should be successful" do
-      get 'update'
-      response.should be_success
+      put 'update', :id => @route.id, :route => { :name => "My Other Route" }
+      response.should redirect_to(stores_path)
     end
   end
 
-  describe "GET 'create'" do
+  describe "POST 'create'" do
     it "should be successful" do
-      get 'create'
-      response.should be_success
+      post :create, :route => { :name => "Some Route" }
+      response.should redirect_to(stores_path)
     end
   end
 end

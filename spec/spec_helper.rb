@@ -53,12 +53,12 @@ end
 
 # returns current fake user 
 def current_user 
-  @current_user ||= users(:one)
+  @current_user ||= Factory.create(:user)
 end 
 
 # returns current session mock 
 def user_session 
-  @user_session = mock 
+  @user_session = mock(UserSession)
   @user_session.stubs(:user).returns(current_user) 
   @user_session.stubs(:record).returns(current_user)
   @user_session 
@@ -70,7 +70,9 @@ def login
 end
 
 def login_with_admin
-  current_user.roles << Role.admin unless current_user.admin?
+  def current_user.admin?
+    true
+  end
   login
 end
  

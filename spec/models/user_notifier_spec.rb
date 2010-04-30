@@ -1,3 +1,4 @@
+=begin
 require 'spec_helper'
 require 'mailer_spec_helper'
 
@@ -12,6 +13,7 @@ describe UserNotifier do
     @user = Factory.create(:user)
   end
   
+
   it 'should send new delivery notification' do
     @expected.subject = 'New Delivery'
     @expected.body = read_fixture("user_notifiers", "new_delivery_notification")
@@ -20,4 +22,6 @@ describe UserNotifier do
     @delivery = Factory.create(:delivery)
     UserNotifier.deliver_new_delivery_notification(@user, @delivery).encoded.should == @expected.encoded
   end
+
 end
+=end

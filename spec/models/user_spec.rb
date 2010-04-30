@@ -26,13 +26,13 @@ describe User do
     
     it "should be a system user when employee" do
       user = Factory.create(:user)
-      user.roles << Role.employee
+      user.roles << Factory.create(:role, :name => "employee")
       user.system_user?.should == true
     end
     
     it "should be a system user when admin" do
       user = Factory.create(:user)
-      user.roles << Role.admin
+      user.roles << Factory.create(:role, :name => "admin")
       user.system_user?.should == true
     end
     

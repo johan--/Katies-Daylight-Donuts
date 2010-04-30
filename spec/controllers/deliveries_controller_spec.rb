@@ -31,7 +31,7 @@ describe DeliveriesController do
   
   context " when valid" do
     it "should redirect on success after create" do
-      post :create, :delivery => Factory.attributes_for(:delivery)
+      post :create, :delivery => Factory.build(:delivery).attributes
       response.should redirect_to(delivery_url(Delivery.last))
     end
     

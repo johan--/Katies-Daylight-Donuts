@@ -14,7 +14,8 @@ describe StoresController do
   end
   
   it "show action should render show template" do
-    get :show, :id => stores(:one).id
+    store = Factory.create(:store)
+    get :show, :id => store.id
     response.should render_template(:show)
   end
   
@@ -36,26 +37,30 @@ describe StoresController do
   end
   
   it "edit action should render edit template" do
-    get :edit, :id => stores(:one)
+    store = Factory.create(:store)
+    get :edit, :id => store.id
     response.should render_template(:edit)
   end
   
   it "update action should render edit template when model is invalid" do
+    store = Factory.create(:store)
     Store.any_instance.stubs(:valid?).returns(false)
-    put :update, :id => stores(:one)
+    put :update, :id => store.id
     response.should render_template(:edit)
   end
   
   it "update action should redirect when model is valid" do
+    store = Factory.create(:store)
     Store.any_instance.stubs(:valid?).returns(true)
-    put :update, :id => stores(:one)
+    put :update, :id => store.id, :store => Factory.attributes_for(:store)
     response.should redirect_to(store_url(assigns[:store]))
   end
   
   it "destroy action should destroy model and redirect to index action" do
-    store = stores(:one)
-    delete :destroy, :id => store
+    mock_store = mock(Store)
+    mock_store.expects(:destroy)
+    Store.should_receive(:find).with("420").and_return(mock_store)
+    delete :destroy, :id => "420"
     response.should redirect_to(stores_url)
-    Store.exists?(store.id).should be_false
   end
 end

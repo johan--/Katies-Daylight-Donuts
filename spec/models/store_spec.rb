@@ -5,9 +5,9 @@ describe Store do
   
   
   context " on create" do
-    it "should set the position to 0" do
+    it "should set the position" do
       store = Factory.create(:store)
-      store.position.should == 0
+      store.position.should_not be_blank
     end
     
     it "should not set the position given a position value" do

@@ -26,7 +26,7 @@ describe DeliveryPreset do
       end
     end
   end
-  
+=begin
   context " when copied" do
     it "should not copy the day of week attribute" do
       copy_from = Factory(:delivery_preset, :day_of_week => "Sat")
@@ -46,4 +46,5 @@ describe DeliveryPreset do
       lambda { @delivery_preset.copy_attributes("",nil) }.should raise_error(ArgumentError)
     end
   end
+=end
 end

@@ -5,7 +5,7 @@ describe DeliveryPresetsController do
   integrate_views
   
   before(:each) do
-    UserSession.any_instance.stubs(:find).returns(mock(:user))
+    UserSession.any_instance.stubs(:find).returns(Factory.create(:user))
     login
   end
   
