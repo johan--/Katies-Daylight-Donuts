@@ -110,16 +110,19 @@ class Store < ActiveRecord::Base
 
   def find_or_create_city
     self.city = City.find_or_create_by_name(self.manual_city) unless self.manual_city.blank?
+    true
   end
   
   def get_geocode
     gc = Geokit::Geocoders::YahooGeocoder.geocode "#{address}, #{city}, #{state}"
     self.lat = gc.lat
     self.lng = gc.lng
+    true
   end
   
   def set_position
     return true unless self.position.nil?
     self.position = 0
+    true
   end
 end

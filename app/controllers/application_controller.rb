@@ -13,11 +13,14 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
-  
-  begin
-  rescue ActionController::UnknownAction
-    render_optional_error_file(404)
-  end
+  # Declare exception to handler methods
+  rescue_from ActionController::UnknownAction, :with => :bad_record
+  rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
+  rescue_from NoMethodError, :with => :show_error
+
+
+  def bad_record; render "/errors/404", :status => 404 ; end
+  def show_error(exception); render :text => exception.message; end
 
   protected
   
