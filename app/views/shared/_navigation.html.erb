@@ -16,7 +16,7 @@
     <li class="<%= current "buy_backs" %>"><%= link_to "#{icon("money")} Buy Backs",  buy_backs_path %></li>
     
       <li class="<%= current "deliveries" %>">
-        <%= link_to "#{icon("wooden-box-label")} Deliveries (#{Delivery.pending.count})", pending_deliveries_path %>
+        <%= link_to "#{icon("wooden-box-label")} Deliveries (#{Delivery.by_date.pending.count})", pending_deliveries_path %>
       </li>
     <% elsif @current_user.customer_with_store? %>
       <li class="<%= current "deliveries" %>">
