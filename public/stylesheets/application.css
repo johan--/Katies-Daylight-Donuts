@@ -586,3 +586,15 @@ div.subnav{
   background: #CCCCCC;
   padding: 1em 0 0 0;
 }
+
+div.standout{
+  background: #F3EED1;
+  padding: 1em;
+  margin: 1em 0;
+}
+
+textarea{
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+}

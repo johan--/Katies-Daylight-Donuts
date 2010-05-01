@@ -54,6 +54,17 @@
       <% end %>
     <% end %>
   </table>
+  
+  <div class="standout">
+  <% fields_for @delivery.comments.empty? ? @delivery.comments.new :  @delivery.comments[0] do |comment_form| %>
+    <p><strong>Add Comment</strong><br /><small>Will be displayed at bottom of invoice.</small></p>
+    <p>
+      <%= comment_form.label :body, "Comment: " %><br />
+      <%= comment_form.text_area :body,{:rows => 6, :class => "span-14"} %>
+    </p>
+  <% end %>
+  </div>
+  
   <p><%= f.check_box :print_after_save, :checked => true %> <%= f.label :print_after_save %></p>
   
   <%= image_submit_tag "buttons/default/button-save.png" %>

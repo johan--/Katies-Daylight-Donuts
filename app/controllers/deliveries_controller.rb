@@ -110,6 +110,7 @@ class DeliveriesController < ApplicationController
   def create
     line_items = params[:delivery].has_key?(:line_items) ? params[:delivery].delete(:line_items) : []
     @delivery = Delivery.new(params[:delivery])
+    @delivery.comments.build(params[:comment]) if params[:comment] && !params[:comment][:body].blank?
     line_items.each{ |l| @delivery.line_items.build(l) } unless line_items.empty?
     if @delivery.save
       flash[:notice] = "Successfully created delivery."
@@ -246,7 +247,9 @@ class DeliveriesController < ApplicationController
         delivery.print!
       end
     end
-    prawnto :inline => false, :filename => "tickets-for-#{Time.zone.now.strftime('%m-%d-%Y')}.pdf"
+    filename = "tickets-for-#{Time.zone.now.strftime('%m-%d-%Y')}.pdf"
+    #@collection = Collection.create(:name => filename,:deliveries => @deliveries)
+    prawnto :inline => false, :filename => filename
     render :layout => false
   end
   
