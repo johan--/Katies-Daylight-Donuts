@@ -91,7 +91,7 @@ class DeliveriesController < ApplicationController
      respond_to do |format|
        format.html
        format.pdf{
-         @delivery.print! unless @delivery.printed?
+         @delivery.print!
          @deliveries = Delivery.pending.by_date
          @donut_count = @deliveries.map(&:donut_count).sum
          @roll_count = @deliveries.map(&:roll_count).sum
