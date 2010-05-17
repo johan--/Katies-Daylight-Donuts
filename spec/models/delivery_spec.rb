@@ -58,6 +58,12 @@ describe Delivery do
       @delivery.total.should == 7.50
     end
     
+    it "should return a phone number" do
+      @delivery.store.tray_type = "Black"
+      @delivery.store.phone = "9492945624"
+      @delivery.phone.should == "(Black) - 9492945624"
+    end
+    
     it "should return the customer name" do
       @delivery.customer_name.should == @delivery.store.name
     end
