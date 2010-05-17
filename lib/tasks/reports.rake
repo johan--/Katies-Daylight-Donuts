@@ -1,3 +1,4 @@
+=begin
 require 'fastercsv'
 
 namespace :report do
@@ -26,3 +27,4 @@ namespace :report do
     UserNotifier.deliver_message(["klynnknoll@hotmail.com","timmy.matheson@gmail.com"], "", time_period, File.read((filename+".csv")))
   end
 end
+=end
