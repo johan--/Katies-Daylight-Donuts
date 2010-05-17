@@ -70,6 +70,10 @@ class Delivery < ActiveRecord::Base
 
   accepts_nested_attributes_for :comments, :line_items
   
+  def phone
+    @phone ||= "(#{self.store.tray_type}) - #{self.store.phone}"
+  end
+  
   def self.metrics
     return @metric_payload if defined?(@metric_payload)
     @metric_payload = []
@@ -161,9 +165,10 @@ class Delivery < ActiveRecord::Base
   
   # Adds a single item to the delivery
   def add_item(item, quantity)
-    raise Exception, "Quantity required!" unless quantity.to_i > 0
+    quantity = quantity.to_i
+    raise Exception, "Quantity required!" unless quantity > 0
     options = {
-      :quantity => quantity.to_i,
+      :quantity => quantity,
       :item => item,
       :price => item.price.to_f
     }
