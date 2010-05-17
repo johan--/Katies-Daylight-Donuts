@@ -1,0 +1,4 @@
+<%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: middle;"), @current_user.system_user? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %>
+<%= link_to(icon("eye"), delivery_path(delivery)) %>
+<%= link_to(icon("pencil-small"), edit_delivery_path(delivery)) %>
+<%= link_to(icon("cross-circle"), delivery_path(delivery), :method => :delete, :confirm => "Are you sure?") %>

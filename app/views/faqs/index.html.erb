@@ -19,6 +19,8 @@
     <%= image_tag "titles/title-deliveries.gif" %>
     <ol class="help">
       <li><%= link_to "How can I change a Delivery?", "#how-can-i-change-a-scheduled-delivery" %></li>
+      <li><%= link_to "How can I revert a ticket generation?", "#collections-rolling-back" %></li>
+      <li><%= link_to "How can I reprint a ticket generation?", "#collections-reprinting" %></li>
       <li><%= link_to "How can I add Comments?", "" %></li>
       <li><%= link_to "How can I add a Buy Back?", "" %></li>
       <li><%= link_to "How can I print a single Delivery?", "" %></li>
@@ -34,17 +36,29 @@
   
 <hr />
 
-<div style="margin-left: 1.5em;">
+<div class="help">
   <h1 id="#how-can-i-change-my-password">
     How can I change my password?
   </h1>
-  <p>Click on the '<%= link_to 'My Account', user_path(@current_user) %>' link, click the 'change password' link and enter and re-enter your new password and save.</p>
+  <p>Click on the '<%= link_to_facebox 'My Account', edit_user_path(@current_user) %>' link, click the 'change password' link and enter and re-enter your new password and save.</p>
 </div>
 
-<div style="margin-left: 1.5em;">
+<div class="help">
   <h1 id="#how-can-i-change-a-scheduled-delivery">
     How can I change a scheduled delivery?
   </h1>
   <p>Click on the '<%= link_to 'My Deliveries', deliveries_path %>' tab and click the pencil icon next to the delivery you would like to change. <strong>NOTE:</strong> You can <strong>NOT</strong> modify an order once we begin filling it.</p>
 </div>
+
+<div class="help">
+  <h1 id="collections">Collections</h1>
+  <p>Collections help you maintain your tickets. With a collection you can reprint a collection of tickets or you can roll back a collection of tickets.</p>
+  
+  <p><strong id="collections-reprinting">Reprinting a Collection</strong><br />Click on the deliveries tab and click on the collections sub tab.
+    Locate the collection you wish to reprint and click the 'reprint' link.</p>
+    
+  <p><strong id="collections-rolling-back">Rolling Back a Collection</strong><br />Click on the deliveries tab and click on the collections sub tab.
+    Locate the collection you wish to rollback and click the 'rollback' link.</p>
+</div>
+
 </div>

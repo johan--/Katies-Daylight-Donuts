@@ -1,0 +1,30 @@
+%div{:class => "light-border-box"}
+  %p
+    Check the checkbox by each delivery then select an action and save.</p>
+  %input{:type => "hidden", :name => "print", :id => "print", :value => "false"}
+    %label{:for => "message"}
+      %strong>
+        Action:
+  %select{:id => "message", :name => "message"}
+    - unless params[:action] == "delivered"
+      %option{:value => "deliver"}
+        Mark Delivered
+    - unless params[:action] == "pending"
+      %option{:value => "undeliver"}
+        Mark Pending
+    - unless params[:action] == "canceled"
+      %option{:value => "cancel"}
+        Mark Canceled
+    - unless params[:action] == "printed"
+      %option{:value => "print"}
+        Mark Printed
+    %option{:value => "undeliver"}
+      Mark Pending (like new)
+  &nbsp;
+  = link_to_function "Select All" do |page|
+    page.select('.checkbox').each{|element| element.checked = true }
+  &nbsp;
+  = link_to_function "Select None" do |page|
+    page.select('.checkbox').each{|element| element.checked = false }
+  = hidden_field_tag :print
+  = image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;", :class => "deliveries_form_button"

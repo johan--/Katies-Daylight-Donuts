@@ -1,0 +1,41 @@
+- title "Collections"
+
+- content_for :hints do
+  %h1{:class => "hint"}
+    Collections
+  %p
+    Collections help you maintain deliveries. Each time you generate tickets or 'deliveries' (same thing) a collection is created, and each delivery now belongs to that collection. At any time you can come to this page and either reprint the collection or roll it back. 
+    %br
+    %a{:href => "/faqs#collections", :target => "_blank"}
+      See more about rolling back collections
+
+%table{:class => "span-14 stripe"}
+  %tr
+    %th
+      Name
+    %th
+      Created
+    %th
+      Action 
+  - @collections.each do |collection|
+    %tr{:id => "collection_#{collection.id}"}
+      %td
+        = link_to h(collection.name), print_todays_admin_deliveries_path(:format => :pdf, :print => false, :delivery_ids => collection.delivery_ids, :method => :post)
+      %td
+        = collection.created_at
+      %td
+        = image_tag "circle-spinner.gif", :style => "display: none;", :id => "loader_for_#{collection.id}"
+        = link_to_remote "rollback", :url => admin_collection_path(collection), :confirm => "Are you sure you want to do that? There is no turning back!", :loading => %($('loader_for_#{collection.id}').show()), :complete => %($('loader_for_#{collection.id}').hide()), :method => :delete
+
+- content_for :sidebar do
+  %h2
+    Collections
+  %p
+    Each time a collection of deliveries is printed a collection will be created and displayed here. You can rollback the collection by clicking on the 'rollback' link. 
+    %strong
+      Rolling Back
+    will reverse all changes to the system by generating the tickets.
+    %strong
+      All Deliveries generated will be destroyed.
+    
+  

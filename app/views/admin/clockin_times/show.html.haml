@@ -1,0 +1,21 @@
+%div{:class => "login"}
+  %center
+    %h1 
+      =@clockin_time.employee.fullname
+    %h2
+      Confirm you want to clockout
+  
+    %form{:action => "/admin/clockin_times/#{@clockin_time.id}"}
+      %input{:type => "hidden", :name => "_method", :value => "delete"}
+      %div
+        %label 
+          Enter the day of the month you were born.
+        %br
+        %input{:id => "employee_clockin_id", :name => "employee_clockin_id", :size => 4, :class => "large", :autocomplete => "OFF"}
+      %div{:style => "clear: both"}
+        %input{:type => "submit", :value => "Finished"}
+      
+      %br
+      Nevermind, 
+      %a{:href => "/admin/timeclock"}
+        send me back to the clock in screen.

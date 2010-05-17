@@ -1,0 +1,44 @@
+- form_remote_for @user, :success => %(facebox.close()) do |f|
+  = f.error_messages
+
+  %p
+    = f.label :username, nil, {:class => "with-icon"}
+    %br
+    = icon("user-silhouette")
+    = f.text_field :username, :readonly => true
+  
+  %p
+    = f.label :email, nil, {:class => "with-icon"}
+    %br
+    = icon "mail"
+    = f.text_field :email
+  
+  %p
+    = f.label :show_hints, "Turn on Hints?", {:class => "with-icon"}
+    %br
+    = icon "information-balloon"
+    = f.select :show_hints, [["Yes",true],["No",false]]
+  
+  %p
+    = f.label :password, nil, {:class => "with-icon"}
+    %br
+    = icon "lock"
+    = f.password_field :password
+
+  %p
+    = f.label :password_confirmation, nil, {:class => "with-icon"}
+    %br
+    = icon "lock"
+    = f.password_field :password_confirmation
+
+  
+  %p
+    = f.label :time_zone, nil, {:class => "with-icon"}
+    %br
+    = icon "clock-frame"
+    = f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones
+
+  %p
+    = image_submit_tag "buttons/default/button-save.png", :style => "vertical-align: middle;"
+    &nbsp;
+    = image_tag("buttons/default/button-cancel.png", :style => "vertical-align: middle;", :onclick => %(facebox.close()))

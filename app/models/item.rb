@@ -11,6 +11,10 @@ class Item < ActiveRecord::Base
   named_scope :available, :conditions => {:available => true}
   named_scope :consumable, :conditions => ["item_type != ?",TYPES.last]
 
+  def discounted?
+    name =~ /discount/i
+  end
+
   def consumable?
     self.item_type != TYPES.last
   end

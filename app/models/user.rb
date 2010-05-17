@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   end
   
   def system_user?
-    (admin? || super? || employee?)
+    @system_user ||= (admin? || super? || employee?)
   end
   
   def super?
@@ -71,15 +71,15 @@ class User < ActiveRecord::Base
   end
   
   def admin?
-    has_role?(:admin)
+    @admin ||= has_role?(:admin)
   end
   
   def employee?
-    has_role?(:employee)
+    @employee ||= has_role?(:employee)
   end
   
   def customer?
-    has_role?(:customer)
+    @customer ||= has_role?(:customer)
   end
   
   def customer_with_store?
@@ -107,6 +107,27 @@ class User < ActiveRecord::Base
   
   def store?
     user_type == "Store"
+  end
+  
+  def store_name
+    self.store.nil? ? "n/a" : store.name
+  end
+
+  def self.find_and_return_json(method, options = {})
+    result = Hash.new
+    result[:totalCount] = self.count
+    result[:users] = []
+    find(method.to_sym, options).map do |user|
+      result[:users] << {
+        :id => "<a href='/admin/users/#{user.to_param}'>#{user.id}</a>",
+        :created_at => grid_date(user.created_at),
+        :store_name => "<a href='/admin/stores/#{user.store.to_param}'>#{user.store_name}</a>",
+        :username => "<a href='/admin/users/#{user.id}'>#{user.username}</a>",
+        :email => "<a href='mailto:#{user.email}'>#{user.email}</a>",
+        :tools => "Coming Soon"
+      }
+    end
+    result.to_json
   end
   
   private

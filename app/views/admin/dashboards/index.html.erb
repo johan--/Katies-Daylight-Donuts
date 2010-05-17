@@ -1,0 +1,89 @@
+<% title "Dashboard" %>
+
+<% content_for :subnav do %>
+<ul id="subnavigation" class="subsection_tabs">  
+    <li class="tab"><a href="#charts">Charts</a></li>  
+    <li class="tab"><a href="#reports">Reports</a></li>  
+    <li class="tab"><a href="#exports">Exports</a></li>
+</ul>  
+<% end %>
+
+
+<div id="charts">
+  <div class="span-24">  
+    <div class="span-11 metric">
+      <h1><%= icon "flask" %> Items</h1>
+      <% visualization "items_chart", "ColumnChart", :width => 400, :height => 200, :is3d => true,  :html => {:class => "graph_chart"} do |chart| 
+      %>
+        <% chart.string "Item" %>
+        <% chart.number "# Sold" %>
+        <% chart.number "Revenue" %>
+
+        <%# Add the data %>
+        <% chart.add_rows(Item.metrics) %>
+      <% end %>
+    </div>
+
+    <div class="span-11 metric">
+      <h1><%= icon "wrench" %> Labor</h1>
+      <% visualization "labor_chart", "ColumnChart", :width => 400, :height => 200, :html => {:class => "graph_chart"} do |chart| 
+      %>
+        <% chart.string "Employee" %>
+        <% chart.number "Total Hours" %>
+
+        <%# Add the data %>
+        <% chart.add_rows(ClockinTime.metric_chart) %>
+      <% end %>
+    </div>
+  </div>
+</div>  
+
+<div id="reports" style="display: none;">
+  <div class="span-22 metric">
+    <h1><%= icon "wooden-box-label" %> Deliveries</h1>
+    <%#= image_tag Delivery.metric_chart, :style => "margin: 0.2em 0 0 0" %>
+    <% visualization "deliveries_chart", "MotionChart", :width => 800, :height => 600, :html => {:class => "graph_chart"} do |chart| 
+    %>
+      <% chart.string "Sales" %>
+      <% chart.date   "Date" %>
+      <% chart.number "Revenue" %>
+      <% chart.number "Refunds" %>
+
+      <%# Add the data %>
+      <% chart.add_rows(Delivery.metrics) %>
+    <% end %>
+  </div>  
+</div>  
+
+<div id="exports" style="display: none;">
+  <% form_for :exports, :url => export_admin_dashboards_url do %>
+    <div class="span-22 metric" style="text-align: right;">
+      <h1>Exports</h1>
+      <p>Check the columns you would like to include in your export.</p> <h1>
+      <select name="format" id="format">
+        <option value="json">JSON</option>
+        <option value="xml">XML</option>
+      </select>
+      <%= submit_tag :export %></h1>
+    </div>
+  <% @models.each_with_index do |klass, index| %>
+    <% fields_for klass.new do |f| %>
+    <div class="span-11">
+    <fieldset>
+      <legend><%= klass.new.class.to_s.pluralize %></legend>
+      <% klass.new.attributes.each do |name, value| %>
+        <p><%= f.check_box name.to_sym %> <%= f.label name.to_sym,"#{name.titleize}" %></p>
+      <% end %>
+    </fieldset>
+    </div>
+      <% if (index+1).even? %>
+        <div class="span-24">&nbsp;</div>
+      <% end %>
+    <% end %>
+  <% end %>
+    <div class="span-22 metric" style="text-align: right;">
+      <p>Check the columns you would like to include in your export.</p>
+      <h1><%= submit_tag :export %></h1>
+    </div>
+  <% end %>
+</div>

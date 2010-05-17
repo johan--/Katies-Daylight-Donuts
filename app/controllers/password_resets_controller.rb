@@ -1,13 +1,15 @@
 class PasswordResetsController < ApplicationController  
   before_filter :find_perishable_token, :only => [:edit, :update]
   
+  layout "external"
+  
   def create
-    if @user = User.find_by_email(params[:email])
+    if !params[:email].blank? && @user = User.find_by_email(params[:email])
       @user.reset_perishable_token! && UserNotifier.deliver_password(@user)
-      flash[:notice] = "Please check your email for instructions on resetting your password."
+      flash[:notice] = "Please check your email for instructions on resetting your password." 
       redirect_to login_url
     else
-      flash[:warning] = "Could not find anyone with that email."
+      flash[:warning] = "Sorry we didn't recognize that email address."
       render :action => "index"
     end
   end

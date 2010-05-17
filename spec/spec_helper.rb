@@ -4,6 +4,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path(File.join(File.dirname(__FILE__),'..','config','environment'))
 require 'spec/autorun'
 require 'spec/rails'
+require "authlogic/test_case"
 # Uncomment the next line to use webrat's matchers
 #require 'webrat/integrations/rspec-rails'
 
@@ -17,6 +18,7 @@ Spec::Runner.configure do |config|
   config.use_transactional_fixtures = true
   config.use_instantiated_fixtures  = false
   config.fixture_path = "spec/fixtures"
+  
 
   # == Fixtures
   #
@@ -66,17 +68,23 @@ end
 
 # logges me in 
 def login 
-  UserSession.stubs(:find).returns( user_session ) 
+  @user = Factory(:user)
+  activate_authlogic
 end
 
 def login_with_admin
-  def current_user.admin?
-    true
-  end
-  login
+  @user = Factory(:user)
+  @user.roles << Role.admin
+  activate_authlogic
 end
  
 # logges me out 
 def logout 
   @user_session = nil 
+end
+
+def admin_user(attributes = {})
+  user = Factory.create(:user, attributes)
+  user.roles << Role.admin
+  user
 end

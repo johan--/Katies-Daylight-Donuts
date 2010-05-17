@@ -1,0 +1,32 @@
+%div{:class => "login"}
+  %center
+    %h2
+      = Time.zone.now.strftime("%h %d, %Y - ")
+      %span{:id => "current_time"}
+  - form_remote_for [:admin, @clockin_time] do |f|
+    %p{:id => 'message'}
+      &nbsp;
+    %p
+      %label Enter your employee clock in id.
+      %br
+      = f.text_field :clockin_id, :class => "large", :autocomplete => "OFF"
+      = image_submit_tag "buttons/default/button-clockin.png"
+    %strong{ :class => "undelined" }
+      People currently clocked in.
+    %ul{:id => "employees"}
+      - @clockin_times.each do |clockin_time|
+        %li
+          = clockin_time.employee.fullname
+          %span
+            Since: 
+            =clockin_time.starts_at.strftime("%I:%M:%S %p") 
+            %a{:href => "/admin/timeclock/clockout/#{clockin_time.employee.id}"}
+              clockout
+    
+    %p{:style => "margin-top: 1em"}
+      Nevermind, 
+      %a{:href => "/admin/deliveries"}
+        Take me to the app
+
+:javascript
+  document.observe("dom:loaded", timeTicker())

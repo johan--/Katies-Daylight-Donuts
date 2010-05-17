@@ -20,10 +20,12 @@ class BuyBack < ActiveRecord::Base
   end
   
   aasm_event :void do
-    transitions :from => :paid, :to => :pending
+    transitions :from => :paid, :to => :voided
   end
   
   before_create :calculate_total
+  
+  accepts_nested_attributes_for :line_items
   
   def copy_delivery_line_items
     return if self.delivery.nil? || self.delivery.line_items.empty?

@@ -9,13 +9,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100422150415) do
+ActiveRecord::Schema.define(:version => 20100516050826) do
 
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax",                :limit => 10
-    t.integer  "price",              :limit => 10
+    t.decimal  "tax"
+    t.decimal  "price"
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -38,6 +38,12 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.datetime "updated_at"
   end
 
+  create_table "collections", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.string   "commentable_type"
@@ -55,14 +61,6 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.string   "time_zone",  :default => "Central Time (US & Canada)"
   end
 
-  create_table "customers", :force => true do |t|
-    t.string   "name"
-    t.string   "website"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "email"
-  end
-
   create_table "deliveries", :force => true do |t|
     t.boolean  "delivered"
     t.datetime "created_at"
@@ -75,7 +73,11 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.integer  "store_id"
     t.boolean  "locked"
     t.boolean  "paid",          :default => false
+    t.integer  "collection_id"
   end
+
+  add_index "deliveries", ["collection_id"], :name => "index_deliveries_on_collection_id"
+  add_index "deliveries", ["store_id"], :name => "index_deliveries_on_store_id"
 
   create_table "deliveries_items", :id => false, :force => true do |t|
     t.integer "delivery_id"
@@ -114,7 +116,7 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.string   "item_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "price",             :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price",                                           :default => 0.0
     t.boolean  "available",                                       :default => true
     t.integer  "number_per_screen",                               :default => 25
     t.decimal  "weight",            :precision => 8, :scale => 2, :default => 0.0
@@ -139,12 +141,13 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.string "name"
   end
 
-  create_table "roles_users", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "role_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "roles_users", :id => false, :force => true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
   end
+
+  add_index "roles_users", ["role_id"], :name => "index_roles_users_on_role_id"
+  add_index "roles_users", ["user_id"], :name => "index_roles_users_on_user_id"
 
   create_table "routes", :force => true do |t|
     t.string   "name"
@@ -198,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.integer  "city_id"
     t.integer  "position"
     t.integer  "route_id"
+    t.text     "notes"
   end
 
   add_index "stores", ["position"], :name => "index_stores_on_position"
@@ -219,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20100422150415) do
     t.boolean  "show_hints",                        :default => true
     t.integer  "facebook_uid",         :limit => 8
     t.string   "facebook_session_key"
+    t.boolean  "has_special_pricing"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

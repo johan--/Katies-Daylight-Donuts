@@ -1,0 +1,4 @@
+<%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: middle;"), admin_delivery_path(delivery, :format => :pdf) %>
+<%= link_to(icon("eye"), admin_delivery_path(delivery)) %>
+<%= link_to(icon("pencil-small"), edit_admin_delivery_path(delivery)) %>
+<%= link_to(icon("cross-circle"), admin_delivery_path(delivery), :method => :delete, :confirm => "Are you sure?") %>

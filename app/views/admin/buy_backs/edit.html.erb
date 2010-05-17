@@ -1,0 +1,8 @@
+<% title "Edit Buy Back" %>
+
+<%= render :partial => 'form' %>
+
+<p>
+  <%= link_to icon("eye",:alt => "Show", :title => "Show"), admin_buy_back_path(@buy_back) %> |
+  <%= link_to "View All", admin_buy_backs_path %>
+</p>

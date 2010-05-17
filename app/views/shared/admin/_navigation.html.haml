@@ -1,0 +1,20 @@
+%ul{:id => "links", :class => "span-24"}
+  - if current_user
+    %li{:class => current("dashboards") }=link_to "#{icon("dashboard")} Dashboard", admin_dashboards_path
+      
+    %li{:class => current("schedules") }=link_to "#{icon("calendar")} Schedule", admin_schedules_path
+      
+    %li{:class => current("users") }=link_to "#{icon("users")} Users", admin_users_path
+    
+    %li{:class => current("employees") }=link_to "#{icon("user-business")} Employees", admin_employees_path
+    
+    %li{:class => current("items") }=link_to "#{icon("flask")} Items", admin_items_path
+    
+    %li{:class => current("stores") }=link_to "#{icon("store")} Stores ( #{Store.count} )",  admin_stores_path
+    
+    /%li{:class => current("buy_backs") }=link_to "#{icon("money")} Buy Backs", admin_buy_backs_path
+  
+    %li{:class => current("deliveries") }=link_to "#{icon("wooden-box-label")} Deliveries (#{Delivery.by_date.pending.count})", admin_deliveries_path
+  - else
+    %li{:class => current("user_sessions") }=link_to "Login", login_url
+  

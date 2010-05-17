@@ -1,0 +1,39 @@
+<% form_for [:admin, @delivery_preset] do |f| %>
+  <fieldset>
+  <%= f.error_messages %>
+  <% if @delivery_preset.store %>
+  <p>
+    <strong><%= link_to h(@delivery_preset.store.display_name), admin_store_path(@delivery_preset.store) %></strong>
+  </p>
+  <% end %>
+  <%= f.label :closed %> <%= f.check_box :closed %>
+  <p><%= icon("calendar", :style => "vertical-align: bottom;") %><strong><%= @delivery_preset.day_of_week.titleize if !@delivery_preset.day_of_week.nil? %></strong></p>
+  <table id="line_items">
+    <tr>
+      <th>Item</th>
+      <th>Quantity <small><%= link_to_function "clear all", %($$('input.quantity').each(function(e){ e.value = 0 })) %></small></th>
+      <th>&nbsp;</th>
+      <th>&nbsp;</th>
+    </tr>
+    <%= render :partial => "admin/delivery_presets/line_item", :collection => @delivery_preset.line_items %>
+    <% (Item.available - @delivery_preset.items).each do |item| %>
+      <%= render :partial => "admin/delivery_presets/line_item", :object => @delivery_preset.line_items.build(:item => item) %>
+    <% end %>
+  </table>
+  
+  <p><%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to image_tag("buttons/default/button-cancel.png"), @delivery_preset.store %></p>
+</fieldset>
+<% end %>
+
+<% content_for :sidebar do %>
+<% if @next_delivery_preset %>
+<p>Select a day of the week to copy from.</p>
+  <% form_tag :action => "copy", :controller => "admin/delivery_presets" do %>
+  <fieldset>
+    <%= select_tag :id, (["<option value='#{@next_delivery_preset.id}'>#{@next_delivery_preset.day_of_week.titleize}</option>"] | @delivery_preset.store.delivery_presets.sort_by(&:position).collect{|dp| "<option value='#{dp.id}'>#{dp.day_of_week.titleize}</option>" if(dp != @delivery_preset && dp.day_of_week.downcase != @delivery_preset.day_of_week.next_day_of_week) }.compact) if @delivery_preset.store %> 
+    <%= hidden_field_tag :copy_from_id, @delivery_preset.id %>
+    <%= image_submit_tag "buttons/default/button-copy.png" %>
+    </fieldset>
+  <% end %>
+<% end %>
+<% end %>

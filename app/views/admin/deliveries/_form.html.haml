@@ -1,0 +1,90 @@
+- form_for [:admin, @delivery] do |f|
+  = f.error_messages
+  %fieldset
+  %p
+    = f.label :delivery_date
+    %br
+    = f.calendar_date_select :delivery_date, :onclick => %(enableCalendar()), :year_range => (Time.now..3.years.from_now), :value => Time.now.strftime("%B %d, %Y %I:%m %p")
+  
+  - if @current_user.super?
+  %p
+    = f.label :store_id
+    %br
+  - if Store.count > 0
+    = f.collection_select :store_id, Store.all_by_position, :id, :display_name
+      or type it 
+    = f.text_field :store_name, :size => 15
+  - else
+    = f.hidden_field :store_id, :value => @current_user.store.id
+  
+  - if @current_user.super?
+    - if Employee.drivers.size > 0
+      %p
+        = f.label :employee_id, "Driver"
+        %br
+        = f.collection_select :employee_id, Employee.drivers, :id, :fullname
+  - else
+    = f.hidden_field :employee_id, :value => Employee.drivers.first.id unless Employee.drivers.empty?
+    %br
+  
+  %table{:style => "width: 100%;", :id => "line_items"}
+    %tr
+      %th
+        Name
+      %th
+        Type
+      %th
+        Quantity 
+        %small
+          = link_to_function "clear all", %($$('input.quantity').each(function(e){ e.value = 0 }))
+      %th
+        Price
+      %th
+        &nbsp;
+        
+    - Item.available.each do |item|
+      - if line_item = @delivery.line_items.detect{|li| li.item == item}
+        = render :partial => "deliveries/line_item", :object => line_item
+      - else
+        = render :partial => "deliveries/line_item", :object => @delivery.line_items.build(:quantity => 0, :item => item)
+  
+  %div{:class => "standout"}
+  - fields_for @delivery.comments.empty? ? @delivery.comments.new :  @delivery.comments[0], "delivery[comments][]" do |comment_form|
+    %p
+      %strong
+        Add Comment
+        %br
+        %small
+          Will be displayed at bottom of invoice.
+    %p
+      = comment_form.label :body, "Comment: "
+      %br
+      = comment_form.text_area :body,{:rows => 6, :class => "span-12"}
+  
+  
+  %p
+    = f.check_box :print_after_save, :checked => true
+    = f.label :print_after_save
+  
+  = image_submit_tag "buttons/default/button-save.png"
+  = link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back())
+
+- content_for :sidebar do
+  =#delivery_action_link(@delivery, true)
+
+  = observe_field :delivery_store_id, :url => { :controller => "stores", :action => "presets", :format => :js}, :with => 'id'
+
+
+%div{:id => "no_drivers_alert", :style => "display: none;"}
+  Please assign atleast one 
+  = link_to 'Employee', admin_employees_path
+  as a driver first. Then come back and create the delivery.
+
+%a{:id => "no_drivers_alert_link", :href => "#no_drivers_alert", :rel => "ibox&amp;width=200&amp;height=80" }
+  &nbsp;
+
+
+:javascript
+  document.observe("dom:loaded", function() {
+    $('no_drivers_alert_link').onclick();
+  });

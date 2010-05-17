@@ -1,0 +1,13 @@
+<% title "Edit Item" %>
+
+<%= render :partial => 'form' %>
+
+<p>
+  <%= link_to icon("eye",:alt => "Show", :title => "Show"), [:admin,@item] %> |
+  <%= link_to "View All", admin_items_path %>
+</p>
+
+<% content_for :sidebar do %>
+  <h1 id="item_title_label"><%= @item.name %></h1>
+  <p>Price: <span id="item_price_label"><%= number_to_currency @item.price %></span></p>
+<% end %>

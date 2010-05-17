@@ -16,4 +16,8 @@ class ActiveRecord::Base
   def self.excluded_on_export(*args)
     @@exportable = (self.attributes.keys - args.map(&:to_sym))
   end
+  
+  def self.grid_date(date)
+    date.strftime("%m/%d %I:%M%p").gsub(/(AM|PM)$/){ |match| match.downcase }
+  end
 end

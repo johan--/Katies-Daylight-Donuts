@@ -1,0 +1,26 @@
+<% fields_for "buy_back[line_items_attributes][]", line_item, :index => nil do |builder| %>
+  <% if line_item.item.nil? %>
+      <tr>
+        <td style="width: 100px;"><%= builder.collection_select :item_id, Item.all, :id, :name %></td>
+        <td>&nbsp;</td>
+
+        <td style="width: 100px;" align="right"><%= builder.text_field :quantity, :value => line_item.quantity, :value => 12, :size => 5 %></td>
+        <td align="right" style="text-align: right; width: 10">
+          <%= builder.text_field :price, :value => 0.00, :size => 10, :class => "price" if @current_user.super?  %>
+        </td>
+        <td>&nbsp;</td>
+      </tr>    
+  <% else %>
+    <tr>
+      <td><strong><%= line_item.item.name %></strong></td>
+      <td><strong><%= line_item.item.item_type.titleize if @current_user.super?  %></strong></td>
+      <td align="right"><%= builder.text_field :quantity, :value => line_item.quantity, :size => 5, :class => "quantity", :id => "line_item_quantity_field_#{line_item.object_id}" %> Units. <%= link_to_function "<small>none</small>", %($('line_item_quantity_field_#{line_item.object_id}').value = 0) %></td>
+      <td align="right" style="text-align: right;">
+        <%= builder.text_field :price, :value => line_item.item.price, :size => 10, :class => "price", :readonly => !@current_user.super?  %>
+        <%= builder.hidden_field :item_id, :value => line_item.item.id %>
+      </td>
+      <td><%= link_to(icon("pencil-small"), edit_admin_item_path(line_item.item)) %></td>
+
+    </tr>
+  <% end %>
+<% end %>

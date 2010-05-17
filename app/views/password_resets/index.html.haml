@@ -1,0 +1,29 @@
+- title "Reset your password" 
+
+%div{:class => "login"}
+  = image_tag "logo-small.png"
+  %form{:url => "/password/reset", :id => "login_form", :method => :post}
+    %legend
+      - if flash[:warning]
+        %p{:class => "warning"}
+          = icon("cross-button")
+          = flash[:warning]
+      %p
+        %strong
+          Forget your password? Can't sign in?
+        %br
+        Enter your email address and we'll send you reset instructions.
+      %br
+    %p
+      %label{:class => "standout"}
+        Enter your email address
+      %br
+      = text_field_tag :email, {}, {:class => "large"}
+
+    %p
+      = submit_tag "Send reset instructions"
+      = hidden_field_tag :authenticity_token, form_authenticity_token
+    %br
+    Nevermind, 
+    %a{:href => "/login"}
+      send me back to the sign in screen.

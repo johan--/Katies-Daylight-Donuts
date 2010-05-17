@@ -1,1 +1,1 @@
-require 'authlogic_facebook_connect'
+#require 'authlogic_facebook_connect'

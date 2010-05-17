@@ -103,7 +103,7 @@ ul.subsection_tabs li.tab a:hover{
   color:#666
 }
 
-ul.subsection_tabs li.tab a.active{
+ul.subsection_tabs li.tab a.current{
   background-color:#fff
 }
 

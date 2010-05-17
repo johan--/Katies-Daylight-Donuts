@@ -32,7 +32,7 @@ describe Schedule do
     it "should calculate and set the work_date" do
       time = Time.zone.now
       Schedule.create(:employee => @employee, 
-        :starts_at => time, :ends_at => (time+2.hours)).work_date.should be_close(time, 1.hour)
+        :starts_at => time, :ends_at => (time+2.hours)).work_date.should be_close(time, 1.day)
     end
   end
   

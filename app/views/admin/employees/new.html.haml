@@ -1,0 +1,19 @@
+- title "New Employee"
+
+= render :partial => 'form'
+
+%p
+  = link_to "Back to List", admin_employees_path
+
+  - content_for :sidebar do
+    %h1
+      New Employee
+    %ul
+      %li
+        %strong Positions
+      - Position.all.each do |position|
+        %li 
+          = position.name      
+      %li
+        = link_to "Add Position", new_admin_position_path
+

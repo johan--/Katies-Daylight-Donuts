@@ -1,9 +1,9 @@
-# Settings specified here will take precedence over those in config/environment.rb
+# Gems
+config.gem "rspec", :lib => false, :version => "= 1.3.0"
+config.gem "rspec-rails", :lib => false , :version => "= 1.3.2"
+config.gem "carlosbrando-remarkable", :lib => "remarkable", :source => "http://gems.github.com"
+config.gem "factory_girl", :lib => "factory_girl", :version => "= 1.2.3"
 
-# The test environment is used exclusively to run your application's
-# test suite.  You never need to work with it otherwise.  Remember that
-# your test database is "scratch space" for the test suite and is wiped
-# and recreated between test runs.  Don't rely on the data there!
 config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.
@@ -13,11 +13,6 @@ config.whiny_nils = true
 config.action_controller.consider_all_requests_local = true
 config.action_controller.perform_caching             = false
 config.action_view.cache_template_loading            = true
-
-
-# Gems
-config.gem "factory_girl", :lib => false, :source => "http://gemcutter.com"
-config.gem "cucumber", :lib => false, :source => "http://gems.github.com", :version => "0.6.4"
 
 # Disable request forgery protection in test environment
 config.action_controller.allow_forgery_protection    = false
@@ -33,4 +28,3 @@ config.time_zone = "Central Time (US & Canada)"
 # This is necessary if your schema can't be completely dumped by the schema dumper,
 # like if you have constraints or database-specific column types
 # config.active_record.schema_format = :sql
-require 'factory_girl'

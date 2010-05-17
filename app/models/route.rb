@@ -6,7 +6,7 @@ class Route < ActiveRecord::Base
   validates_presence_of :name
   
   def self.with_deliveries
-    all.map{|r| r unless r.deliveries.empty? }.compact
+    find(:all, :include => [:deliveries, :stores]).map{|r| r unless r.deliveries.empty? }.compact
   end
   
   def option_name

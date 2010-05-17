@@ -28,6 +28,7 @@ class Employee < ActiveRecord::Base
   has_many :schedules
   
   named_scope :drivers, :conditions => {:positions => "in (#{Position.driver.id})"}
+  named_scope :clocked_in, :conditions => {:state => "clocked_in"}
   
   # Finds or Creates a new employee with a driving position
   def self.default

@@ -1,0 +1,3 @@
+<p>
+  <%= check_box_tag "delivery_ids[]", delivery.id, {},{:class => "checkbox", :style => "text-align: top"} %>&nbsp;&nbsp;<%= link_to "##{delivery.id}", admin_delivery_path(delivery) %>
+</p>

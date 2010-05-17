@@ -1,0 +1,16 @@
+<% title "Delivery Preset" %>
+
+<p>
+  <strong>Store:</strong>
+  <%=h @delivery_preset.store_id %>
+</p>
+<p>
+  <strong>Day Of Week:</strong>
+  <%=h @delivery_preset.day_of_week.titleize if @delivery_preset.day_of_week %>
+</p>
+
+<p>
+  <%= link_to "Edit", edit_admin_delivery_preset_path(@delivery_preset) %> |
+  <%= link_to "Destroy", admin_delivery_preset_path(@delivery_preset), :confirm => 'Are you sure?', :method => :delete %> |
+  <%= link_to "View All", admin_delivery_presets_path %>
+</p>

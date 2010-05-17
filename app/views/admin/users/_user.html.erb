@@ -1,0 +1,6 @@
+<tr onMouseOver="$('actions_for_<%= user.object_id %>').show();" onMouseOut="$('actions_for_<%= user.object_id %>').hide();">
+  <td><%= link_to h(user.username), admin_user_path(user) %></td>
+  <td><%= mail_to h(user.email), h(user.email) %></td>
+  <td><%= user.roles.map(&:name).map(&:titleize).join(", ") %></td>
+  <td><span style="display: none;" id="actions_for_<%= user.object_id %>"><%= link_to icon("pencil-small"), edit_admin_user_path(user) %> <%= link_to icon("cross-circle-frame"), admin_user_path(user), :method => :delete, :confirm => "Are you sure you want to delete this user?" unless user.admin? %></span></td>
+</tr>

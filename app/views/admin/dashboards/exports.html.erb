@@ -1,0 +1,39 @@
+<% title "Export Data" %>
+
+<% content_for :subnav do %>
+<ul id="tabs_example_two" class="subsection_tabs">  
+    <!--<li class="tab"><a href="#charts">Charts</a></li>  -->
+    <li class="tab"><a href="/dashboards#reports">Reports</a></li>  
+    <li class="tab"><%= link_to "Exports", exports_admin_dashboards_url, :class => current_action == "exports" ? "active" : "" %></li>
+</ul>  
+<% end %>
+
+<% form_for :exports, :url => export_admin_dashboards_url do %>
+  <div class="span-22 metric" style="text-align: right;">
+    <p>Check the columns you would like to include in your export.</p> <h1>
+    <select name="format" id="format">
+      <option value="json">JSON</option>
+      <option value="xml">XML</option>
+    </select>
+    <%= submit_tag :export %></h1>
+  </div>
+<% @models.each_with_index do |klass, index| %>
+  <% fields_for klass.new do |f| %>
+  <div class="span-11">
+  <fieldset>
+    <legend><%= klass.new.class.to_s.pluralize %></legend>
+    <% klass.new.attributes.each do |name, value| %>
+      <p><%= f.check_box name.to_sym %> <%= f.label name.to_sym,"#{name.titleize}" %></p>
+    <% end %>
+  </fieldset>
+  </div>
+    <% if (index+1).even? %>
+      <div class="span-24">&nbsp;</div>
+    <% end %>
+  <% end %>
+<% end %>
+  <div class="span-22 metric" style="text-align: right;">
+    <p>Check the columns you would like to include in your export.</p>
+    <h1><%= submit_tag :export %></h1>
+  </div>
+<% end %>

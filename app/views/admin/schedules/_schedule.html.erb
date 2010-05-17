@@ -1,0 +1,14 @@
+<tr id="schedule_<%= schedule.id %>" onmouseover="$('actions_for_schedule_<%= schedule.id %>').show()" onmouseout="$('actions_for_schedule_<%= schedule.id %>').hide()"> 
+  <td><%= schedule.display_date %></td>
+  <td><%= link_to schedule.employee.fullname, admin_employee_schedule_path(schedule.employee, schedule) %></td>
+  <td><%= schedule.starts %></td>
+  <td><%= schedule.ends %></td>
+  <td><%= pluralize(schedule.total_hours, "Hour") %></td>
+  <td>
+    <span id="actions_for_schedule_<%= schedule.id %>" style="display: none;">
+      <%= link_to(icon("eye"),admin_schedule_path(schedule)) %> 
+      <%= link_to_facebox(icon("pencil"),edit_admin_schedule_path(schedule)) %> 
+      <%= link_to(icon("cross-circle"), admin_schedule_path(schedule), :method => :delete, :confirm => "Are you sure?") %>
+    </span>&nbsp;
+  </td>
+</tr>

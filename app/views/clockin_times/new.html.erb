@@ -1,7 +1,0 @@
-<center><h2><%= Time.zone.now.strftime("%H:%M:%S %p") %></h2></center>
-<% form_remote_for @clockin_time do |f| %>
-  <fieldset>
-    <h1>Clock In</h1>
-  <%= f.text_field :clockin_id, :class => "large" %> <%= image_submit_tag "buttons/default/button-clockin.png" %>
-  </fieldset>
-<% end %>

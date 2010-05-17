@@ -1,0 +1,55 @@
+- title "Employee"
+
+%p
+  %strong Firstname:
+  =h @employee.firstname.titleize
+
+%p
+  %strong Lastname:
+  = h @employee.lastname.titleize
+
+%p
+  %strong Positions:
+  = @employee.positions.map(&:name).join(", ")
+
+%p
+  = link_to "Edit", edit_admin_employee_path(@employee) 
+  |
+  = link_to icon("cross-circle-frame"), [:admin,@employee], :confirm => 'Are you sure?', :method => :delete 
+  |
+  = link_to "View All", admin_employees_path 
+
+- content_for :sidebar do
+  %strong
+    = @employee.fullname
+  
+  %p
+    %strong
+      = icon "mobile-phone"
+      Phone:
+    =h @employee.phone
+    
+  %p
+    %strong
+      = icon "clock-frame"
+      Lifetime Hours: 
+      = h @employee.lifetime_hours
+      hours
+    %br
+    %strong
+      = icon "clock-frame"
+      Average Shift: 
+      = h @employee.average_hours 
+      hours
+      
+    %br
+    
+    %small 
+      Lifetime Hours this employee has worked since 
+      = @employee.created_at.to_s(:short)
+
+  %p
+    %strong
+      = icon "present"
+      Birthday:
+      = h @employee.dob

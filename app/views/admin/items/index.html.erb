@@ -1,0 +1,39 @@
+<% title "Items" %>
+
+<% content_for :hints do %>
+  <h1 class="hint">Items</h1>
+  <p>All the items listed here will be used throughout the entire system. It is important to ensure you select item types when creating a new item.</p>
+<% end %>
+
+<table class="stripe">
+  <tr>
+    <th>Available</th>
+    <th>Name</th>
+    <th>Item Type</th>
+    <th>Price</th>
+    <th>Weight</th>
+    <th style="text-align: right;">No. per screen</th>
+    <th style="width: 50px">&nbsp;</th>
+  </tr>
+  <% for item in @items %>
+    <tr onMouseOver="$('actions_for_<%= item.object_id %>').show();" onMouseOut="$('actions_for_<%= item.object_id %>').hide();">
+      <td><%= item.available? ? icon("tick-circle-frame") : icon("slash") %></td>
+      <td><%= link_to h(item.name), edit_admin_item_path(item) %></td>
+      <td><%=h item.item_type %></td>
+      <td><%= number_to_currency item.price %></td>
+      <td><%= item.weight %> ozs.</td>
+      <td style="text-align: right;">
+        <%= item.number_per_screen %>
+      </td>
+      <td>
+        <span style="display: none;" id="actions_for_<%= item.object_id %>"><%= link_to icon("pencil-small"), edit_admin_item_path(item) %> <%= link_to icon("cross-circle-frame"), admin_item_path(item), :confirm => 'Are you sure?', :method => :delete %></span>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<% content_for :sidebar do %>
+  <%= button "Add Item", new_admin_item_path %>
+  <br />
+  <%= render :partial => "screen_calculator_form" %>
+<% end %>

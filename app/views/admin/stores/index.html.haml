@@ -1,0 +1,37 @@
+- title "Stores"
+
+- content_for :hints do
+  %h1{:class => "hint"}
+    Stores
+  %p
+    You can drag drop stores to adjust the order which they are displayed. NOTE: This will also change the order in which the tickets are printed.
+    %strong
+      USE CAUTION
+
+%ul{:id => "stores"}
+  = render :partial => @stores
+
+- content_for :sidebar do
+  - form_remote_tag :url => search_admin_stores_path do
+    = icon "magnifier-medium"
+    = text_field_tag :store_name
+    = image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom"
+  
+  = button "Add Store", new_admin_store_path
+  
+  = button "PDF Store List", admin_stores_path(:format => :pdf)
+  
+  - cache :routes do
+    %div{:style => "margin: 1em;"}
+      %h2 Routes
+      %p
+        You can drag stores to a Routes Drop Zone to add the store to that route. 
+        = link_to_facebox "Add a route", new_admin_route_path
+  
+  %ul{:id => "routes"}
+    = render :partial => @routes
+  
+  - @routes.each do |route|
+    = drop_receiving_element("route_#{route.id}", :url => {:controller => "routes", :action => "add_store", :id => route.id}, :method => :put, :with => "'store_id='+ escape(element.id) +''")
+
+= sortable_element("stores", :url => sort_admin_stores_url, :method => :post, :scroll => "'stores'", :ghosting => true, :hoverclass => "'store_hover'")

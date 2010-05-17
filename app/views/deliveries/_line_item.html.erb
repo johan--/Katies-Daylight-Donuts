@@ -1,4 +1,4 @@
-<% fields_for "delivery[line_items][]", line_item, :index => nil do |builder| %>
+<% fields_for "delivery[line_items_attributes][]", line_item, :index => nil do |builder| %>
   <% if line_item.item.nil? %>
       <tr>
         <td><%= builder.collection_select :item_id, Item.all, :id, :name %></td>
@@ -19,7 +19,7 @@
         <%= builder.text_field :price, :value => line_item.item.price, :size => 10, :class => "price", :readonly => !@current_user.super?  %>
         <%= builder.hidden_field :item_id, :value => line_item.item.id %>
       </td>
-      <td><%= link_to(icon("pencil-small"), edit_item_path(line_item.item)) if @current_user.super? %></td>
+      <td><%= link_to(icon("pencil-small"), edit_admin_item_path(line_item.item)) if @current_user.super? %></td>
 
     </tr>
   <% end %>

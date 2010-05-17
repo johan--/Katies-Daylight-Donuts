@@ -59,7 +59,7 @@ describe User do
   end
 
   it "should be a super user with admin as a username" do
-    (User.find_by_username("admin") || Factory.create(:user, :username => "admin")).admin?.should == true
+    (User.find_by_username("admin") || Factory(:user, :username => "admin")).super?.should == true
   end
   
   it "should be an employee user with an employee role" do

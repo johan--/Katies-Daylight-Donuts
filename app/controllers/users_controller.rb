@@ -1,88 +1,13 @@
 class UsersController < ApplicationController
   before_filter :login_required
-  before_filter :admin_role_required, :except => [:edit, :update, :show, :turn_off_hints]
-  
-  def index
-    @users = User.paginate :page => params[:page], :order => "created_at DESC"
-  end
-  
-  def search
-    @users = User.paginate_search(params)
-    render :update do |page|
-      page.replace_html(:users, "")
-      @users.each do |user|
-        page.insert_html(:top, :users, :partial => user, :locals => {:row_class => cycle("oddRow","stripe")})
-      end
-      page << "stripe()"
-    end
-  end
-  
-  def new
-    @user = User.new
-    respond_to do |format|
-      format.html
-      format.js{ render :layout => false }
-    end
-  end
-  
-  def create
-    @user = User.new(params[:user])
-    if @user.save
-      flash[:notice] = "Successfully created user."
-      redirect_to users_path
-    else
-      render :action => 'new'
-    end
-  end
   
   def edit
-    @user = find_user
-    respond_to do |format|
-      format.html
-      format.js{ render :layout => false }
-    end
+    @user = current_user
+    render :layout => false
   end
   
   def show
-    @user = find_user
+    @user = current_user
     render :action => "edit"
-  end
-  
-  def update
-    @user = find_user
-    if @user.update_attributes(params[:user])
-      flash[:notice] = "Your account was successfully updated."
-      redirect_to user_url(@user)
-    else
-      render :action => 'edit'
-    end
-  end
-  
-  def destroy
-    if @user = User.find_by_username(params[:id])
-      if @user.destroy
-        flash[:notice] = "User successfully removed."
-      else
-        flash[:warning] = "Could not remove user."
-      end
-    end
-    redirect_to users_path
-  end
-  
-  def turn_off_hints
-    if current_user.show_hints?
-      current_user.update_attribute(:show_hints, false)
-    end
-    render :nothing => true
-  end
-  
-  protected
-  
-  def find_user
-    if current_user.super? && params[:id]
-      User.find_by_username(params[:id])
-    else
-      current_user
-    end
   end
 end

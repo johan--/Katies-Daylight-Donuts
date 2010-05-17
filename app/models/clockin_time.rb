@@ -1,6 +1,8 @@
 class ClockinTime < ActiveRecord::Base
   belongs_to :employee
   
+  named_scope :current, :conditions => ["ends_at is NULL and date(starts_at) = ?", Time.now.utc.to_date.to_s(:db)],
+    :include => [:employee]
   named_scope :clocked_in, :conditions => {:ends_at => nil}, :limit => 1
   named_scope :clocked_out, :conditions => "starts_at is not NULL and ends_at is not NULL"
   named_scope :by_date, lambda { |*args|
@@ -18,6 +20,8 @@ class ClockinTime < ActiveRecord::Base
     ((active? ? Time.zone.now : ends_at) - starts_at) / 1.hour
   end
   
+  # TODO:
+  # This needs to be a float.
   def total_hours_integer
     total_hours.to_i
   end

@@ -1,6 +1,13 @@
 class City < ActiveRecord::Base
   has_many :stores, :dependent => :destroy
   has_many :deliveries, :through => :stores
+
+  validates_presence_of :name
+  validates_uniqueness_of :name
+
+  def pretty_name
+    name.titleize
+  end
   
   # All Cities in Nebraska
   def self.list

@@ -1,0 +1,56 @@
+- title "Admin / Deliveries / Show"
+
+- content_for :sidebar do
+  %div{:style => "padding: 1em;"}
+    =# google_map_from_store(@delivery.store)
+
+%p
+  %strong Delivery Date:
+  %br
+  = @delivery.delivery_date.strftime("%B %d, %Y at %H:%m %p")
+  
+%p
+  %strong Store:
+  %br
+  = h @delivery.store.name 
+  %br
+  = @delivery.store.full_address
+  
+%p
+  %strong Status:
+  %br
+  =h @delivery.state.titleize
+
+%p
+  %strong Driver:
+  %br
+  = h @delivery.employee.fullname 
+
+- unless @delivery.items.empty?
+  %h2 Items
+
+%table
+  %tr
+    %th Name
+    %th Quantity
+    %th Price
+  - for line_item in @delivery.line_items.select{|li| li if !li.nil? && li.quantity.to_i > 0 }
+    %tr
+      %td{:style => "text-align: left;"}
+        = line_item.item.name
+      %td{:style => "text-align: left;"}
+        = line_item.quantity
+      %td{:style => "text-align: right;"}
+        = number_to_currency line_item.item.price
+    %tr
+      - unless @delivery.comments.blank?
+        %th{:colspan => 3}
+          Comments
+        %td{:colspan => 3}
+        - for comment in @delivery.comments
+          = comment.body
+          %br
+    %tr
+      %td{:colspan => 3, :style => "text-align: right; font-size: 14pt; font-weight: bold; color: #36A33D;"}
+        %strong Total: 
+        = number_to_currency(@delivery.total)

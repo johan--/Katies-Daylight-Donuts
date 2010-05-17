@@ -1,0 +1,11 @@
+- title "Admin / Deliveries / Edit ##{@delivery.id}"
+
+- content_for :toolbar do 
+  = render :partial => "search"
+
+= render :partial => 'form'
+
+- content_for :sidebar do 
+  %div{ :class => "side content"} 
+    = render :partial => "presets"
+

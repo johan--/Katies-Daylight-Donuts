@@ -1,0 +1,54 @@
+-form_for @store do |f|
+  %fieldset
+    = f.error_messages
+    %p
+      = f.label :name, "* Name"
+      %br
+      = f.text_field :name
+  
+    %p
+      = f.label :address, "* Address"
+      %br
+      = f.text_field :address
+
+    %p
+      = f.label :city_id, "* City"
+      %br
+      = f.collection_select :city_id, City.find(:all, :order => "name ASC"), :id, :pretty_name, :include_blank => true
+      or type it 
+      = f.text_field :manual_city, :size => 6
+
+    = f.hidden_field :state, :value => "NE"
+  
+    = f.hidden_field :country, :value => "United States"
+
+    %p
+      = f.label :zipcode, "* Zipcode"
+      %br
+      = f.text_field :zipcode, :size => 8
+
+    %p
+      = f.label :phone
+      %br
+      = f.text_field :phone
+
+    %p
+      = f.label :fax
+      %br
+      = f.text_field :fax
+    
+    %p
+      = f.label :email
+      %br
+      = f.text_field :email
+
+    %p
+      = f.label :url
+      %br
+      = f.text_field :url
+
+    = f.hidden_field :position, :value => 0
+    %p
+      = image_submit_tag "buttons/default/button-save.png" 
+      = link_to_function(image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()))
+

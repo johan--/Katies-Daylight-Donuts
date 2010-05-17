@@ -1,0 +1,7 @@
+%form{:action => "", :method => "get", :id => "delivery_fetch_form"}
+  = icon("arrow-180") if @delivery.previous 
+  = link_to("Previous", @controller.action_name.eql?("show") ? delivery_path(@delivery.previous) : edit_delivery_path(@delivery.previous)) if @delivery.previous
+  %input{:type => "text", :id => "delivery_id", :value => "=@delivery.id", :size => "4"}
+  %input{:type => "button", :value => "Fetch", :onclick => "$('delivery_fetch_form').action = '/deliveries/show/' + $('delivery_id').value ;$('delivery_fetch_form').submit()", :class => "none"}
+  = link_to("Next", @controller.action_name.eql?("show") ? delivery_path(@delivery.next) : edit_delivery_path(@delivery.next)) if @delivery.next
+  = icon("arrow") if @delivery.next

@@ -1,0 +1,21 @@
+<% title "Delivery Presets" %>
+
+<table>
+  <tr>
+    <th>ID</th>
+    <th>Store</th>
+    <th>Day Of Week</th>
+  </tr>
+  <% for delivery_preset in @delivery_presets %>
+    <tr>
+      <td><%= delivery_preset.id %></td>
+      <td><%=h delivery_preset.store_id %></td>
+      <td><%=h delivery_preset.day_of_week %></td>
+      <td><%= link_to "Show", admin_delivery_preset_path(delivery_preset) %></td>
+      <td><%= link_to "Edit", edit_admin_delivery_preset_path(delivery_preset) %></td>
+      <td><%= link_to "Destroy", admin_delivery_preset_path(delivery_preset), :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p><%= link_to "New Delivery Preset", new_admin_delivery_preset_path %></p>

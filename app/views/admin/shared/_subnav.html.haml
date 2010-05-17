@@ -1,0 +1,14 @@
+- content_for :subnav do
+  %ul{:id => "subnavigation", :class => "subsection_tabs"}  
+    %li{:class => "tab", :id => 'sub_nav_pending'}
+      = link_to_function "Pending (#{@delivery_klass.pending.count})", "reloadDeliveriesGrid('pending',true)"
+  
+    %li{:class => "tab", :id => 'sub_nav_delivered'}
+      = link_to_function "Delivered (#{@delivery_klass.delivered.count}) <small><em>(History)</em></small>", "reloadDeliveriesGrid('delivered',true)"
+
+    %li{:class => "tab", :id => 'sub_nav_printed'}
+      = link_to_function "Printed (#{@delivery_klass.printed.count})", "reloadDeliveriesGrid('printed',true)"
+  
+    %li{:class => "tab", :id => 'sub_nav_canceled'}
+      = link_to_function "Canceled (#{@delivery_klass.canceled.count})", "reloadDeliveriesGrid('canceled',true)"
+

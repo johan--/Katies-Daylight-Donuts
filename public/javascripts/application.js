@@ -1,6 +1,15 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
+String.prototype.titleize = function() { 
+    res = new Array(); 
+    var parts = this.split(" "); 
+    parts.each(function(part) { 
+        res.push(part.capitalize()); 
+    }) 
+    return res.join(" "); 
+}
+
 function enableCalendar(){
   $$('.calendar_date_select_popup_icon').each(function(e){
     e.onclick();
@@ -429,3 +438,203 @@ var IframeShim = Class.create({
 		return this;
 	}
 });
+
+
+function initGrid(container, grid_title, grid_fields, grid_columns, data){
+  var store = new Ext.data.ArrayStore({
+    fields: grid_fields
+  });
+  store.loadData(data);
+  var grid = new Ext.grid.GridPanel({
+    store: store,
+    columns: grid_columns,
+    stipeRows: true,
+    height: 350,
+    width: 550,
+    title: grid_title
+  })
+}
+
+// Initialize Users Grid
+// Initialize the Deliveries Grid
+function initUsersGrid(){
+  var store = new Ext.data.Store({
+      remoteSort: false,
+      autoLoad: {params:{start:0, limit:100}},
+      
+      proxy: new Ext.data.HttpProxy({
+          url: "/admin/users.json",
+          method: "GET"
+      }),
+
+      reader: new Ext.data.JsonReader({
+          root: 'users',
+          totalProperty: 'totalCount',
+          idProperty: 'id',
+          fields: [
+            {name: 'id', type: 'string'},
+            {name: 'created_at', type: 'date', dateFormat: 'n/j h:ia'},
+            {name: 'store_name', type: 'string'},
+            {name: 'username', type: 'string'},
+            {name: 'email', type: 'string'},
+            {name: 'tools', type: 'string'}
+          ]
+      })
+  });
+
+  var grid = new Ext.grid.GridPanel({
+      id: 'usersGrid',
+      stripeRows: true,
+      renderTo: 'users',
+      width: 550,
+      height:400,
+      autoWidth: 'auto',
+      frame:true,
+      title:'Users',
+      trackMouseOver:false,
+      store: store,
+
+      columns: [
+           {header: 'ID', sortable: true, dataIndex: 'id', width: 40},
+           {header: 'Created', sortable: true, renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'created_at', width: 80},
+           {header: 'Store Name', sortable: true, dataIndex: 'store_name'},
+           {header: 'Username', sortable: true, dataIndex: 'username', width: 110},
+           {header: 'Email', sortable: true, dataIndex: 'email'},
+           {header: 'Tools', sortable: true, dataIndex: 'tools'}
+       ],
+
+    bbar: new Ext.PagingToolbar({
+      id: 'paging',
+      store: store,
+      pageSize:100,
+      displayInfo:true
+    })
+  });
+}
+
+// Initialize the Deliveries Grid
+function initDeliveriesGrid(path){
+  var store = new Ext.data.Store({
+      remoteSort: true,
+      autoLoad: {params:{start:0, limit:70}},
+      
+      proxy: new Ext.data.HttpProxy({
+          url: path,
+          method: "GET"
+      }),
+
+      reader: new Ext.data.JsonReader({
+          root: 'deliveries',
+          totalProperty: 'totalCount',
+          idProperty: 'id',
+          fields: [
+            {name: 'id', type: 'string'},
+            {name: 'created_at', type: 'date', dateFormat: 'n/j h:ia'},
+            {name: 'store', type: 'string'},
+            {name: 'route', type: 'string'},
+            {name: 'state', type: 'string'},
+            {name: 'tools', type: 'string'}
+          ]
+      })
+  });
+
+  var grid = new Ext.grid.GridPanel({
+      id: 'deliveriesGrid',
+      stripeRows: true,
+      renderTo: 'deliveries',
+      width: 550,
+      height:400,
+      autoWidth: 'auto',
+      frame:true,
+      title:'Deliveries',
+      trackMouseOver:false,
+      store: store,
+
+      columns: [
+           {header: 'ID', sortable: true, dataIndex: 'id', width: 70},
+           {header: 'Created', sortable: true, renderer: Ext.util.Format.dateRenderer('m/d/Y'), dataIndex: 'created_at', width: 80},
+           {header: 'Store', sortable: true, dataIndex: 'store', width: 110},
+           {header: 'Route', sortable: true, dataIndex: 'route'},
+           {header: 'Status', sortable: true, dataIndex: 'state', width: 60},
+           {header: 'Tools', sortable: false, dataIndex: 'tools', width: 125}
+       ],
+
+    bbar: new Ext.PagingToolbar({
+      id: 'paging',
+      store: store,
+      pageSize:70,
+      displayInfo:true
+    })
+  });
+}
+
+function reloadDeliveriesGrid(action, admin){
+  var grid = Ext.getCmp('deliveriesGrid');
+  grid.setTitle("Deliveries / " + action);
+  var store = grid.getStore()
+  if(admin == true){ 
+    store.proxy.setApi('read',"/admin/deliveries.json") 
+  }else{ store.proxy.setApi('read',"/deliveries.json")  }
+  store.baseParams = {status: action, start: 0, limit: 70};
+  store.load();
+  //tabs.setActiveTab("#pending")
+  if($('clear_search_link'))
+    $('clear_search_link').hide();
+}
+
+function setDeliveriesGridUrl(path){
+  var grid = Ext.getCmp('deliveriesGrid')
+  var store = grid.getStore()
+  store.proxy.setApi('read',path)
+  grid.getStore().reload()
+  if($('clear_search_link').childNodes.length == 0){
+    var clearLink = Element("a",{
+      "href" : "javascript:reloadDeliveriesGrid('pending',true)"
+    })
+    $('clear_search_link').appendChild(clearLink)
+    clearLink.innerHTML = "clear search"
+  }else{
+    $('clear_search_link').show();
+  }
+}
+
+// Creates a time ticker
+function timeTicker(){
+  var today = new Date();
+  var hour = today.getHours();
+  var mins = today.getMinutes();
+  var secs = today.getSeconds();
+
+  if (secs <=9){
+      secs = "0" + secs
+  }
+  
+  if (mins <=9){
+      mins = "0" + mins
+  }
+  
+  if(hour > 12){
+    hour = hour - 12;
+    var ordinal = "pm"
+  }else{
+    var ordinal = "am"
+  }
+
+  var TotalTime = hour + ":" + mins + ":" + secs + " " + ordinal;
+
+  $('current_time').innerHTML = TotalTime;
+
+  setTimeout("timeTicker()", 1000)
+}
+
+function initDeliveriesGridWithDelivery(){
+  setDeliveriesGridUrl('store/'+ $('store_id').value +'/deliveries/' + $('id').value + '.json')
+}
+
+// Handle Key Event
+function handleKeyPress(e){
+  var key = e.keyCode == undefined ? e.which : e.keyCode;
+  if (key==13){ // Enter Key
+    initDeliveriesGridWithDelivery()
+  }
+}

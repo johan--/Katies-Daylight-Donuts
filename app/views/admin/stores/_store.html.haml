@@ -1,0 +1,18 @@
+- content_tag_for :li, store, :class => "store_list_item" do
+  %div{:class => "handle"}
+    %div{:onMouseOver => "$('actions_for_<%= store.object_id %>').show();", :onMouseOut => "$('actions_for_<%= store.object_id %>').hide();"}
+    %div{:class => "span-9"}
+      = link_to h(store.display_name), admin_store_path(store)
+      |
+      = link_to "Deliveries", admin_store_deliveries_path(store)
+      &nbsp;
+      %span{:style => "display: none;", :id => "actions_for_#{store.object_id}"}
+        = link_to icon('pencil'), edit_admin_store_path(store)
+        = link_to icon("cross-circle-frame"), admin_store_path(store), :confirm => 'Are you sure you want to remove this store? All associated records will be removed also.', :method => :delete
+
+  %div{:class => "span-4 route_car", :id => "#{store.id}_store_route_droppable"}
+    = icon("car")
+    %span{:id => "route_name_for_store#{store.id}"}
+      = store.route.name unless store.route.nil?
+      
+= draggable_element("#{store.id}_store_route_droppable", {:revert => true})

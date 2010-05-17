@@ -1,0 +1,49 @@
+- title "Admin / Deliveries"
+
+- content_for :hints do 
+  %h1{:class => "hint"}
+    Welcome = @current_user.username,
+  %p
+    You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.
+
+- form_for "deliveries[]", :id => nil, :url => {:controller => "deliveries", :action => "update_status"} do |f|
+  %div{:class => "span-14"}
+    %strong Delivery ID#
+    = hidden_field_tag :store_id, @store.to_param
+    = text_field_tag :id
+    %input{:type => "button", :value => "Search", :onclick => %(setDeliveriesGridUrl('deliveries/' + $('id').value + '.json'))}
+    %span{:id => "clear_search_link"}
+    
+  %div{:id => "deliveries", :class => "span-14", :style => "margin-top: 1em;"}
+
+= render :partial => 'admin/shared/subnav'
+
+- content_for :sidebar do 
+  = button_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar())}, {:class => "button"} if @current_user.system_user?
+          
+  %br
+  
+  %ul{:class => "sidebar"}
+    %li= link_to "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_admin_deliveries_path(:format => :pdf)
+    
+    %li=link_to "Add Delivery", new_admin_delivery_path
+    
+    %li= link_to "Collections", admin_collections_path
+  
+  =# button_to_function "Print Selected", %($('print').value = true;$$('.deliveries_form_button').each(function(e){e.click()})), :class => "button"
+  
+  %div{:id => "schedule"}
+    - deliveries = Delivery.all
+    - calendar(:year => @date.year, :previous_month_text => pre, :month  => @date.month, :next_month_text => nex) do |d|
+      - deliveries_array = deliveries.map(&:delivery_date).map{|c| c.to_date unless c.nil? }
+      - if deliveries_array.include?(d)
+        - index = deliveries_array.index d
+        - if @store
+          - [link_to(d.mday, admin_store_deliveries_path(@store,:date => d)), {:class => "specialDay"}]
+        - else
+          - [link_to(d.mday, deliveries_path(:date => d)), {:class => "specialDay"}]
+      - else
+        - [d.mday, {:class => "day"}]
+        
+:javascript
+  document.observe("dom:loaded", function(){initDeliveriesGrid("/admin/deliveries.json") })

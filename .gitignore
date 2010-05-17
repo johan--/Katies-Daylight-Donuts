@@ -8,3 +8,5 @@ db/production.sqlite3
 db/test.sqlite3
 db/katies.csv
 db/katies.xls
+coverage/
+tmp/

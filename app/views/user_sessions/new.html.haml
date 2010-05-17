@@ -1,0 +1,39 @@
+- title "Login"
+
+- cache :login_form do
+  %div{:class => "login"}
+    = image_tag "logo-small.png"
+    - form_for @user_session, :url => login_path,:html => {:id => "login_form"} do |f|
+      = hidden_field_tag :authenticity_token, form_authenticity_token
+      - if flash[:notice]
+        %p{:class => "notice"}
+          = icon("information")
+          = flash[:notice]
+      - if flash[:warning]
+        %p{:class => "warning"}
+          = icon("cross-button")
+          = flash[:warning]
+      %p
+        = f.label :username
+        %br
+        = f.text_field :username, :class => "large", :style => "width: 250px;"
+    
+      %p
+        = f.label :password
+        %br
+        = f.password_field :password, :class => "large", :style => "width: 250px;"
+
+      %p
+        %br
+        = f.submit "Sign In"
+
+      %p{:style => "border-top: 1px dotted #aaa; padding: 1em 0; margin: 1em 0 0 0; text-align: right"}
+        Need help logging in? 
+        %strong
+          = link_to "Forgot Password", password_reset_url
+
+    =# authlogic_facebook_login_button(:controller => "user_sessions")
+      
+
+  :javascript
+    document.observe("dom:loaded", $('user_session_username').focus())

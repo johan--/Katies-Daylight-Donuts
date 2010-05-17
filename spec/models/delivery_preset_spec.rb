@@ -2,7 +2,16 @@ require File.dirname(__FILE__) + "/../spec_helper"
 
 describe DeliveryPreset do
   before(:each) do
-    @delivery_preset = Factory(:delivery_preset)
+    @delivery_preset = Factory(:delivery_preset, :store => Factory(:store))
+  end
+  
+  describe "save" do
+    it "should not change the position of the store" do
+      @delivery_preset.store.update_attribute(:position, 3)
+      @delivery_preset.day_of_week = "tue"
+      @delivery_preset.save
+      @delivery_preset.store.position.should == 3
+    end
   end
   
   context " when valid" do

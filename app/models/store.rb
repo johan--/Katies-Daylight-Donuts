@@ -10,10 +10,8 @@ class Store < ActiveRecord::Base
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
-  before_create :set_position
+  before_validation :set_position
   before_validation :find_or_create_city
-  
-  validates_uniqueness_of :name # important!
   
   validates_presence_of :name, :address, :city, :state, :country, :zipcode, :position # important!
     
@@ -31,12 +29,30 @@ class Store < ActiveRecord::Base
     "#{id}-#{name}".gsub(/[^A-Za-z0-9]/,'-')
   end
   
+  # Returns the city name titleized
   def city_name
     @city_name ||= city.name.titleize
   end
   
+  # Class method calls, the instance method create_todays_delivery!
+  # on all deliveries in order of their position.
+  def self.create_todays_deliveries!
+    deliveries = []
+    all_by_position.each do |store|
+      begin
+        deliveries << store.create_todays_delivery!
+      rescue Exception => e
+        logger.error e.message
+        next # keep it movin
+      end
+    end
+    deliveries = deliveries.compact
+    deliveries
+  end
+  
+  # Can be called on any store to genertae todays delivery.
+  # Todays delivery is defined by todays DeliveryPreset.
   def create_todays_delivery!
-  #begin
     unless todays_ticket.nil? || is_closed_today? || has_delivery_for_today?
     delivery = deliveries.create({
       :employee => Employee.default,
@@ -46,9 +62,7 @@ class Store < ActiveRecord::Base
         delivery.add_item(line_item.item, line_item.quantity) unless line_item.quantity.to_i < 1
       end
     end
-  #rescue Exception
-    
-  #end
+    delivery
   end
 
   # Returns the current balance for a store (includes discounts for buy backs)

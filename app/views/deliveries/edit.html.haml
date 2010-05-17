@@ -1,0 +1,11 @@
+- title "Edit Delivery ##{@delivery.id}"
+
+- content_for :toolbar do 
+  = render :partial => "fetch_form"
+
+= render :partial => 'form'
+
+- content_for :sidebar do 
+  %div{ :class => "side content"} 
+    = render :partial => "presets"
+

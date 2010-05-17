@@ -1,9 +1,9 @@
 <table>
   <tr>
     <% if @current_user.admin? %>
-      <th>&nbsp;</th>
+      <th class="span-2">&nbsp;</th>
     <% end %>
-    <th>Address</th>
+    <th>Delivery Date</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
@@ -15,9 +15,9 @@
         <%= link_to "##{delivery.id}", store_delivery_path(delivery.store,delivery) %>
       </td>
     <% end %>
-    <td><span style="width: 150px;"><%= link_to delivery.store.to_google, store_delivery_path(delivery.store,delivery) %></span></td>
+    <td><span style="width: 150px;"><%= link_to delivery.date, store_delivery_path(delivery.store,delivery) %></span></td>
     <td align="right">
-    <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: middle;"), @current_user.system_user? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf), :confirm => "This delivery will be marked printed. Are you sure you want to print this?" %>
+    <%= link_to image_tag("icons/pdf.gif", :style => "vertical-align: middle;"), @current_user.system_user? ? delivery_path(delivery, :format => :pdf) : store_delivery_path(@current_user.store, delivery, :format => :pdf) %>
     <% if delivery.delivered? && delivery.buy_backs.empty? %>
       <%= link_to icon("money"), new_store_delivery_buy_back_path(delivery.store, delivery) %>
     <% end %>

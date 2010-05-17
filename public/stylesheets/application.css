@@ -12,9 +12,9 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 body {
-  background: url("../images/background-tile.png") repeat-x #fffcd7 top left;
-  font-family: helvetica, arial, sans-serif;
-  font-size: 80%;
+  background: url("/images/background-tile.png") repeat-x #fffcd7 top left;
+  font-family: lucida grande, verdana;
+  font-size: 12px;
 }
 
 
@@ -174,7 +174,7 @@ ul.inline li{
 div#sidebar{
   padding: 0.5em;
   margin: 1em;
-  background: #e4e1dd;
+  background: #eee;
 }
 
 div#sidebar h2, div#sidebar ul li, div#sidebar ol li{
@@ -332,6 +332,7 @@ div.metric h1 img{
 }
 
 div.tip{
+  width: 90%;
   padding: 1em;
   background: #F0FCBA;
 }
@@ -341,16 +342,15 @@ td.line{
   border-bottom: 1px solid #C0C0C0;
 }
 
-form#login_form{
-  margin: 0 auto;
-  padding: 3em 0 0 1em;
-  background: url("../images/login-bg.png") no-repeat;
-  height: 200px;
-  width: 300px;
+form#login_form input{
+  padding: 0.3em;
+  font-size: 14px;
+  font-weight: bold;
 }
 
-form#login_form input{
-  font-size: 14px;
+form#login_form label, label.standout{
+  font-size: 12px;
+  font-weight: bold;
 }
 
 form fieldset{
@@ -360,13 +360,14 @@ form fieldset{
   margin: 0 0.5em;
 }
 
-form fieldset p label{
+p label,form fieldset p label{
   font-weight: bold;
   color: #979797;
 }
 
 input.large{
   font-size: 14pt;
+  width: 80%;
 }
 
 /* Errors */
@@ -597,4 +598,88 @@ textarea{
   color: black;
   font-weight: bold;
   font-size: 14px;
+}
+
+div.help{
+  padding: 1em;
+  background: #EDEDED;
+  border: 1px solid #B2B2B2;
+  margin: 0.4em 0 0 1.5em;
+}
+
+div.help h1{
+  padding: 0.4em;
+  background: #F2F2F2;
+  border: 1px solid #C6C6C6;
+}
+
+div.help p{
+  margin: 1em 0.4em;
+}
+
+.light-border-box{
+  border: 2px solid #ebebeb; 
+  padding: 0.5em; 
+  margin: 0.5em;
+}
+
+.center{
+  margin: 0 auto;
+}
+
+body.login div.login {
+	padding: 25px 28px;
+	background: #fff;
+	text-align: left;
+	width: 410px;
+	margin: 55px auto;
+	font-family: lucida grande, verdana;
+	font-size: 12px;
+	-webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 6px #999;
+  -webkit-box-shadow: 0 0 6px #999;
+  box-shadow: 0 0 6px #999;
+  border: 1px solid #ccc;
+}
+
+p.warning{
+  background: #C61700;
+  color: white;
+}
+
+p.notice{
+  background: #ABDB96;
+  color: black;
+}
+
+p.warning, p.notice{
+  font-weight: bold;
+  padding: 1em;
+}
+
+.undelined{
+  border-bottom: 1px dashed #999;
+  padding-bottom: 0.8em;
+  margin-bottom: 0.2em;
+  display: block;
+}
+
+p.notes{
+  padding: 1em;
+  background: #E1E1E1;
+}
+
+textarea.notes{
+  border: 1px solid #eee;
+  width: 96%;
+  height: 100px;
+}
+
+ul.sidebar li{
+  background: #E4FBF5;
+  padding: 4px 8px;
+  border-top: 1px solid white;
+  border-bottom: 1px solid #B8C5D5;
 }

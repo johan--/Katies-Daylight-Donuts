@@ -1,16 +1,19 @@
 class Delivery < ActiveRecord::Base
   include AASM
   
+  cattr_reader :per_page
+  @@per_page = 10
+  
   attr_accessor :store_name, :print_after_save
   
   has_many :comments, :as => :commentable
-  
   has_many :line_items, :dependent => :destroy
   has_many :items, :through => :line_items
-  
   has_many :buy_backs, :dependent => :destroy
+  
   belongs_to :employee
   belongs_to :store
+  belongs_to :collection
   
   aasm_column :state
   aasm_initial_state :pending
@@ -42,28 +45,30 @@ class Delivery < ActiveRecord::Base
   
   named_scope :next, lambda { |d| {:conditions => ["id > ?", d.id], :limit => 1, :order => "id"} }
   named_scope :previous, lambda { |d| {:conditions => ["id < ?", d.id], :limit => 1, :order => "id DESC"} }
-  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
-  named_scope :pending, :conditions => {:state => "pending"}, :order => "delivery_date ASC", :include => [:store,:employee, {:line_items, :item}]
-  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "delivery_date ASC", :include => [:buy_backs,:store,:line_items, {:line_items, :item}]
+  named_scope :recent, :conditions => {:state => "delivered"}, :limit => 10, :order => "delivery_date DESC", :include => [:store,:employee, :comments, {:line_items, :item}]
+  named_scope :pending, :conditions => {:state => "pending"}, :order => "id DESC", :include => [:store,:employee, :comments, {:line_items, :item}]
+  named_scope :delivered, :conditions => {:state => "delivered"}, :order => "id DESC", :include => [:buy_backs,:store, :comments,:line_items, {:line_items, :item}]
   # This does not work with postgresql db's for some reason
   named_scope :delivered_this_week, :conditions => {
     :state => "delivered", 
     :delivered_at => "between #{Time.now.at_beginning_of_week.to_s(:db)} and #{Time.now.at_end_of_week.to_s(:db)}", 
-    :include => [{:line_items, :item}]
+    :include => [:comments, :store, {:line_items, :item}]
   }
   named_scope :by_date, lambda { |*args|
     args[0] ||= Time.zone.now
     {
       :order => "delivery_date asc",
       :conditions => ["delivery_date BETWEEN ? AND ?", args[0].beginning_of_day.to_s(:db), (args[1]||args[0]).end_of_day.to_s(:db)],
-      :include => [{:line_items, :item}]
+      :include => [:comments, :store, {:line_items, :item}]
     }
   }
-  named_scope :printed, :conditions => {:state => "printed"}, :include => [:buy_backs,{:line_items, :item}]
+  named_scope :printed, :conditions => {:state => "printed"}, :include => [:buy_backs, :comments,:store, {:line_items, :item}]
   named_scope :unprinted, :conditions => "deliveries.state = 'pending' or deliveries.state = 'delivered'",
-    :include => [{:line_items, :item}]
-  named_scope :unpaid, :conditions => {:paid => false}, :include => [{:line_items, :item}]
-  named_scope :paid, :conditions => {:paid => true}, :include => [{:line_items, :item}]
+    :include => [:comments, :store, {:line_items, :item}]
+  named_scope :unpaid, :conditions => {:paid => false}, :include => [:comments, :store, {:line_items, :item}]
+  named_scope :paid, :conditions => {:paid => true}, :include => [:comments, :store, {:line_items, :item}]
+
+  accepts_nested_attributes_for :comments, :line_items
   
   def self.metrics
     return @metric_payload if defined?(@metric_payload)
@@ -77,6 +82,10 @@ class Delivery < ActiveRecord::Base
       }
     }
     @metric_payload
+  end
+  
+  def short_date
+    delivery_date.strftime("%m/%d %I:%M%p").gsub(/(AM|PM)$/){ |match| match.downcase }
   end
   
   def route_name
@@ -113,6 +122,10 @@ class Delivery < ActiveRecord::Base
 
   def address
     "#{store.display_name} - #{store.to_google}"
+  end
+
+  def date
+    @delivery_date ||= delivery_date.strftime("%m/%d/%Y")
   end
 
   def delivery_time

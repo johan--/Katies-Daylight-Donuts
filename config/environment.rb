@@ -16,6 +16,9 @@ Rails::Initializer.run do |config|
   config.gem "prawn"
   config.gem "facebooker", :lib => false
   config.gem "twelve_hour_select"
+  config.gem "will_paginate"
+  config.gem "haml"
+  
   #config.gem 'mislav-will_paginate', 
   #    :lib => 'will_paginate', 
   #    :source => 'http://gems.github.com'
@@ -37,3 +40,5 @@ Rails::Initializer.run do |config|
     :pie => ["2663C4","E3DF1B"]
   }
 end
+
+WillPaginate.enable_named_scope

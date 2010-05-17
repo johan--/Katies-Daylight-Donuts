@@ -3,7 +3,7 @@ Factory.sequence(:position) do |n|
 end
 
 Factory.sequence(:store_name) do |n|
-  "Store#{n}"
+  "Store #{n}"
 end
 
 Factory.define(:store) do |f|
@@ -13,5 +13,5 @@ Factory.define(:store) do |f|
   f.state "NE"
   f.country "USA"
   f.zipcode "68826"
-  f.position{ Factory.next(:position) }
+  f.position 0
 end

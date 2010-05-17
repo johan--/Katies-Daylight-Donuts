@@ -3,6 +3,23 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Store do
   fixtures :stores, :cities
   
+  context "class methods" do
+    it "should create todays deliveries" do
+      store = Factory(:store)
+      Store.should_receive(:all_by_position).and_return([store])
+      store.should_receive(:create_todays_delivery!)
+      Store.create_todays_deliveries!
+    end
+  end
+  
+  context "instance methods" do
+    it "should create todays deliveries" do
+      Position.stubs(:driver).returns(Factory(:position))
+      store = Factory(:store)
+      store.deliveries.should_receive(:create).and_return(Factory(:delivery))
+      store.create_todays_delivery!.should be_true
+    end
+  end
   
   context " on create" do
     it "should set the position" do
@@ -29,6 +46,12 @@ describe Store do
   end
   
   context "with an existing city" do
+    it "should titleize the city_name" do
+      store = Factory.create(:store)
+      store.update_attribute(:city, Factory.create(:city, :name => "fooville") )
+      store.city_name.should == "Fooville"
+    end
+    
     it "should create the store with the city" do
       store = stores(:one)
       store.city = cities(:one)

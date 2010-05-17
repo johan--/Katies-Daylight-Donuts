@@ -1,0 +1,44 @@
+- title(personalized_title_for(@current_user, @controller))
+
+- content_for :hints do 
+  %h1{:class => "hint"}
+    Welcome 
+    =@current_user.username
+  %p
+    You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.
+
+%div{:class => "span-14"}
+  Delivery ID#
+  = hidden_field_tag :store_id, @store.to_param
+  = text_field_tag :id, {},:onkeypress => "handleKeyPress(event)"
+  %input{:type => "button", :value => "Search", :onclick => %(initDeliveriesGridWithDelivery())}
+  %span{:id => "clear_search_link"}
+%div{:id => "deliveries", :class => "span-14"}
+  
+
+= render :partial => 'shared/subnav'
+
+- content_for :sidebar do 
+  = button_to_remote "Generate Today's Tickets", {:url => generate_todays_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar())}, {:class => "button"} if @current_user.system_user?
+          
+  = button "Add Delivery", @current_user.system_user? ? new_delivery_path : new_store_delivery_path(@current_user.store)
+  
+  = button "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_deliveries_path(:format => :pdf) if @current_user.system_user?
+  
+  = button_to_function "Print Selected", %($('print').value = true;$$('.deliveries_form_button').each(function(e){e.click()})), :class => "button"
+  
+  %div{:id => "schedule"}
+    - deliveries = Delivery.all
+    - calendar(:year => @date.year, :previous_month_text => pre, :month  => @date.month, :next_month_text => nex) do |d| 
+      - deliveries_array = deliveries.map(&:delivery_date).map{|c| c.to_date unless c.nil? }
+      - if deliveries_array.include?(d) 
+        - index = deliveries_array.index d
+        - if @store
+          - [link_to(d.mday, admin_store_deliveries_path(@store,:date => d)), {:class => "specialDay"}]
+        - else
+          - [link_to(d.mday, deliveries_path(:date => d)), {:class => "specialDay"}]
+      - else 
+        - [d.mday, {:class => "day"}] 
+        
+:javascript
+  document.observe("dom:loaded", function(){initDeliveriesGrid("/deliveries.json") })

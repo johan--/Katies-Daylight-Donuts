@@ -1,0 +1,8 @@
+<li id="route_<%= route.id %>" onmouseover="$('actions_for_route_<%= route.id %>').show();" onmouseout="$('actions_for_route_<%= route.id %>').hide();"> 
+  <h1><%= link_to route.new_record? ? "" : route.name.titleize, admin_route_path(route) %></h1>
+  <h1 style="color: #B7B7B7">Drop Zone</h1>
+  <span id="actions_for_route_<%= route.id %>" style="display: none;">
+    <%= link_to icon("pencil"), edit_admin_route_path(route) unless route.new_record? %>
+    <%= link_to icon("cross-circle"), admin_route_path(route), :method => :delete, :confirm => "Are you sure?" unless route.new_record? %>
+  </span>
+</li>

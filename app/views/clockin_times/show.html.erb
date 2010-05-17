@@ -1,9 +1,0 @@
-<% title "Clock In Time for #{@clockin_time.employee.fullname}" %>
-
-<p>
-  Hours: <%= time(@clockin_time.starts_at,@clockin_time.ends_at) %>
-</p>
-
-<p>
-  <%= @clockin_time.created_at %> .. <%= @clockin_time.ends_at %>
-</p>

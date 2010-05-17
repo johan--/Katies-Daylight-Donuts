@@ -1,0 +1,10 @@
+- title "New Store"
+
+- content_for :hints do
+  %h1{:class => "hint"}
+    %p
+      Once you have your store setup you're all set!
+
+
+- form_for @store do |f|
+  = render :partial => "form"

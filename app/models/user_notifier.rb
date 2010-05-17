@@ -1,4 +1,13 @@
 class UserNotifier < ActionMailer::Base
+
+  def message(recipients, message, time_period, payload)
+    recipients   recipients
+    from         "reports@katiesdaylightdonuts.com"
+    body         message
+    subject      "Sales Report for #{time_period}" 
+    content_type "text/html"
+    attachment :content_type => "text/plain", :body => payload, :filename => "importme.csv"
+  end
   
   # Delivery
   def new_delivery_notification(recipients, delivery)

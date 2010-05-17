@@ -1,0 +1,10 @@
+<% for employee in @employees %>
+  <tr onMouseOver="$('actions_for_<%= employee.object_id %>').show();" onMouseOut="$('actions_for_<%= employee.object_id %>').hide();">
+    <td><%= link_to h(employee.firstname.titleize), [:admin, employee] %></td>
+    <td><%=h employee.lastname.titleize %></td>
+    <td><%=h employee.phone %></td>
+    <td><%= icon "clock-select" %><%= link_to "Timesheet", timesheet_admin_employee_path(employee) %></td>
+    <td><span  style="display: none;" id="actions_for_<%= employee.object_id %>"><%= link_to icon("pencil-small"), edit_admin_employee_path(employee) %>
+     <%= link_to icon("cross-circle-frame"), [:admin, employee], :confirm => 'Are you sure?', :method => :delete %></span></td>
+  </tr>
+<% end %>

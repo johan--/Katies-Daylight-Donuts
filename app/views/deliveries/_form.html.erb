@@ -30,9 +30,11 @@
   <% end %>
     <br />
     
+    <% if false %>
     <p>
       <%= icon "lock" %> <%= f.check_box :locked %> <%= f.label :locked %>
     </p>
+    <% end %>
   
 
   <table style="width: 100%;" id="line_items">
@@ -65,8 +67,6 @@
   <% end %>
   </div>
   
-  <p><%= f.check_box :print_after_save, :checked => true %> <%= f.label :print_after_save %></p>
-  
   <%= image_submit_tag "buttons/default/button-save.png" %>
   <%= link_to_function image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()) %>
   </fieldset>
@@ -77,15 +77,3 @@
 <% end %>
 
 <%= observe_field :delivery_store_id, :url => { :controller => "stores", :action => "presets", :format => :js}, :with => 'id' %>
-
-
-<div id="no_drivers_alert" style="display: none;">
-  Please assign atleast one <%= link_to 'Employee', employees_path %> as a driver first. Then come back and create the delivery.
-</div>
-<a id="no_drivers_alert_link" href="#no_drivers_alert" rel="ibox&amp;width=200&amp;height=80">&nbsp;</a>
-
-<script type="text/javascript" charset="utf-8">
-  document.observe("dom:loaded", function() {
-    $('no_drivers_alert_link').onclick();
-  });
-</script>

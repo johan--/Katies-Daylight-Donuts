@@ -1,0 +1,14 @@
+<%= {
+  :totalCount => count,
+  :deliveries => deliveries.map{ |delivery| 
+     {
+       :id => render(:partial => "checkbox", :locals => {:delivery => delivery}),
+       :created_at => grid_date(delivery.delivery_date),
+       :store => link_to(delivery.store.name, delivery.store),
+       :route => delivery.route_name,
+       :state => delivery.state.to_s.titleize,
+       :tools => render(:partial => "crud_links", :locals => {:delivery => delivery})
+     }
+  }.flatten
+}.to_json %>
+

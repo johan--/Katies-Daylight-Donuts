@@ -1,0 +1,90 @@
+<% title h(@store.display_name) %>
+<% content_tag :p do %>
+  <strong>Store No:</strong>
+  <%=h @store.store_no %>
+<% end if @store.store_no %>
+
+<p>
+  <strong>Address:</strong>
+  <%=h @store.address.upcase %><br />
+  <%=h @store.city.name.upcase if !@store.city.nil? %>, <%=h @store.state %> <%=h @store.country.upcase %><br />
+  <%=h @store.zipcode %><br />
+
+  <% if @store.phone %>
+    <%=h @store.phone %><br />
+  <% end %>
+  
+  <% if @store.fax %>
+    <%=h @store.fax %><br />
+  <% end %>
+</p>
+
+<div id="delivery_schedule">
+<table>
+  <tr>
+    <th colspan="7">
+      Default Delivery Schedule
+    </th>
+  </tr>
+  <tr>
+    <% %w(sun mon tue wed thu fri sat).each do |day| %>
+      <th><%= day.upcase %></th>
+    <% end %>
+  </tr>
+  <tr>
+    <% @store.delivery_presets.sort_by{|dp| dp.position }.each do |dp| %>
+      <td>
+        <ul>
+        <% if dp.closed? %>
+          <li><strong>Closed</strong></li>
+          <li><%= dp.day_of_week %></li>
+          <li><%= link_to "Edit", edit_admin_delivery_preset_path(@store,dp) %></li>
+        <% else %>
+        <li><%= dp.day_of_week %></li>
+        <% dp.line_items.each do |line_item| %>
+          <li><small><%= line_item.quantity %> <%= line_item.item.name %></small></li>
+        <% end %>
+        <li><%= link_to "Edit", edit_admin_delivery_preset_path(@store,dp) %></li>
+        
+        <% end %>
+        </ul>
+      </td>
+    <% end %>
+  </tr>
+</table>
+</div>
+
+<% content_for :sidebar do %>
+  <div class="store-balance">
+    Balance: <%= number_to_currency @store.balance %>
+  </div>
+
+  <ul class="sidebar">
+    <li><%= link_to "All Stores", admin_stores_path %></li>
+    <li><%= link_to "Order History", delivered_admin_deliveries_path(@store) %></li>
+    <li><%= link_to "Edit", edit_admin_store_path(@store) %></li>
+    <li><%= link_to "Delete", admin_store_path(@store), :confirm => 'Are you sure?', :method => :delete %></li>
+    <% if !@store.email.blank? %>
+    <li>Email: <%= link_to h(@store.email), "mailto:#{h(@store.email)}" %>
+    <%=h @store.url if @store.url %></li>
+    <% end %>
+  </ul>
+
+  <% if @current_user.super? %>
+    <% if @store.user %>
+      <p>This store belongs to <%= link_to @store.user.username, admin_store_path(@store.user) %></p>
+  <% else %>
+    <p>This store does <strong>NOT</strong> have a user account. Please add an email address to create their account.</p>
+  <% end %>
+    <br />
+  <% end %>
+  
+  <% unless @store.notes.blank? %>
+  <h2>Static Note</h2>
+  <p>
+    <%= @store.notes %><br />
+    <%= link_to "Edit", edit_admin_store_path %>
+  </p>
+  <% end %>
+
+<% end %>

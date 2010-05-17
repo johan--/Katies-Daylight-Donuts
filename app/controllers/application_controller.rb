@@ -14,13 +14,28 @@ class ApplicationController < ActionController::Base
   filter_parameter_logging :password
   
   # Declare exception to handler methods
-  rescue_from ActionController::UnknownAction, :with => :bad_record
+  #rescue_from ActionController::UnknownAction, :with => :bad_record
   rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
   rescue_from NoMethodError, :with => :show_error
 
 
   def bad_record; render "/errors/404", :status => 404 ; end
   def show_error(exception); render :text => exception.message; end
+  
+  def view_all?
+    params[:view] == "all"
+  end
+  
+  def success(message)
+    flash[:notice] = message
+  end
+  
+  def fail(message)
+    flash[:warning] = message
+  end
+  
+  helper_method :success
+  helper_method :fail
 
   protected
   
@@ -71,16 +86,6 @@ class ApplicationController < ActionController::Base
     Time.zone = current_user.time_zone if current_user_session
   end
   
-  def current_user_session
-    return @current_user if defined?(@current_user_sessiom)
-    @current_user_session ||= UserSession.find
-  end
-  
-  def current_user
-    return @current_user if defined?(@current_user)
-    @current_user = current_user_session && current_user_session.record
-  end
-  
   def login_required
     unless current_user_session
       flash[:error] = "Please login"
@@ -88,8 +93,38 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def find_store
+    if params[:store_id]
+      @store = Store.find(params[:store_id])
+    elsif current_user.customer_with_store?
+      @store = current_user.store
+    end
+  end
+  
   def load_settings
     @setting ||= Setting.for_application
+  end
+  
+  def load_deliveries
+    @date = params[:date] ? Date.parse(params[:date]) : Time.zone.today
+    @delivery_klass = (current_user.admin? || current_user.employee?) ? Delivery : current_user.store.deliveries.by_date(@date)
+    
+    # Order History
+    if params[:store_id] && store = Store.find(params[:store_id])
+      @deliveries = store.deliveries
+    else    
+      if params[:status] == "pending"
+        @deliveries = @delivery_klass.pending.by_date(@date)
+      elsif params[:status] == "delivered"
+        @deliveries = @delivery_klass.delivered.by_date(@date)
+      elsif params[:status] == "printed"
+        @deliveries = @delivery_klass.printed.by_date(@date)
+      elsif params[:status] == "canceled"
+        @deliveries = @delivery_klass.canceled.by_date(@date)
+      else
+        @deliveries = @delivery_klass.by_date(@date)
+      end
+    end
   end
   
   def redirect_back_or_default(path)
@@ -97,4 +132,25 @@ class ApplicationController < ActionController::Base
   rescue ActionController::RedirectBackError
     redirect_to path
   end
+  
+  def ensure_user_has_store
+    return if current_user.system_user?
+    unless !current_user.store.nil?
+      flash[:notice] = "Let's setup your store."
+      redirect_to new_store_path
+      return
+    end
+  end
+  
+
+  def current_user_session
+    return @current_user_session if defined?(@current_user_session)
+    @current_user_session = UserSession.find
+  end
+
+  def current_user
+    return @current_user if defined?(@current_user)
+    @current_user = current_user_session && current_user_session.user
+  end
+
 end

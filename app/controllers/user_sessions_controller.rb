@@ -1,4 +1,6 @@
 class UserSessionsController < ApplicationController  
+  layout "external"
+  
   def new
     @user_session = UserSession.new
   end
@@ -6,20 +8,11 @@ class UserSessionsController < ApplicationController
   def create 
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
-      flash[:notice] = "Successfully logged in."
-      if current_user and current_user.has_roles?(:admin, :employee)
-        redirect_to pending_deliveries_url
-      #elsif current_user
-        #if @current_user.facebooker?
-        #  fb_login_and_redirect(edit_user_path(current_user))
-        #else
-        #  redirect_to edit_user_path(current_user)
-        #end
-      elsif current_user
-        redirect_to edit_user_path(current_user)
-      end
+      flash[:notice] = 'Successfully logged in.'
+      redirect_to root_url
     else
-      render :action => 'new'
+      flash[:warning] = %(We didn't recognize the username or password you entered. Please try again.)
+      render :action => "new"
     end
   end
   

@@ -1,0 +1,23 @@
+- title "Employees"
+
+= will_paginate @employees
+%br
+
+%div{:id => "list"}
+%table{:class => "stripe"}
+  %thead
+  %tr
+    %th Firstname
+    %th Lastname
+    %th Phone
+    %th Timesheet
+    %th{:style => "width: 50px;"} &nbsp;
+
+  %tbody{:id => "employees"}
+    = render "employee_list"
+
+= will_paginate @employees
+
+- content_for :sidebar do
+  = button "Add Employee", new_admin_employee_path
+  = render :partial => "shared/schedule"

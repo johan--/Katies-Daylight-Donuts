@@ -1,0 +1,76 @@
+- form_for [:admin, @store] do |f|
+  %fieldset
+    = f.error_messages
+    %p
+      = f.label :route_id
+      %br
+      = f.collection_select :route_id, Route.all, :id, :name
+
+  %p
+    = f.label :name
+    %br
+    = f.text_field :name
+
+  %p
+    = f.label :store_no
+    %br
+    = f.text_field :store_no
+  
+  %p
+    = f.label :address
+    %br
+    = f.text_field :address
+
+  %p
+    = f.label :city_id
+    %br
+    = f.collection_select :city_id, City.find(:all, :order => "name ASC"), :id, :name 
+    or type it 
+    = f.text_field :manual_city, :size => 6
+
+  %p
+    = f.label :state
+    %br
+    = f.select :state, State.list, :selected => "NE"
+
+  %p
+    = f.label :country
+    %br
+    = f.select :country, Country.list, :selected => "United States"
+
+  %p
+    = f.label :zipcode
+    %br
+    = f.text_field :zipcode, :size => 8
+
+  %p
+    = f.label :phone
+    %br
+    = f.text_field :phone
+
+  %p
+    = f.label :fax
+    %br
+    = f.text_field :fax
+
+  %p
+    = f.label :email
+    %br
+    = f.text_field :email 
+
+  %p
+    = f.label :url
+    %br
+    = f.text_field :url
+  
+  %br
+  
+  %p.notes
+    = f.label :notes
+    %br
+    = f.text_area :notes, :class => "notes"
+
+  = f.hidden_field :position, :value => 0
+  %p
+    = image_submit_tag "buttons/default/button-save.png" 
+    = link_to_function(image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()))
