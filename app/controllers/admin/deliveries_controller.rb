@@ -58,7 +58,15 @@ class Admin::DeliveriesController < ApplicationController
   
   def update
     @delivery = Delivery.find(params[:id])
-    line_items = params[:delivery].delete(:line_items) || []
+    line_items = params[:delivery].delete(:line_items_attributes) || []
+    if params[:comment] && @delivery.comments.size > 0
+      @delivery.comments.first.update_attributes(params[:comment])
+    elsif params[:comment]
+      c = @delivery.comments.build(params[:comment])
+      c.save
+    end
+    
+    
     if @delivery.update_attributes(params[:delivery]) && @delivery.update_line_items(line_items)
       success "Delivery was successfully updated."
       redirect_to admin_deliveries_path

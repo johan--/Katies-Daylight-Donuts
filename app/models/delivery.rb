@@ -145,6 +145,7 @@ class Delivery < ActiveRecord::Base
   end
   
   def update_line_items(*args)
+    #debugger
     args.first.each do |line_item|
       item = Item.find(line_item[:item_id])
       if existing_line_item = self.line_items.detect{ |l| l.item_id == item.id.to_i }

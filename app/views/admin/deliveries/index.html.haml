@@ -55,4 +55,7 @@
         - [d.mday, {:class => "day"}]
         
 :javascript
-  document.observe("dom:loaded", function(){initDeliveriesGrid("/admin/deliveries.json") })
+  document.observe("dom:loaded", function(){
+    initDeliveriesGrid("/admin/deliveries.json");
+    $('id').activate();
+  })
