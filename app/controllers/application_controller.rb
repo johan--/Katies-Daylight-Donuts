@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   rescue_from NoMethodError, :with => :show_error
 
 
-  def bad_record; render "/errors/404", :status => 404 ; end
+  def bad_record; render "/errors/404.html", :status => 404; end
   def show_error(exception); render :text => exception.message; end
   
   def view_all?
