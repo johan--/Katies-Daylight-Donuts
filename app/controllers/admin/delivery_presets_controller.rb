@@ -20,7 +20,7 @@ class Admin::DeliveryPresetsController < ApplicationController
     @delivery_preset = DeliveryPreset.new(params[:delivery_preset])
     if @delivery_preset.save
       flash[:notice] = "Successfully Created Delivery."
-      redirect_to edit_delivery_preset_path(@delivery_preset)
+      redirect_to edit_admin_delivery_preset_path(@delivery_preset)
     else
       render :action => 'new'
     end
@@ -38,7 +38,7 @@ class Admin::DeliveryPresetsController < ApplicationController
     if DeliveryPreset.copy_attributes(@delivery_preset, @copy_to_delivery_preset)
       flash[:notice] = "Copy complete"
       next_day_of_week = @delivery_preset.day_of_week.next_day_of_week
-      redirect_to edit_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
+      redirect_to edit_admin_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
     else
       flash[:warning] = "Copy failed"
       render :action => "edit"
@@ -51,7 +51,7 @@ class Admin::DeliveryPresetsController < ApplicationController
     if @delivery_preset.update_attributes(params[:delivery_preset]) && @delivery_preset.update_line_items(line_items)
       flash[:notice] = "Successfully Updated Delivery Preset."
       next_day_of_week = @delivery_preset.day_of_week.next_day_of_week
-      redirect_to edit_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
+      redirect_to edit_admin_delivery_preset_path(@delivery_preset.store.delivery_presets.find_by_day_of_week(next_day_of_week))
     else
       render :action => 'edit'
     end
@@ -76,7 +76,7 @@ class Admin::DeliveryPresetsController < ApplicationController
     else
       flash[:warning] = "Could not remove item from preset, an error occured."
     end
-    redirect_to edit_store_delivery_preset_path(@delivery_preset)
+    redirect_to edit_admin_delivery_preset_path(@delivery_preset)
   end
   
   def destroy
