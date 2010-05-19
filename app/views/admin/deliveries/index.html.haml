@@ -23,7 +23,7 @@
     %li.header Delivery Tools
     
     %li
-      =link_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :before => %($('ticket_spinner').toggle()), :complete => %(generateDeliveriesComplete())}
+      =link_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :before => %($('ticket_spinner').toggle()), :complete => %(generateDeliveriesComplete()), :confirm => "Are you sure you want to do that?"}
       %span.right
         = image_tag "spinner.gif", :id => "ticket_spinner", :style => "display: none;"
         
