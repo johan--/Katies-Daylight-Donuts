@@ -5,11 +5,6 @@
 
 = render :partial => 'form'
 
-:javascript
-  document.observe("dom:loaded", function(){
-    $$('input.quantity')[0].activate()
-  })
-
 - content_for :sidebar do 
   %div{ :class => "side content"} 
     = render :partial => "presets"
