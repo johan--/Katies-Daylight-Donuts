@@ -17,6 +17,10 @@
 </table>
 
 <% content_for :sidebar do %>
-  <%= facebox_button "Add Schedule", new_admin_schedule_path(:date => @date) %>
+  <ul class="sidebar">
+    <li class="header">Schedule Tools</li>
+    <li><%= icon "plus" %> <%= link_to_facebox "Add Schedule", new_admin_schedule_path(:date => @date) %></li>
+    <li><%= icon "clock" %> <%= link_to "Launch Timeclock", "/admin/timeclock" %></li>
+  </ul>
   <%= render :partial => "shared/schedule" %>
 <% end %>

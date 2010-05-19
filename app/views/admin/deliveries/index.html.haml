@@ -23,15 +23,22 @@
     %li.header Delivery Tools
     
     %li
+      = icon "plus"
+      =link_to "Add Delivery", new_admin_delivery_path
+    
+    %li
+      = icon "inbox-document-text"
       =link_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :before => %($('ticket_spinner').toggle()), :complete => %(generateDeliveriesComplete()), :confirm => "Are you sure you want to do that?"}
       %span.right
         = image_tag "spinner.gif", :id => "ticket_spinner", :style => "display: none;"
         
-    %li= link_to "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_admin_deliveries_path(:format => :pdf)
+    %li
+      = icon "printer"
+      = link_to "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_admin_deliveries_path(:format => :pdf)
     
-    %li=link_to "Add Delivery", new_admin_delivery_path
-    
-    %li= link_to "Collections", admin_collections_path
+    %li
+      = icon "box-share"
+      = link_to "Collections", admin_collections_path
   
   =# button_to_function "Print Selected", %($('print').value = true;$$('.deliveries_form_button').each(function(e){e.click()})), :class => "button"
   

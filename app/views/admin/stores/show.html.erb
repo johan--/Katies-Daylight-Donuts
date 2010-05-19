@@ -2,7 +2,7 @@
 <% content_tag :p do %>
   <strong>Store No:</strong>
   <%=h @store.store_no %>
-<% end if @store.store_no %>
+<% end if !@store.store_no.blank? %>
 
 <p>
   <strong>Address:</strong>
@@ -55,36 +55,26 @@
 </div>
 
 <% content_for :sidebar do %>
-  <div class="store-balance">
-    Balance: <%= number_to_currency @store.balance %>
-  </div>
-
   <ul class="sidebar">
+    <li class="header">Balance: <%= number_to_currency @store.balance %></li>
     <li><%= link_to "All Stores", admin_stores_path %></li>
-    <li><%= link_to "Order History", delivered_admin_deliveries_path(@store) %></li>
-    <li><%= link_to "Edit", edit_admin_store_path(@store) %></li>
+    <li><%= link_to "Order History", delivered_admin_deliveries_path(@store) %> (store)</li>
+    <li><%= link_to "Edit", edit_admin_store_path(@store) %> (store)</li>
     <li><%= link_to "Delete", admin_store_path(@store), :confirm => 'Are you sure?', :method => :delete %></li>
+    
     <% if !@store.email.blank? %>
     <li>Email: <%= link_to h(@store.email), "mailto:#{h(@store.email)}" %>
     <%=h @store.url if @store.url %></li>
     <% end %>
-  </ul>
-
-  <% if @current_user.super? %>
+    
     <% if @store.user %>
-      <p>This store belongs to <%= link_to @store.user.username, admin_store_path(@store.user) %></p>
-  <% else %>
-    <p>This store does <strong>NOT</strong> have a user account. Please add an email address to create their account.</p>
-  <% end %>
-    <br />
-  <% end %>
-  
-  <% unless @store.notes.blank? %>
-  <h2>Static Note</h2>
-  <p>
-    <%= @store.notes %><br />
-    <%= link_to "Edit", edit_admin_store_path %>
-  </p>
-  <% end %>
-
+    <li>User: <%= link_to @store.user.username, admin_store_path(@store.user) %></li>
+    <% else %>
+      <li>This store does <strong>NOT</strong> have a user account. Please add an email address to create their account.</li>
+    <% end %>
+    
+    <% unless @store.notes.blank? %>
+    <li>Static Notes: <%= @store.notes %> <%= link_to "Edit", edit_admin_store_path %></li>
+    <% end %>
+  </ul>
 <% end %>
