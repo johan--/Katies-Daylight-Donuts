@@ -82,7 +82,7 @@ class Admin::DeliveriesController < ApplicationController
     Store.create_todays_deliveries!
     respond_to do |format|
       format.html{ redirect_to deliveries_path }
-      format.js
+      format.js{ render :nothing => true }
     end
   end
   

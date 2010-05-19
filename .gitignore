@@ -2,7 +2,7 @@ log/
 .DS_Store
 lib/tasks/rcov.rake
 app/views/coverage
-db/test.sqlite3
+db/*.sqlite3
 db/katies.csv
 db/katies.xls
 coverage/

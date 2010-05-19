@@ -1,3 +1,6 @@
+// Google Ajax Api Key
+// ABQIAAAAVimlRb2aAW5cgcfvHFp1zBSphUg9eGBlzC3ENvNCNY8EWEmmLBSJnaSRujuDXblprps3f9ZJkT2IlA
+
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
 
@@ -637,4 +640,9 @@ function handleKeyPress(e){
   if (key==13){ // Enter Key
     initDeliveriesGridWithDelivery()
   }
+}
+
+function generateDeliveriesComplete(){
+  reloadDeliveriesGrid('pending',true);
+  $('ticket_spinner').hide();
 }

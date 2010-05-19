@@ -677,9 +677,28 @@ textarea.notes{
   height: 100px;
 }
 
+ul.sidebar li.header{
+  background: #494949;
+  color: #fff;
+  font-weight: bold;
+}
+
 ul.sidebar li{
   background: #E4FBF5;
   padding: 4px 8px;
   border-top: 1px solid white;
   border-bottom: 1px solid #B8C5D5;
+}
+
+.clear{
+  clear: both;
+}
+
+.right{
+  float: right;
+}
+
+#ticket_spinner{
+  float: right;
+  vertical-align: middle;
 }

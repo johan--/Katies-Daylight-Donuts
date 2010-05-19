@@ -19,11 +19,14 @@
 = render :partial => 'admin/shared/subnav'
 
 - content_for :sidebar do 
-  = button_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :loading => %(showProgressBar('Generating #{Delivery.pending.by_date.unprinted.count} tickets... Please Wait...')), :complete => %(hideProgressBar())}, {:class => "button"} if @current_user.system_user?
-          
-  %br
-  
-  %ul{:class => "sidebar"}
+  %ul.sidebar
+    %li.header Delivery Tools
+    
+    %li
+      =link_to_remote "Generate Today's Tickets", {:url => generate_todays_admin_deliveries_path, :before => %($('ticket_spinner').toggle()), :complete => %(generateDeliveriesComplete())}
+      %span.right
+        = image_tag "spinner.gif", :id => "ticket_spinner", :style => "display: none;"
+        
     %li= link_to "Print Tickets <span id='ticket_count'>#{Delivery.pending.by_date.count}</span>", print_todays_admin_deliveries_path(:format => :pdf)
     
     %li=link_to "Add Delivery", new_admin_delivery_path
