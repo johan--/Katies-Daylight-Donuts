@@ -12,19 +12,21 @@
   = render :partial => @stores
 
 - content_for :sidebar do
-  - form_remote_tag :url => search_admin_stores_path do
-    = icon "magnifier-medium"
-    = text_field_tag :store_name
-    = image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom"
+  %ul.sidebar
+    %li.header
+      - form_remote_tag :url => search_admin_stores_path do
+        = icon "magnifier-medium"
+        = text_field_tag :store_name
+        = image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom"
+    %li= link_to "Add Store", new_admin_store_path
+    %li= link_to "PDF Store List", admin_stores_path(:format => :pdf)
   
-  = button "Add Store", new_admin_store_path
-  
-  = button "PDF Store List", admin_stores_path(:format => :pdf)
+  %br
   
   - cache :routes do
-    %div{:style => "margin: 1em;"}
-      %h2 Routes
-      %p
+    %ul.sidebar
+      %li.header Routes
+      %li
         You can drag stores to a Routes Drop Zone to add the store to that route. 
         = link_to_facebox "Add a route", new_admin_route_path
   

@@ -70,7 +70,7 @@
     <% if @store.user %>
     <li>User: <%= link_to @store.user.username, admin_store_path(@store.user) %></li>
     <% else %>
-      <li>This store does <strong>NOT</strong> have a user account. Please add an email address to create their account.</li>
+      <li>This store does <strong>NOT</strong> have a user account. Please <%= link_to "add an email address", edit_admin_store_path(@store) %> to create their account.</li>
     <% end %>
     
     <% unless @store.notes.blank? %>

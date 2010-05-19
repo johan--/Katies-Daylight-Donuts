@@ -81,3 +81,11 @@
   %p
     = image_submit_tag "buttons/default/button-save.png" 
     = link_to_function(image_tag("buttons/default/button-cancel.png"), %(javascript:history.back()))
+    
+
+- content_for :sidebar do
+  %ul.sidebar
+    %li.header= @store.name
+    %li.li= @store.full_address
+    %li= @store.phone
+    %li= link_to "All Stores", admin_stores_path
