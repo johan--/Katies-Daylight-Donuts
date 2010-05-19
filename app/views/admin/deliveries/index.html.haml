@@ -5,21 +5,20 @@
     Welcome = @current_user.username,
   %p
     You can create, update and cancel a delivery by using the tools below. When a delivery changes we will be notified by email and update the order.
-
-- form_for "deliveries[]", :id => nil, :url => {:controller => "deliveries", :action => "update_status"} do |f|
-  %div{:class => "span-14"}
-    %strong Delivery ID#
-    = hidden_field_tag :store_id, @store.to_param
-    = text_field_tag :id
-    %input{:type => "button", :value => "Search", :onclick => %(setDeliveriesGridUrl('deliveries/' + $('id').value + '.json'))}
-    %span{:id => "clear_search_link"}
     
-  %div{:id => "deliveries", :class => "span-14", :style => "margin-top: 1em;"}
+%div{:id => "deliveries", :class => "span-14", :style => "margin-top: 1em;"}
 
 = render :partial => 'admin/shared/subnav'
 
 - content_for :sidebar do 
   %ul.sidebar
+    %li.header
+      - form_for "deliveries[]", :id => nil, :url => "javascript:handleKeyPress(event);" do |f|
+        = icon "magnifier-medium"
+        = hidden_field_tag :store_id, @store.to_param
+        = text_field_tag :id, {},:onkeypress => "handleKeyPress(event);"
+        = image_tag "buttons/default/button-search.png", :style => "vertical-align: bottom", :onclick => %(setDeliveriesGridUrl('deliveries/' + $('id').value + '.json'))
+    %li{:id => "clear_search_link"}
     %li.header Delivery Tools
     
     %li

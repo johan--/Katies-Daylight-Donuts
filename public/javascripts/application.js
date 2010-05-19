@@ -631,7 +631,7 @@ function timeTicker(){
 }
 
 function initDeliveriesGridWithDelivery(){
-  setDeliveriesGridUrl('store/'+ $('store_id').value +'/deliveries/' + $('id').value + '.json')
+  setDeliveriesGridUrl('/admin/deliveries/' + $('id').value + '.json')
 }
 
 // Handle Key Event

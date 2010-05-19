@@ -5,10 +5,13 @@ class Admin::DeliveriesController < ApplicationController
   layout "admin"
   
   def index
+    order = params[:sort].blank? ? "delivery_date desc" : "'#{params[:sort]} #{params[:dir]}'"
     @date = params[:date] || Time.zone.now
     @delivery_klass = Delivery
     scope = params[:status] ? @delivery_klass.send(params[:status].to_sym) : @delivery_klass
-    @deliveries = scope.all(:include => [{:store,:route}], :order => "id desc", :limit => (params[:limit] || 70), :offset => (params[:start] || 0))
+    @deliveries = scope.all(:include => [{:store,:route}], 
+      :order => order, :limit => (params[:limit] || 70), 
+      :offset => (params[:start] || 0))
     respond_to do |format|
       format.html
       format.xml{ render :xml => @deliveries.to_xml(:include => [:store]) }
@@ -131,7 +134,10 @@ class Admin::DeliveriesController < ApplicationController
       @deliveries.each do |delivery|
         delivery.send(:"#{params[:message]}!") if delivery.respond_to?(:"#{params[:message]}!")
       end
-      redirect_to pending_deliveries_path
+      respond_to do |format|
+        format.html{ redirect_to pending_deliveries_path }
+        format.js
+      end
     end
   end
   

@@ -15,14 +15,14 @@
       or type it 
     = f.text_field :store_name, :size => 15
   - else
-    = f.hidden_field :store_id, :value => @current_user.store.id
+    = f.hidden_field :store_id, :value => @current_user.store.id, :tabindex => -1
   
   - if @current_user.super?
     - if Employee.drivers.size > 0
       %p
         = f.label :employee_id, "Driver"
         %br
-        = f.collection_select :employee_id, Employee.drivers, :id, :fullname
+        = f.collection_select :employee_id, Employee.drivers, :id, :fullname, :tabindex => -1
   - else
     = f.hidden_field :employee_id, :value => Employee.drivers.first.id unless Employee.drivers.empty?
     %br
@@ -42,11 +42,11 @@
       %th
         &nbsp;
         
-    - Item.available.each do |item|
+    - Item.available.each_with_index do |item, index|
       - if line_item = @delivery.line_items.detect{|li| li.item == item}
-        = render :partial => "deliveries/line_item", :object => line_item
+        = render :partial => "deliveries/line_item", :object => line_item, :locals => {:index => index}
       - else
-        = render :partial => "deliveries/line_item", :object => @delivery.line_items.build(:quantity => 0, :item => item)
+        = render :partial => "deliveries/line_item", :object => @delivery.line_items.build(:quantity => 0, :item => item), :locals => {:index => index}
   
   %div{:class => "standout"}
   - fields_for @delivery.comments.empty? ? @delivery.comments.new :  @delivery.comments[0], "delivery[comments][]" do |comment_form|
@@ -59,7 +59,7 @@
     %p
       = comment_form.label :body, "Comment: "
       %br
-      = comment_form.text_area :body,{:rows => 6, :class => "span-12"}
+      = comment_form.text_area :body,{:rows => 6, :class => "span-12", :tabindex => Item.available.count+1}
   
   
   %p
@@ -86,6 +86,6 @@
 
 :javascript
   document.observe("dom:loaded", function() {
-    $('no_drivers_alert_link').onclick();
+    //$('no_drivers_alert_link').onclick();
     $$('input.quantity')[0].activate();
   });
