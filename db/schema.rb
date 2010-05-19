@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(:version => 20100517075140) do
   create_table "buy_backs", :force => true do |t|
     t.integer  "delivery_id"
     t.string   "state"
-    t.integer  "tax"
-    t.integer  "price"
+    t.decimal  "tax"
+    t.decimal  "price"
     t.integer  "raised_donut_count"
     t.integer  "cake_donut_count"
     t.integer  "roll_count"
@@ -59,14 +59,6 @@ ActiveRecord::Schema.define(:version => 20100517075140) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "time_zone",  :default => "Central Time (US & Canada)"
-  end
-
-  create_table "customers", :force => true do |t|
-    t.string   "name"
-    t.string   "website"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "email"
   end
 
   create_table "deliveries", :force => true do |t|
@@ -124,7 +116,7 @@ ActiveRecord::Schema.define(:version => 20100517075140) do
     t.string   "item_type"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "price",             :precision => 8, :scale => 2, :default => 0.0
+    t.decimal  "price",                                           :default => 0.0
     t.boolean  "available",                                       :default => true
     t.integer  "number_per_screen",                               :default => 25
     t.decimal  "weight",            :precision => 8, :scale => 2, :default => 0.0
@@ -137,22 +129,6 @@ ActiveRecord::Schema.define(:version => 20100517075140) do
     t.decimal "price",              :precision => 8, :scale => 2
     t.integer "delivery_preset_id"
     t.integer "buy_back_id"
-  end
-
-  create_table "locations", :force => true do |t|
-    t.string   "address"
-    t.string   "city"
-    t.string   "state"
-    t.integer  "zipcode"
-    t.string   "country"
-    t.string   "phone"
-    t.string   "fax"
-    t.string   "email"
-    t.string   "manager"
-    t.integer  "customer_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "geocode"
   end
 
   create_table "positions", :force => true do |t|

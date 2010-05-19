@@ -3,6 +3,15 @@ class ScreenCalculation
   attr_reader :error
   attr_accessor :result, :items
   
+  # Creates a new screen calculation object
+  #
+  # params - The Hash of options
+  #
+  # Examples
+  #
+  # screen_calculation = ScreenCalculation.new(:item => item)
+  #
+  # Returns a new instance
   def initialize(params = {})
     @results = []
     if params[:item] && params[:item][:ids] && params[:item][:counts]
@@ -16,6 +25,14 @@ class ScreenCalculation
     []
   end
   
+  # Creates the html to display the screen counts
+  #
+  # Examples
+  # 
+  # screen_calculator.to_html
+  # # => <ul id='screens'><li>Donuts 24</li></ul>
+  #
+  # Returns a String of html
   def to_html
     content = "<ul id='screens'>"
     @results.each do |result|
@@ -27,6 +44,17 @@ class ScreenCalculation
   
   private
   
+  # Parse through the array and create a 
+  # multi-dimensional array of results
+  #
+  # array - The Array of data
+  #
+  # Examples
+  #
+  # parse([item, 28])
+  # # => [['Donut Holes', 288]]
+  #
+  # Returns the Array of results
   def parse(array)
     @results = []
     array.each do |line|

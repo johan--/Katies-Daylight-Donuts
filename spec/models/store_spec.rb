@@ -10,6 +10,16 @@ describe Store do
       store.should_receive(:create_todays_delivery!)
       Store.create_todays_deliveries!
     end
+    
+    it "should have the correct items and counts for today" do
+      Position.should_receive(:driver).and_return(Factory(:position))
+      store = Factory(:store)
+      store_ticket = store.todays_ticket
+      delivery = store.create_todays_delivery!
+      [:item_id, :quantity].each do |proc|
+        delivery.line_items.map(&proc).should == store_ticket.line_items.map(&proc)
+      end
+    end
   end
   
   context "instance methods" do

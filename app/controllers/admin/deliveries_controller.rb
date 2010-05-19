@@ -20,6 +20,8 @@ class Admin::DeliveriesController < ApplicationController
     @delivery = Delivery.new
   end
   
+  # id - The Id of the delivery
+  #
   def edit
     @delivery = Delivery.find(params[:id])
   end

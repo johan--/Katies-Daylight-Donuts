@@ -15,6 +15,12 @@ describe Delivery do
     @delivery = Factory(:delivery)
   end
   
+  it "should add an item" do
+    item = Factory(:item)
+    @delivery.add_item(item, 1)
+    @delivery.items.include?(item).should be_true
+  end
+  
   context "future dated delivery" do
     it "should be returned in the pending by date named scope" do
       time = (Time.zone.now+1.month)

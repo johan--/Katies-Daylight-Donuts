@@ -95,6 +95,14 @@ class BuyBack < ActiveRecord::Base
   
   private
   
+  # Calculates the total value of the LineItems
+  #
+  # Examples
+  #
+  # calculate_total
+  # # => 5.46
+  #
+  # Returns the Float value of the sum
   def calculate_total
     self.price = line_items.map(&:total).sum
   end

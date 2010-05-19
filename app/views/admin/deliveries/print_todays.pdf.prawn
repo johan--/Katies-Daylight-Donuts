@@ -36,7 +36,7 @@ end
       [{:text => "Invoice #{invoice_date}", :colspan => 5, :align => :center, :background_color => "ACACAC"}],
       [{:text => "#{@setting.name} \n#{@setting.address}\n#{@setting.city}, #{@setting.state}\n#{@setting.country} #{@setting.zipcode}\n\nPhone: #{@setting.phone}", :align => :left},
        {:text => "Invoice #: #{delivery.id}\nDate : #{invoice_date}\nE-Mail :#{delivery.email}", :rowspan => 2, :colspan => 3}],
-      [{:text => "Customer Sold to: \n#{delivery.address.upcase}"},
+      [{:text => "Customer Sold to: \n#{delivery.address.upcase} \n\n #{delivery.phone}"},
        {:text => "Ship to: \n#{delivery.address.upcase}"}]
     ], :width => 500
 
