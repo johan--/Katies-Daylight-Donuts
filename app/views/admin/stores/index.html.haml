@@ -18,8 +18,12 @@
         = icon "magnifier-medium"
         = text_field_tag :store_name
         = image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom"
-    %li= link_to "Add Store", new_admin_store_path
-    %li= link_to "PDF Store List", admin_stores_path(:format => :pdf)
+    %li
+      = icon "plus"
+      = link_to "Add Store", new_admin_store_path
+    %li
+      = image_tag "icons/pdf.gif"
+      = link_to "PDF Store List", admin_stores_path(:format => :pdf)
   
   %br
   

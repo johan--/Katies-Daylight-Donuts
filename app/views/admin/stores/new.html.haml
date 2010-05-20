@@ -1,0 +1,8 @@
+- title "New Store"
+= render :partial => 'form' 
+
+- content_for :sidebar do
+  %ul.sidebar
+    %li.header New Store
+    %li= link_to "All Stores", admin_stores_path
+

@@ -10,7 +10,7 @@ class Store < ActiveRecord::Base
   # Geocode the locations for mapping
   after_update  :get_geocode
   before_create :get_geocode
-  before_validation :set_position
+  before_validation_on_create :set_position
   before_validation :find_or_create_city
   
   validates_presence_of :name, :address, :city, :state, :country, :zipcode, :position # important!
