@@ -702,3 +702,9 @@ ul.sidebar li{
   float: right;
   vertical-align: middle;
 }
+
+/* 500 Error, Sleeping Rhino */
+.error-page{
+  background: url("../images/sleeping-rooster.gif") no-repeat bottom center;
+  height: 500px;
+}
