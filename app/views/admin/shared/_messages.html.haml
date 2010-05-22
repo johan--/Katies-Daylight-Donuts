@@ -1,6 +1,6 @@
 %ul{:class => "messages", :id => "ticker_messages"}
-  - Api::Sms.find(:all, :limit => 10).each do |message|
-    %li
-      = link_to message.ticker_string, admin_sm_path(message)
-  - Delivery.pending do |delivery|
-      = link_to "#{delivery.store.name}'s: ticket ##{delivery.id}, needs printed.", admin_delivery_path(delivery)
+  - [Api::Sms.find(:all, :limit => 10) | Delivery.pending].flatten.each do |message|
+    -if message.is_a?(Delivery)
+      %li= link_to "#{message.store.name}'s: ticket ##{message.id}, needs printed.", admin_delivery_path(message)
+    -else
+      %li= link_to message.ticker_string, admin_sm_path(message)
