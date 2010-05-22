@@ -18,7 +18,7 @@ class Api::Sms < ActiveRecord::Base
   end
   
   def ticker_string
-    "#{self.created_at.strftime('%b, %d %I:%M %p')} From: #{self.user.number_or_email}, #{self.body}"
+    "#{self.created_at.strftime('%b, %d %I:%M %p')} From: #{self.user.store_name_or_mobile}, #{self.body}"
   end
   
   private

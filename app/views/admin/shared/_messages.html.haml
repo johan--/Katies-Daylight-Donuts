@@ -2,3 +2,5 @@
   - Api::Sms.find(:all, :limit => 10).each do |message|
     %li
       = link_to message.ticker_string, admin_sm_path(message)
+  - Delivery.pending do |delivery|
+      = link_to "#{delivery.store.name}'s: ticket ##{delivery.id}, needs printed.", admin_delivery_path(delivery)
