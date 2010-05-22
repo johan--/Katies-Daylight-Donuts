@@ -708,3 +708,38 @@ ul.sidebar li{
   background: url("../images/sleeping-rooster.gif") no-repeat bottom center;
   height: 500px;
 }
+
+.container{
+  margin-top: 40px;
+}
+
+#ticker{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 30px;
+  background: url("../images/tickerbg.gif") repeat-x black;
+  color: #fff;
+  overflow: hidden;
+  z-index: 100;
+}
+
+#ticker div.ticker-content{
+  padding-left: 12.5%;
+}
+
+#ticker ul.messages li{
+  padding-top: 5px;
+  padding-left: 14px;
+  height: 30px;
+  text-align: left;
+}
+
+#ticker ul.messages li a{
+  color: #fff;
+  text-decoration: none;
+}
+
+#ticker ul.messages li a:hover{
+  text-decoration: underline;
+}

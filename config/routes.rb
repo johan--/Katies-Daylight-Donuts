@@ -5,7 +5,7 @@ ActionController::Routing::Routes.draw do |map|
   
   map.namespace :admin do |admin|
     admin.resource :sms, :only => [:index,:create, :new]
-    admin.resources :sms, :only => [:show]
+    admin.resources :sms, :only => [:show, :index]
     admin.resources :users, :collection => { :search => :any }, :has_one => :store
     admin.resources :collections, :member => {:rollback => :any}
     admin.resources :buy_backs

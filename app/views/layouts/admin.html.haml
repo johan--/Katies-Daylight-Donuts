@@ -17,9 +17,17 @@
     :javascript
       document.observe("dom:loaded", function() {
         facebox.settings.opacity = 0.5;
+        setInterval(function(){
+          ticker();
+        }, 5000)
       });
       
     %body
+      #ticker
+        %div{:class => "span-24 ticker-content"}
+          = icon "mobile-phone", :style => "float: left"
+          = render :partial => "admin/shared/messages"
+      
       %div{ :class => "container" }
         %div{ :class => "span-24"}
           %div{:class => "span-8"}

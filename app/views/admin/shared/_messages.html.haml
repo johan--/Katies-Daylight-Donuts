@@ -1,0 +1,4 @@
+%ul{:class => "messages", :id => "ticker_messages"}
+  - Api::Sms.find(:all, :limit => 10).each do |message|
+    %li
+      = link_to message.body, admin_sm_path(message)

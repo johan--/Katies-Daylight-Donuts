@@ -646,3 +646,8 @@ function generateDeliveriesComplete(){
   reloadDeliveriesGrid('pending',true);
   $('ticket_spinner').hide();
 }
+
+function ticker(){
+  var e = $$('#ticker_messages li')[0];
+  $('ticker_messages').appendChild(e);
+}

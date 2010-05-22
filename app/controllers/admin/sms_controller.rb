@@ -6,6 +6,10 @@ class Admin::SmsController < ApplicationController
   
   def index
     @sms_messages = Api::Sms.all
+    respond_to do |format|
+      format.html
+      format.json{ render :json => @sms_messages }
+    end
   end
 
   def new
