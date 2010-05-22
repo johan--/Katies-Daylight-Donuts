@@ -1,5 +1,5 @@
 class Api::SmsController < ApplicationController  
-  before_filter :login_required, :only => :index, :outgoing
+  before_filter :login_required, :only => [:index, :outgoing]
 
   protect_from_forgery :except => :incoming
 
