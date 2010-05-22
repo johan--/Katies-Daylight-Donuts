@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
-  if Rails.env == "production"
+  if Rails.env == "production1"
     # Declare exception to handler methods
     #rescue_from ActionController::UnknownAction, :with => :bad_record
     rescue_from Exception, :with => :show_error
