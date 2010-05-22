@@ -4,4 +4,4 @@
       %li{:class => current("stores")}=link_to "#{icon("store")} #{@current_user.store.nil? ? 'Add' : 'My'}  Store",  @current_user.customer_with_store? ? user_store_path(@current_user,@current_user.store) : new_user_store_path(@current_user)
   
   - else
-    %li{:class => current("user_sessions")}= link_to "Login", login_url
+    %li{:class => 'current'}= link_to "Login", login_url

@@ -45,7 +45,7 @@ class Admin::UsersController < ApplicationController
   end
   
   def edit
-    @user = find_user
+    @user = User.find(params[:id])
     respond_to do |format|
       format.html
       format.js{ render :layout => false }
@@ -53,12 +53,12 @@ class Admin::UsersController < ApplicationController
   end
   
   def show
-    @user = find_user
+    @user = User.find(params[:id])
     render :action => "edit"
   end
   
   def update
-    @user = find_user
+    @user = User.find(params[:id])
     if @user.update_attributes(params[:user])
       flash[:notice] = "Your account was successfully updated."
       redirect_to user_url(@user)
@@ -68,7 +68,7 @@ class Admin::UsersController < ApplicationController
   end
   
   def destroy
-    if @user = User.find_by_username(params[:id])
+    if @user = User.find(params[:id])
       if @user.destroy
         flash[:notice] = "User successfully removed."
       else

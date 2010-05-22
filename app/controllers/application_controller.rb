@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
+
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
   
@@ -13,14 +14,19 @@ class ApplicationController < ActionController::Base
   # Scrub sensitive parameters from your log
   filter_parameter_logging :password
   
-  # Declare exception to handler methods
-  #rescue_from ActionController::UnknownAction, :with => :bad_record
-  rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
-  rescue_from NoMethodError, :with => :show_error
+  if Rails.env == "production"
+    # Declare exception to handler methods
+    #rescue_from ActionController::UnknownAction, :with => :bad_record
+    rescue_from Exception, :with => :show_error
+    rescue_from ActiveRecord::RecordNotFound, :with => :bad_record
+    rescue_from NoMethodError, :with => :show_error
+  
 
-
-  def bad_record; render "/errors/404.html", :status => 404; end
-  def show_error(exception); render :text => exception.message; end
+  
+    def bad_request; render :template => "/errors/500.html", :layout => "application", :status => 500; end
+    def bad_record; render "/errors/404.html", :status => 404; end
+    def show_error; render :template => "/errors/500.html", :layout => "application", :status => 500; end
+  end
   
   def view_all?
     params[:view] == "all"
@@ -39,15 +45,17 @@ class ApplicationController < ActionController::Base
 
   protected
   
-  # Custom Error Pages
-  def render_optional_error_file(status_code)
-    known_codes = ["404", "422", "500", :not_found]
-    status = interpret_status(status_code)
-
-    if known_codes.include?(status_code)
-      render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'application.html.erb'
-    else
-      render :template => "/errors/unknown.html.erb", :status => status, :layout => 'application.html.erb'
+  if Rails.env == "production"
+    # Custom Error Pages
+    def render_optional_error_file(status_code)
+      known_codes = ["404", "422", "500", :not_found]
+      status = interpret_status(status_code)
+      raise Exception, status
+      if known_codes.include?(status_code)
+        render :template => "/errors/#{status[0,3]}.html.erb", :status => status, :layout => 'application.html.erb'
+      else
+        render :template => "/errors/unknown.html.erb", :status => status, :layout => 'application.html.erb'
+      end
     end
   end
   

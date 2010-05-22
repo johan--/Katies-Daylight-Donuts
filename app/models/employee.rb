@@ -27,7 +27,7 @@ class Employee < ActiveRecord::Base
   has_many :clockin_times
   has_many :schedules
   
-  named_scope :drivers, :conditions => {:positions => "in (#{Position.driver.id})"}
+  named_scope :drivers, :through => :positions
   named_scope :clocked_in, :conditions => {:state => "clocked_in"}
   
   # Finds or Creates a new employee with a driving position
@@ -40,7 +40,7 @@ class Employee < ActiveRecord::Base
   end
   
   def make_driver
-    self.positions << Position.driver
+    self.positions << (Position.driver || Position.create(:name => "Driver"))
   end
   
   def hours

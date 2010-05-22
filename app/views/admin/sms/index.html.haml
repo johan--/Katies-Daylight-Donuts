@@ -1,0 +1,16 @@
+- title "SMS Messages"
+
+- if @sms_messages.empty?
+  %p
+    No Messages Yet
+- else
+  %ul.sms
+    - @sms_messages.each do |sms_message|
+      %li=link_to display_sms_message(sms_message), admin_sm_path(sms_message) 
+      
+- content_for :sidebar do
+  %ul.sidebar
+    %li.header SMS Tools
+    %li
+      =icon('plus')
+      =link_to "Add an SMS message", new_admin_sms_path

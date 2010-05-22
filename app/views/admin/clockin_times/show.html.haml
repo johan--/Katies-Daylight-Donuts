@@ -5,7 +5,7 @@
     %h2
       Confirm you want to clockout
   
-    %form{:action => "/admin/clockin_times/#{@clockin_time.id}"}
+    - form_for [:admin, @clockin_time], :url => clockout_admin_clockin_time_path(@clockin_time) do |f|
       %input{:type => "hidden", :name => "_method", :value => "delete"}
       %div
         %label 

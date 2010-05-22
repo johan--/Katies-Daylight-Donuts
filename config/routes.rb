@@ -1,9 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
+  map.namespace :api do |api|
+    api.resource :sms, :only => [:outgoing,:incoming, :index], :collection => {:outgoing => :any, :incoming => :post}
+  end
+  
   map.namespace :admin do |admin|
+    admin.resource :sms, :only => [:index,:create, :new]
+    admin.resources :sms, :only => [:show]
     admin.resources :users, :collection => { :search => :any }, :has_one => :store
     admin.resources :collections, :member => {:rollback => :any}
     admin.resources :buy_backs
-    admin.resources :clockin_times
+    admin.resources :clockin_times, :member => {:clockin => :any, :clockout => :any}
     admin.resources :comments
     admin.resources :positions
     admin.resources :routes

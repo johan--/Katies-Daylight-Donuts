@@ -1,0 +1,18 @@
+- title "SMS Message"
+
+%p
+  Sent To:
+  = @sms_message.prefix
+
+%p
+  From:
+  = link_to @sms_message.user.username, admin_user_path(@sms_message.user.id)
+
+%p
+  Received:
+  = @sms_message.created_at.to_s(:short)
+
+%p
+  Body:
+  %br
+  = @sms_message.body

@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   before_validation :generate_api_key
   
   has_and_belongs_to_many :roles
-  
+  has_many :sms
   has_one :store, :dependent => :destroy
   
   perishable_token_valid_for = 2.hours
@@ -36,6 +36,10 @@ class User < ActiveRecord::Base
   #  self.password = self.password_confirmation = "stunod"
   #  self.roles << Role.customer
   #end
+  
+  def self.nobody
+    @nobody ||= find_or_create_by_username("nobody")
+  end
   
   def self.paginate_search(options = {})
     query = "%"+options[:q]+"%"

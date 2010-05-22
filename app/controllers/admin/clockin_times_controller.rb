@@ -11,7 +11,10 @@ class Admin::ClockinTimesController < ApplicationController
   
   def clockout
     @clockin_time = ClockinTime.find_by_employee_id(params[:id])
-    render :action => :show
+    respond_to do |format|
+      format.html{ render :action => :show }
+      format.js{ render :nothing => true }
+    end
   end
   
   def create

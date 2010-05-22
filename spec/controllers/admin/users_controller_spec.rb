@@ -15,4 +15,25 @@ describe Admin::UsersController do
     get :index
     response.should render_template(:index)
   end
+  
+  it "should render the new action" do
+    get :new
+    response.should render_template(:new)
+  end
+  
+  it "should render the edit action" do
+    get :edit, :id => @user.id
+    response.should render_template(:edit)
+  end
+  
+  it "should render the show action" do
+    get :show, :id => @user.id
+    response.should render_template(:edit)
+  end
+  
+  it "should redirect on create" do
+    User.stubs(:save).returns(true)
+    post :create
+    response.should be_redirect
+  end
 end
