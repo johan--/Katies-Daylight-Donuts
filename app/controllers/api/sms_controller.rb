@@ -13,7 +13,7 @@ class Api::SmsController < ApplicationController
       @message = Api::Sms.new(:user => User.nobody, :prefix => params[:sms_prefix], :body => params[:body])
     end
     
-    render :status => @message.save ? 200 : 500, :text => "Success"
+    render :status => @message.save ? 200 : 500, :text => "Success", :content_type => "text/plain"
   end
 
   def outgoing
@@ -21,7 +21,7 @@ class Api::SmsController < ApplicationController
     if response.code.to_i == 200
       render :json => {:code => 200, :body => response.body}
     else
-      render :status => response.code.to_i, :text => response.body
+      render :status => response.code.to_i, :text => response.body, :content_type => "text/plain"
     end
   end
 
