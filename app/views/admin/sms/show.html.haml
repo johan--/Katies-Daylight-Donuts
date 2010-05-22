@@ -16,3 +16,11 @@
   Body:
   %br
   = @sms_message.body
+  
+- content_for :sidebar do
+  %ul{:class => "sidebar"}
+    %li{:class => "header"}
+      SMS Message Tools
+    %li
+      = link_to "Show all (unread) messages", admin_sms_path(:filter => 'unread')
+      = link_to "Show all (read) messages", admin_sms_path(:filter => 'read')

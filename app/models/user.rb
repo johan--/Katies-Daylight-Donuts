@@ -58,6 +58,10 @@ class User < ActiveRecord::Base
     user
   end
   
+  def number_or_email
+    mobile_number || email || "unknown"
+  end
+  
   def has_role?(role)
     !self.roles.find_by_name(role.to_s).nil?
   end

@@ -4,17 +4,21 @@ class Api::Sms < ActiveRecord::Base
   belongs_to :user
   
   aasm_column :state
-  aasm_initial_state :recieved
-  aasm_state :recieved
-  aasm_state :replied
+  aasm_initial_state :unread
+  aasm_state :unread
+  aasm_state :read
   aasm_state :delivered, :enter => :deliver_message
   
-  aasm_event :replied_to do
-    transitions :from => :recieved, :to => :replied_to
+  aasm_event :to_read do
+    transitions :from => :unread, :to => :read
   end
   
-  aasm_event :deliver do
-    transitions :from => :recieved, :to => :delivered
+  aasm_event :to_unread do
+    transitions :from => :read, :to => :unread
+  end
+  
+  def ticker_string
+    "#{self.created_at.strftime('%b, %d %H:%M %p')} From: #{self.user.number_or_email}, #{self.body}"
   end
   
   private

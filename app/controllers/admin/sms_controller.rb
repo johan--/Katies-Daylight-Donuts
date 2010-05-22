@@ -5,7 +5,8 @@ class Admin::SmsController < ApplicationController
   layout "admin"
   
   def index
-    @sms_messages = Api::Sms.all
+    params[:filter] ||= "unread"
+    @sms_messages = Api::Sms.find(:all, :conditions => {:state => params[:filter]})
     respond_to do |format|
       format.html
       format.json{ render :json => @sms_messages }
