@@ -12,6 +12,8 @@
     
     %li{:class => current("stores") }=link_to "#{icon("store")} Stores ( #{Store.count} )",  admin_stores_path
     
+    %li{:class => current("sms") }=link_to "#{icon("mail")} SMS",  admin_sms_path
+    
     /%li{:class => current("buy_backs") }=link_to "#{icon("money")} Buy Backs", admin_buy_backs_path
   
     %li{:class => current("deliveries") }=link_to "#{icon("wooden-box-label")} Deliveries (#{Delivery.by_date.pending.count})", admin_deliveries_path

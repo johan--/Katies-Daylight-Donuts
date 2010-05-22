@@ -16,7 +16,7 @@ class Api::Sms < ActiveRecord::Base
   aasm_event :deliver do
     transitions :from => :recieved, :to => :delivered
   end
-
+  
   private
   
   def deliver_message
