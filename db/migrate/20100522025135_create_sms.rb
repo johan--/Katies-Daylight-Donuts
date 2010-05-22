@@ -3,7 +3,7 @@ class CreateSms < ActiveRecord::Migration
     create_table :sms do |t|
       t.string  :state
       t.text    :body
-      t.integer :prefix
+      t.string  :prefix
       t.integer :user_id
       t.timestamps
     end
