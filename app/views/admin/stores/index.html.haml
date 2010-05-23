@@ -19,6 +19,8 @@
         = text_field_tag :store_name
         = image_submit_tag "buttons/default/button-search.png", :style => "vertical-align: bottom"
     %li
+      = link_to_function "clear search", %($('store_name').value='';$$('ul.sidebar li.header form')[0].onsubmit())
+    %li
       = icon "plus"
       = link_to "Add Store", new_admin_store_path
     %li
