@@ -1,4 +1,6 @@
 %ul{:class => "messages", :id => "ticker_messages"}
+  %li
+    Send SMS messages to 881-47 with keyword donuts to notify us of changes.
   - [Api::Sms.find(:all, :limit => 10) | Delivery.pending].flatten.each do |message|
     -if message.is_a?(Delivery)
       %li= link_to "#{message.store.name}'s: ticket ##{message.id}, needs printed.", admin_delivery_path(message)
