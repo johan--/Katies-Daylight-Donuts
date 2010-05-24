@@ -1,0 +1,5 @@
+- form_remote_for :location, :url => search_locations_path do
+  = text_field_tag :q, {},{:class => "large", :style => "float: left"} 
+  = image_submit_tag "buttons/default/button-search.png"
+  %span{:id => "city_name"}
+    &nbsp;

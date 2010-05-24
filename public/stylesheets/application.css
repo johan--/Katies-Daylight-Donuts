@@ -12,7 +12,7 @@ blockquote, q {quotes:"" "";}
 a img {border:none;}
 
 body {
-  background: url("/images/background-tile.png") repeat-x #fffcd7 top left;
+  background: url("/images/background-tile.png") repeat-x #000 top left;
   font-family: lucida grande, verdana;
   font-size: 12px;
 }
@@ -742,4 +742,24 @@ ul.sidebar li{
 
 #ticker ul.messages li a:hover{
   text-decoration: underline;
+}
+
+ul.stores{
+  margin: 0;
+}
+
+ul.stores li{ 
+  height: 100px;
+  float: left;
+  border-bottom: 1px solid #DBDBDB;
+  padding-top: 1em;
+}
+
+ul.stores li p img{
+  margin-right: 0.5em;
+  float: left;
+}
+
+ul.stores li p strong{
+  font-weight: bold;
 }

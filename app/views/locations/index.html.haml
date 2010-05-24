@@ -1,0 +1,11 @@
+- title "Where can I buy Donuts? " + render(:partial => "locations/search").to_s
+
+%p
+  Katie's Daylight Donuts supplies over 
+  = pluralize @stores.size, "location" 
+  in 
+  = pluralize @cities.size, "cities"
+
+%ul{:class => "stores", :id => "stores_list"}
+  = render :partial => "store", :collection => @stores
+    

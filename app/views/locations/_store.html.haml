@@ -1,0 +1,9 @@
+%li{:class => "span-7"}
+  %p
+    = image_tag "donut-icon.png"
+    %strong=store.name
+    %br
+    =store.full_address
+    .clear
+    =icon "telephone"
+    =number_to_phone store.phone

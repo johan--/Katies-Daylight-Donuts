@@ -1,4 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :locations, :only => :index, :collection => {:search => :any}
   map.namespace :api do |api|
     api.resource :sms, :only => [:outgoing,:incoming, :index], :collection => {:outgoing => :any, :incoming => :post}
   end
@@ -97,4 +98,5 @@ ActionController::Routing::Routes.draw do |map|
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
   map.connect '/admin/timeclock/clockout/:id', :controller => "/admin/clockin_times", :action => "clockout"
+  map.connect '/locations/city/:name', :controller => "locations", :action => "city"
 end
