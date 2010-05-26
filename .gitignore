@@ -7,3 +7,4 @@ db/katies.csv
 db/katies.xls
 coverage/
 tmp/
+config/*.yml
