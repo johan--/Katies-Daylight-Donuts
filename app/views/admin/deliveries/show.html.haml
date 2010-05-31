@@ -1,8 +1,12 @@
 - title "Admin / Deliveries / Show"
 
 - content_for :sidebar do
-  %div{:style => "padding: 1em;"}
-    =# google_map_from_store(@delivery.store)
+  %ul.sidebar
+    %li.header="Order ##{@delivery.id}"
+    %li.status
+      Status: 
+      =@delivery.printed? ? 'Closed' : 'Open'
+    %li.close-link=link_to_remote "Close this delivery", :url => update_status_admin_deliveries_path(:delivery_ids => [@delivery.id], :message => 'print'), :confirm => "Are you sure you want to close this order?", :complete => %($$('ul.sidebar li.status')[0].update('Status: Closed');$$('ul.sidebar li.close-link')[0].toggle()) unless @delivery.printed?
 
 %p
   %strong Delivery Date:
@@ -50,7 +54,7 @@
         - for comment in @delivery.comments
           = comment.body
           %br
-    %tr
-      %td{:colspan => 3, :style => "text-align: right; font-size: 14pt; font-weight: bold; color: #36A33D;"}
-        %strong Total: 
-        = number_to_currency(@delivery.total)
+  %tr
+    %td{:colspan => 3, :style => "text-align: right; font-weight: bold; color: #36A33D;"}
+      %strong Total: 
+      = number_to_currency(@delivery.total)

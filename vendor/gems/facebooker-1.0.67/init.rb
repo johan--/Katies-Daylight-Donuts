@@ -1,3 +1,4 @@
+=begin
 # Added support to the Facebooker.yml file for switching to the new profile design..
 # Config parsing needs to happen before files are required.
 facebook_config = "#{RAILS_ROOT}/config/facebooker.yml"
@@ -24,3 +25,4 @@ if defined? Rails
   #require 'facebooker/rails/extensions/action_view'
   require 'facebooker/rails/extensions/routing'
 end
+=end

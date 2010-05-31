@@ -144,7 +144,7 @@ class Admin::DeliveriesController < ApplicationController
       end
       respond_to do |format|
         format.html{ redirect_to pending_deliveries_path }
-        format.js
+        format.js{ render :nothing => true }
       end
     end
   end

@@ -1,3 +1,3 @@
-require 'ym4r_gm'
+#require 'ym4r_gm'
 
 

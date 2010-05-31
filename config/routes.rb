@@ -47,7 +47,8 @@ ActionController::Routing::Routes.draw do |map|
       :print_todays => :any,
       :map => :get,
       :delivered => :get,
-      :pending => :get
+      :pending => :get,
+      :update_status => [:put, :post]
     }, :has_many => [:buy_backs, :items, :comments]
   end
 
