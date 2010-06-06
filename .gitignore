@@ -8,3 +8,4 @@ db/katies.xls
 coverage/
 tmp/
 config/*.yml
+lib/tasks/reports.rake
