@@ -14,6 +14,6 @@
     <%= icon "clock" %> <%= f.label :ends_at, "End:" %><br />
     <%= f.twelve_hour_select :schedule, :ends_at, :selected => @date %>
   </p>
-  <%= f.hidden_field :work_date, :value => @date.to_date %>
+  <%= f.hidden_field :work_date, :value => (params[:date] || @date.to_date) %>
   <%= image_submit_tag "buttons/default/button-save.png" %> <%= link_to_function(image_tag("buttons/default/button-cancel.png"),%(facebox.close())) %>
 </fieldset>
